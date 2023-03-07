@@ -1,0 +1,76 @@
+#!/usr/bin/env node
+
+const { promises: fs } = require('fs')
+const runP = require('npm-run-all')
+const common = require('./common');
+
+async function startTailwinds() {
+  const tailCSSFile = 'assets/css/base.css'
+
+  // Delete tailwind css generated file (ignore errors)
+  await fs.rm(tailCSSFile).catch(() => { });
+
+  // Start Tailwindcss dev server
+  const [procName] = common.runProcess('npm', ['run', 'start:tailwind'])
+
+  // Wait for css file to be generated or Tailwind to exit
+  await Promise.race([
+    common.waitForProcess(procName, { throw: true }),
+    common.waitForFile(tailCSSFile),
+  ]);
+}
+
+async function startHugo() {
+  const listenPort = 4280;
+
+  let hugoArgs = ['--appendPort=false'];
+  if (process.env.CODESPACE_NAME) {
+    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-4280.githubpreview.dev/`)
+  } else {
+    hugoArgs.push('--baseURL', `http://localhost:${listenPort}/`)
+  }
+
+  // Delete public folder (Hugo generated files)
+  await fs.rm('public', { recursive: true }).catch(() => { });
+
+  // Start Hugo dev server
+  const [procName] = common.runProcess('npm', ['run', 'start:hugo', '--', ...hugoArgs])
+
+  // Wait for Hugo initial output to complete or Hugo to exit
+  await Promise.race([
+    common.waitForProcess(procName, { throw: true }),
+    common.waitForFile('public/index.html'),
+  ]);
+}
+
+async function startSearch() {
+  // Start Pagefind dev server
+  const [procName] = common.runProcess('npm', ['run', 'start:search'])
+
+  // TODO: listen for rebuild on Hugo instead to manually trigger a rebuild of pagefind
+
+  // Wait for the Pagefine initial output to complete
+  await Promise.race([
+    common.waitForProcess(procName, { throw: true }),
+    common.waitForFile('public/_pagefind/pagefind.js'),
+  ]);
+}
+
+async function startAPI() {
+  common.runProcess('npm', ['run', 'start:api'])
+}
+
+async function main() {
+  await startTailwinds();
+  await startHugo();
+  await startSearch();
+  // await startAPI();
+
+  await common.waitForAnyProcess();
+  common.killAllProcesses();
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+})

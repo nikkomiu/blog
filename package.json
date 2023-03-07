@@ -1,0 +1,29 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/start",
+    "start:hugo": "hugo server --watch --buildDrafts --buildFuture --minify --enableGitInfo --cleanDestinationDir --destination public",
+    "start:search": "pagefind --source public --serve",
+    "start:tailwind": "tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/base.css --watch",
+    "start:api": "swa start public --api-location api -D http://localhost:1313",
+    "build": "run-s build:tailwind build:hugo build:search",
+    "build:tailwind": "tailwindcss -i ./assets/tailwind.css -o ./assets/base.css",
+    "build:hugo": "hugo --enableGitInfo --minify --cleanDestinationDir",
+    "build:search": "pagefind --source public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "flowbite": "^1.6.3",
+    "tailwindcss": "^3.2.7"
+  },
+  "devDependencies": {
+    "@azure/static-web-apps-cli": "^1.0.6",
+    "npm-run-all": "^4.1.5",
+    "pagefind": "^0.12.0"
+  }
+}

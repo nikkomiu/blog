@@ -1,0 +1,31 @@
+{
+  "name": "Blog",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "HUGO_VARIANT": "hugo_extended"
+    },
+    "context": "."
+  },
+  "workspaceFolder": "/workspaces/blog",
+  "postCreateCommand": {
+    "npm-install": "npm install"
+  },
+  "containerEnv": {
+    "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "1"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "davidanson.vscode-markdownlint"
+      ],
+      "settings": {
+        "html.format.templating": true
+      }
+    }
+  },
+  "forwardPorts": [
+    1313,
+    1414
+  ]
+}
