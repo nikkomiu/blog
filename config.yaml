@@ -1,0 +1,12 @@
+baseURL: /
+languageCode: en-us
+title: Reduce Recycle Recode
+
+menu:
+  main:
+    - name: Home
+      url: /
+      weight: 1
+    - name: Categories
+      url: /categories/
+      weight: 5

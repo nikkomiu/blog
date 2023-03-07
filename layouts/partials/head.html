@@ -9,7 +9,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 
-    {{ $css := resources.Get "css/base.css" }}
-    {{ $style := $css | resources.PostCSS }}
-    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{ $baseCSS := resources.Get "css/base.gen.css" }}
+    <link rel="stylesheet" href="{{ $baseCSS.RelPermalink }}">
+
+    {{ partial "svg.html" . }}
 </head>
