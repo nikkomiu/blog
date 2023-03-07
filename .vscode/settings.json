@@ -7,8 +7,7 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
         "node_modules/": true,
-        "resources/_gen": true,
-        "assets/css/base.css": true
+        "resources/_gen": true
     },
     "azureFunctions.deploySubpath": "api",
     "azureFunctions.projectLanguage": "JavaScript",

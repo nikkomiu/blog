@@ -7,7 +7,6 @@
     "start": "node ./bin/start",
     "start:hugo": "hugo server --watch --buildDrafts --buildFuture --minify --enableGitInfo --cleanDestinationDir --destination public",
     "start:search": "pagefind --source public --serve",
-    "start:tailwind": "tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/base.css --watch",
     "start:api": "swa start public --api-location api -D http://localhost:1313",
     "build": "run-s build:tailwind build:hugo build:search",
     "build:tailwind": "tailwindcss -i ./assets/tailwind.css -o ./assets/base.css",
@@ -18,12 +17,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.9",
     "flowbite": "^1.6.3",
     "tailwindcss": "^3.2.7"
   },
   "devDependencies": {
     "@azure/static-web-apps-cli": "^1.0.6",
-    "npm-run-all": "^4.1.5",
-    "pagefind": "^0.12.0"
+    "autoprefixer": "^10.4.13",
+    "pagefind": "^0.12.0",
+    "postcss": "^8.4.21",
+    "postcss-cli": "^10.1.0"
   }
 }
