@@ -4,7 +4,11 @@
       <svg class="h-6 w-6 mr-3 sm:h-10 sm:w-10" alt="{{ .Site.Title }} Logo">
         <use href="#site-icon" />
       </svg>
-      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ .Site.Title }}</span>
+      <span class="self-center font-semibold whitespace-nowrap dark:text-white mr-3">
+        <span class="flex text-sm">Reduce</span>
+        <span class="flex">Reuse</span>
+      </span>
+      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Recode</span>
     </a>
     <button data-collapse-toggle="navbar-dropdown" type="button"
       class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -34,7 +38,28 @@
           {{ end }}
         </li>
         {{ end }}
+        <li>
+          <button id="siteSearchButton"
+            class="block my-2 py-2 px-3 text-gray-400 rounded-lg md:border-0 hover:text-gray-100 hover:bg-gray-500 dark:text-gray-400 md:dark:hover:text-white transition-all"
+            type="button">
+            <svg class="h-6 w-6">
+              <use href="#hi-magnifying-glass" />
+            </svg>
+            <span class="sr-only">Search</span>
+          </button>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Main modal -->
+<div id="siteSearchModal" tabindex="-1" aria-hidden="true" data-modal-placement="top-center"
+  class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full backdrop-blur-sm">
+  <div class="relative w-full h-full max-w-2xl md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 p-4">
+      <div id="siteSearch"></div>
+    </div>
+  </div>
+</div>

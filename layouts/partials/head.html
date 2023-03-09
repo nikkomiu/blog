@@ -12,5 +12,7 @@
     {{ $baseCSS := resources.Get "css/base.gen.css" }}
     <link rel="stylesheet" href="{{ $baseCSS.RelPermalink }}">
 
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}_pagefind/pagefind-ui.css">
+
     {{ partial "svg.html" . }}
 </head>

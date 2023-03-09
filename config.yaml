@@ -7,6 +7,9 @@ menu:
     - name: Home
       url: /
       weight: 1
-    - name: Categories
-      url: /categories/
-      weight: 5
+    - name: Posts
+      url: /posts/
+      weight: 2
+    - name: Tags
+      url: /tags/
+      weight: 3
