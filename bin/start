@@ -60,7 +60,7 @@ async function startAPI() {
 }
 
 async function main() {
-  await startTailwinds();
+  // await startTailwinds();
   await startHugo();
   await startSearch();
   await startAPI();

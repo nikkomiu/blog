@@ -1,15 +1,20 @@
 baseURL: /
 languageCode: en-us
-title: Reduce Recycle Recode
+title: RRR
+subtitle: Reduce Recycle Recode
+theme: terminal
 
-menu:
-  main:
-    - name: Home
-      url: /
-      weight: 1
-    - name: Posts
-      url: /posts/
-      weight: 2
-    - name: Tags
-      url: /tags/
-      weight: 3
+copyright: '@ Nikko Miu'
+
+params:
+  themeColor: pink
+  centerTheme: true
+  noindex: true
+
+  # automatically set the cover image from cover.(jpg|png|webp)
+  autoCover: true
+  # show reading time by default
+  readingTime: true
+
+  logo:
+    logoText: Reduce Recycle Recode
