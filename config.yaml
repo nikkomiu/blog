@@ -17,9 +17,6 @@ menu:
     - name: Guides
       weight: 3
       url: /guides/
-    - name: Authors
-      weight: 6
-      url: /authors/
   footer:
     - name: Home
       weight: 1
