@@ -1,0 +1,64 @@
+{
+  "routes": [
+      {
+          "route": "/site.webmanifest",
+          "headers": {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, OPTIONS"
+          }
+      },
+      {
+          "route": "/login",
+          "redirect": "/.auth/login/aad"
+      },
+      {
+          "route": "/logout",
+          "redirect": "/.auth/logout"
+      },
+      {
+          "route": "/.auth/login/twitter",
+          "statusCode": 404
+      },
+      {
+          "route": "/.auth/login/github",
+          "statusCode": 404
+      },
+      {
+          "route": "/css/*",
+          "headers": {
+              "cache-control": "private, must-revalidate, max-age=15770000"
+          },
+          "allowedRoles": ["registeredusers"]
+      },
+      {
+          "route": "/js/*",
+          "headers": {
+              "cache-control": "private, must-revalidate, max-age=15770000"
+          },
+          "allowedRoles": ["registeredusers"]
+      },
+      {
+          "route": "/images/*",
+          "headers": {
+              "cache-control": "private, must-revalidate, max-age=15770000"
+          },
+          "allowedRoles": ["registeredusers"]
+      },
+      {
+          "route": "*",
+          "headers": {
+              "cache-control": "no-cache"
+          },
+          "allowedRoles": ["registeredusers"]
+      }
+  ],
+  "responseOverrides": {
+      "401": {
+          "redirect": "/login",
+          "statusCode": 302
+      },
+      "404": {
+          "rewrite": "/404.html"
+      }
+  }
+}
