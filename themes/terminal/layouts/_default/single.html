@@ -6,7 +6,7 @@
   <div class="post-meta">
     {{ if .Date }}
       <time class="post-date">
-        {{ .Date.Format "2006-01-02" }} ::
+        {{ .Date.Format "2006-01-02" }}
         {{ if $.Site.Params.showLastUpdated }}
           [{{or $.Site.Params.updatedDatePrefix "Updated"}} :: {{ .Lastmod.Format "2006-01-02" }}]
         {{ end }}
@@ -15,9 +15,9 @@
     {{ with .Params.Author }}
       {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
       {{ with $.Site.GetPage $authorPagePath }}
-        <span class="post-author"><a href="{{ .RelPermalink }}" data-pagefind-filter="author">{{ .Title }}</a></span>
+        :: <span class="post-author"><a href="{{ .RelPermalink }}" data-pagefind-filter="author">{{ .Title }}</a></span>
       {{ else }}
-        <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
+        :: <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
       {{ end }}
     {{ end }}
     {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
