@@ -8,9 +8,6 @@ copyright: Nikko Miu
 
 menu:
   main:
-    - name: Home
-      weight: 1
-      url: /
     - name: Notes
       weight: 2
       url: /notes/
