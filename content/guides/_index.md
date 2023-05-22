@@ -1,4 +1,4 @@
 ---
-title: Notes
+title: Guides
 showAllSubPages: true
 ---

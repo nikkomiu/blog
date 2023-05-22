@@ -15,9 +15,9 @@
     {{ with .Params.Author }}
       {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
       {{ with $.Site.GetPage $authorPagePath }}
-        <span class="post-author"><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+        <span class="post-author"><a href="{{ .RelPermalink }}" data-pagefind-filter="author">{{ .Title }}</a></span>
       {{ else }}
-        <span class="post-author">{{ . }}</span>
+        <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
       {{ end }}
     {{ end }}
     {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
@@ -28,7 +28,7 @@
   {{ if .Params.tags }}
     <span class="post-tags">
       {{ range .Params.tags }}
-      #<a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>&nbsp;
+      #<a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}" data-pagefind-filter="tag">{{ . }}</a>&nbsp;
       {{ end }}
     </span>
   {{ end }}

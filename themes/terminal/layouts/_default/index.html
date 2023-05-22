@@ -21,7 +21,7 @@
 
     {{ range $paginator.Pages }}
       <article class="post on-list">
-        <h1 class="post-title {{ if $.Title }}small{{ end }}">
+        <h1 class="post-title {{ if (and $.Content $.Title) }}small{{ end }}">
           <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
         </h1>
 

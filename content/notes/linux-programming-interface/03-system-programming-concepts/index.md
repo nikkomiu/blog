@@ -1,16 +1,30 @@
 ---
 title: System Programming Concepts
 author: Nikko Miu
-date: 2020-01-26T23:11:13Z
+date: 2022-05-22T16:00:00Z
 draft: true
 toc: true
-tags:
-- linux-programming-interface
+categories:
+- linux programming interface
 ---
 
-TODO: PUT HEADING HERE
+Introduction to prerequisite concepts of Linux system programming.
+These include the following:
+
+- System calls
+- Library functions
+- Standard C library
+- Issues related to portability
 
 <!--more-->
+
+## Alternative to `glibc`
+
+There are alternative implementations of the C standard library that are not `glibc`.
+These are a couple that look interesting:
+
+- [musl](https://musl.libc.org/)
+- [uclibc](https://www.uclibc.org/)
 
 ## Determining `glibc` Version on System
 

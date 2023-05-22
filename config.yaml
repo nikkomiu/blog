@@ -14,8 +14,14 @@ menu:
     - name: Notes
       weight: 2
       url: /notes/
+    - name: Categories
+      weight: 4
+      url: /categories/
+    - name: Tags
+      weight: 5
+      url: /tags/
     - name: Authors
-      weight: 3
+      weight: 6
       url: /authors/
 
 params:

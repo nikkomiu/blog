@@ -1,10 +1,14 @@
+// $border-color: mix($accent, #999, 90%);
+
 body {
   --pagefind-ui-primary: #eeeeee;
-  --pagefind-ui-text: #eeeeee;
-  --pagefind-ui-background: #152028;
-  --pagefind-ui-border: #152028;
+  --pagefind-ui-text: #ddd;
+  --pagefind-ui-background: #{mix($background, #999, 95%)};
+  --pagefind-ui-border: #{mix($accent, #000, 30%)};
   --pagefind-ui-tag: #152028;
   --pagefind-ui-font: 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace;
+
+  --pagefind-ui-border-radius: 0;
 }
 
 #siteSearch {
@@ -35,5 +39,18 @@ body {
     p.small {
       font-size: 0.85rem;
     }
+  }
+
+  form::before {
+    background-color: $accent;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: mix($accent, #000, 50%);
+  }
+
+  input::placeholder {
+    color: $accent;
   }
 }
