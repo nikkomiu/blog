@@ -4,7 +4,7 @@ title: RRR
 subtitle: Reduce, Recycle, Recode
 theme: terminal
 
-copyright: '@ Nikko Miu'
+copyright: Nikko Miu
 
 menu:
   main:
@@ -14,15 +14,31 @@ menu:
     - name: Notes
       weight: 2
       url: /notes/
-    - name: Categories
-      weight: 4
-      url: /categories/
-    - name: Tags
-      weight: 5
-      url: /tags/
+    - name: Guides
+      weight: 3
+      url: /guides/
     - name: Authors
       weight: 6
       url: /authors/
+  footer:
+    - name: Home
+      weight: 1
+      url: /
+    - name: Notes
+      weight: 2
+      url: /notes/
+    - name: Guides
+      weight: 3
+      url: /guides/
+    - name: Authors
+      weight: 6
+      url: /authors/
+    - name: Categories
+      weight: 7
+      url: /categories/
+    - name: Tags
+      weight: 8
+      url: /tags/
 
 params:
   themeColor: pink

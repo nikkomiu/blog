@@ -1,13 +1,20 @@
 <footer class="footer">
   <div class="footer__inner">
+    {{ if gt (len .Site.Menus.footer) 0 }}
+      <nav class="footer__menu">
+        {{ range .Site.Menus.footer }}
+          <span><a href="{{ .URL }}">{{ .Name }}</a></span>
+        {{ end }}
+      </nav>
+    {{ end }}
+
     {{ if $.Site.Copyright }}
       <div class="copyright copyright--user">
-        <span>{{ $.Site.Copyright | safeHTML }}</span>
+        <span>@ {{ $.Site.Copyright | safeHTML }} :: {{ now.Year }}</span>
     {{ else }}
       <div class="copyright">
         <span>© {{ now.Year }} Powered by <a href="http://gohugo.io">Hugo</a></span>
     {{ end }}
-      <span>
       </div>
   </div>
 </footer>
