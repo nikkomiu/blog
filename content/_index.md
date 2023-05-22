@@ -1,6 +1,6 @@
 ---
 ---
 
-# Something Else
+# Home
 
-Some [link](https://google.com) to somewhere!
+This is some random home page content.

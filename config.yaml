@@ -1,15 +1,29 @@
 baseURL: /
 languageCode: en-us
 title: RRR
-subtitle: Reduce Recycle Recode
+subtitle: Reduce, Recycle, Recode
 theme: terminal
 
 copyright: '@ Nikko Miu'
+
+menu:
+  main:
+    - name: Home
+      weight: 1
+      url: /
+    - name: Notes
+      weight: 2
+      url: /notes/
+    - name: Authors
+      weight: 3
+      url: /authors/
 
 params:
   themeColor: pink
   centerTheme: true
   noindex: true
+
+  readMore: Continue Reading
 
   # automatically set the cover image from cover.(jpg|png|webp)
   autoCover: true

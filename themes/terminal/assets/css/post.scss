@@ -43,7 +43,12 @@
     padding-bottom: 15px;
     border-bottom: $border;
 
-    &:after {
+    &.small {
+      font-size: 1.1rem;
+      padding-bottom: 10px;
+    }
+
+    &:not(.small):after {
       content: '';
       position: absolute;
       bottom: 2px;

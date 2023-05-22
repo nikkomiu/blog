@@ -13,6 +13,17 @@ function toggleSearch(e) {
   }
 }
 
+function loadSearchFailed() {
+  console.warn('Could not load search');
+
+  document.querySelector(searchSelector).innerHTML = `
+    <div class="alert alert-error">
+      <p>Search is currently unavailable.</p>
+      <p class="small">Please try again later.</p>
+    </div>
+  `;
+}
+
 export async function loadSearch() {
   try {
     // Load search
@@ -31,6 +42,6 @@ export async function loadSearch() {
     // Add search triggers
     document.addEventListener('keydown', toggleSearch);
   } catch (err) {
-    console.error(err)
+    loadSearchFailed();
   }
 }

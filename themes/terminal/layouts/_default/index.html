@@ -1,5 +1,10 @@
 {{ define "main" }}
   {{ if .Content }}
+    {{ with $.Title }}
+      <h1 class="post-title">
+        {{ . | markdownify }}
+      </h1>
+    {{ end }}
     <div class="index-content {{ if .Params.framed -}}framed{{- end -}}">
       {{ .Content }}
     </div>
@@ -16,7 +21,7 @@
 
     {{ range $paginator.Pages }}
       <article class="post on-list">
-        <h1 class="post-title">
+        <h1 class="post-title {{ if $.Title }}small{{ end }}">
           <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
         </h1>
 

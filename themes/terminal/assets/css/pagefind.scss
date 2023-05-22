@@ -14,4 +14,26 @@ body {
   li::before {
     content: '';
   }
+
+  .alert {
+    height: 52px;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+
+    background: #911111;
+    color: #f29b9b;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+
+    p {
+      margin: 0;
+    }
+
+    p.small {
+      font-size: 0.85rem;
+    }
+  }
 }

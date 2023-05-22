@@ -1,0 +1,3 @@
+---
+showAllSubPages: true
+---
