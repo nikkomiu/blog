@@ -3,21 +3,21 @@
 const { promises: fs } = require('fs')
 const common = require('./common');
 
-async function startTailwinds() {
-  const tailCSSFile = 'assets/css/base.gen.css'
+// async function startTailwinds() {
+//   const tailCSSFile = 'assets/css/base.gen.css'
 
-  // Delete tailwind css generated file (ignore errors)
-  await fs.rm(tailCSSFile).catch(() => { });
+//   // Delete tailwind css generated file (ignore errors)
+//   await fs.rm(tailCSSFile).catch(() => { });
 
-  // Start Tailwindcss dev server
-  const [procName] = common.runProcess('npm', ['run', 'start:tailwinds'])
+//   // Start Tailwindcss dev server
+//   const [procName] = common.runProcess('npm', ['run', 'start:tailwinds'])
 
-  // Wait for css file to be generated or Tailwind to exit
-  await Promise.race([
-    common.waitForProcess(procName, { throw: true }),
-    common.waitForFile(tailCSSFile),
-  ]);
-}
+//   // Wait for css file to be generated or Tailwind to exit
+//   await Promise.race([
+//     common.waitForProcess(procName, { throw: true }),
+//     common.waitForFile(tailCSSFile),
+//   ]);
+// }
 
 async function startHugo() {
   const listenPort = 4280;

@@ -9,7 +9,7 @@
     "start:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css --watch",
     "start:search": "pagefind --source public --serve",
     "start:api": "swa start public --api-location api -D http://localhost:1313",
-    "build": "run-s build:tailwinds build:hugo build:search",
+    "build": "node ./bin/build",
     "build:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css",
     "build:hugo": "hugo --enableGitInfo --minify --cleanDestinationDir",
     "build:search": "pagefind --source public"

@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+const common = require('./common');
+
+async function buildHugo() {
+  const [procName] = common.runProcess('npm', ['run', 'build:hugo']);
+
+  await Promise.all([
+    common.waitForProcess(procName),
+    common.waitForFile('public/index.html'),
+  ]);
+}
+
+async function buildSearch() {
+  const [procName] = common.runProcess('npm', ['run', 'build:search']);
+
+  await Promise.all([
+    common.waitForProcess(procName),
+    common.waitForFile('public/_pagefind/pagefind.js'),
+  ]);
+}
+
+async function main() {
+  await buildHugo();
+  await buildSearch();
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
