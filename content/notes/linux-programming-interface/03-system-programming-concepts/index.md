@@ -2,7 +2,6 @@
 title: System Programming Concepts
 author: Nikko Miu
 date: 2022-05-22T16:00:00Z
-draft: true
 toc: true
 categories:
 - linux programming interface
