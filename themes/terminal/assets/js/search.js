@@ -1,5 +1,6 @@
 import { loadScript } from './util'
 
+const pagefindUIID = 'pagefind-ui-script'
 const searchSelector = '#siteSearch'
 
 function toggleSearch(e) {
@@ -27,7 +28,7 @@ function loadSearchFailed() {
 export async function loadSearch() {
   try {
     // Load search
-    await loadScript('/_pagefind/pagefind-ui.js');
+    await loadScript('/_pagefind/pagefind-ui.js', pagefindUIID);
 
     const searchElement = document.querySelector(searchSelector);
     if (!searchElement) {

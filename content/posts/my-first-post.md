@@ -1,6 +1,7 @@
 ---
-title: My First Post
 date: 2020-01-26T23:11:13Z
+title: My First Post
+author: Nikko Miu
 draft: true
 tags:
 - foo
