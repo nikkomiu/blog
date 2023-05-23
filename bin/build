@@ -4,7 +4,7 @@ const common = require('./common');
 
 async function buildHugo() {
   const extraArgs = ['--'];
-  if (process.env.WITH_DRAFTS) {
+  if (process.env.WITH_DRAFTS === 'true') {
     console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`)
     extraArgs.push('--buildDrafts');
   }
