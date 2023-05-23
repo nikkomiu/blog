@@ -1,12 +1,13 @@
 .highlight {
   position: relative;
+  background: #000;
 
   .copy-button {
     position: absolute;
     top: 0;
     right: 0;
-    margin-top: 0.75rem;
-    margin-right: 0.75rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
     opacity: 0;
     transition: opacity .4s ease-in-out;
 
@@ -23,6 +24,6 @@
 
   pre {
     padding: 0.75rem 1rem;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid transparentize($accent, 0.6);
   }
 }
