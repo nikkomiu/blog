@@ -57,7 +57,7 @@ code.language-html,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: rgba(255, 255, 255, 30%) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .token.namespace {
@@ -122,7 +122,7 @@ pre[class*="language-"] {
   position: relative;
   margin: $code-margin 0;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 10%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   + .code-toolbar,
   + .highlight,
@@ -144,9 +144,9 @@ pre[class*="language-"] {
   > .toolbar {
     button {
       font-size: 0.8em !important;
-      background: hsla(0deg, 0%, 87.8%, 20%) !important;
+      background: hsla(0deg, 0%, 87.8%, 0.2) !important;
       color: #bbb !important;
-      box-shadow: 0 2px 0 0 rgba(0, 0, 0, 20%) !important;
+      box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2) !important;
       border-radius: 0 !important;
       margin: 6px !important;
       padding: 10px !important;
