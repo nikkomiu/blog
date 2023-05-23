@@ -5,7 +5,7 @@ export function loadScript(url, elementID) {
       return;
     }
 
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = url;
     script.id = elementID;
 
@@ -13,5 +13,5 @@ export function loadScript(url, elementID) {
     script.onerror = reject;
 
     document.body.appendChild(script);
-  })
+  });
 }

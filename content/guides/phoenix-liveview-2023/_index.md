@@ -4,7 +4,7 @@ title: Phoenix LiveView (2023)
 author: Nikko Miu
 draft: true
 categories:
-- phoenix liveview 2023
+  - phoenix liveview 2023
 ---
 
 This guide covers the basics of Phoenix LiveView.

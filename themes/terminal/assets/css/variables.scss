@@ -1,7 +1,7 @@
 /* COLOR VARIABLES */
-$background: mix($accent, #1D1E28, 2%);
+$background: mix($accent, #1d1e28, 2%);
 $color: white;
-$border-color: rgba(255, 255, 255, .1);
+$border-color: rgba(255, 255, 255, 10%);
 
 /* MEDIA QUERIES */
 $phone: "max-width: 684px";
@@ -9,6 +9,6 @@ $tablet: "max-width: 900px";
 
 /* variables for js, must be the same as these in @custom-media queries */
 :root {
-  --phoneWidth: (max-width: 684px);
-  --tabletWidth: (max-width: 900px);
+  --phone-width: (max-width: 684px);
+  --tablet-width: (max-width: 900px);
 }

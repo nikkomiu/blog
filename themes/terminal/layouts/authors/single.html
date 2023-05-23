@@ -1,86 +1,103 @@
 {{ define "main" }}
-<article class="post">
-  {{ partial "cover.html" . }}
-  <h1 class="post-title">
-    <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
-  </h1>
-  <div class="post-meta">
-    {{ if .Date }}
-      <time class="post-date">
-        {{ .Date.Format "2006-01-02" }}
-        {{ if $.Site.Params.showLastUpdated }}
-          [{{or $.Site.Params.updatedDatePrefix "Updated"}} :: {{ .Lastmod.Format "2006-01-02" }}]
+  <article class="post">
+    {{ partial "cover.html" . }}
+    <h1 class="post-title">
+      <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+    </h1>
+    <div class="post-meta">
+      {{ if .Date }}
+        <time class="post-date">
+          {{ .Date.Format "2006-01-02" }}
+          {{ if $.Site.Params.showLastUpdated }}
+            [{{ or $.Site.Params.updatedDatePrefix "Updated" }} ::
+            {{ .Lastmod.Format "2006-01-02" }}]
+          {{ end }}
+        </time>
+      {{ end }}
+      {{ with .Params.Author }}
+        {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
+        {{ with $.Site.GetPage $authorPagePath }}
+          ::
+          <span class="post-author"
+            ><a href="{{ .RelPermalink }}" data-pagefind-filter="author"
+              >{{ .Title }}</a
+            ></span
+          >
+        {{ else }}
+          ::
+          <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
         {{ end }}
-      </time>
-    {{ end }}
-    {{ with .Params.Author }}
-      {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
-      {{ with $.Site.GetPage $authorPagePath }}
-        :: <span class="post-author"><a href="{{ .RelPermalink }}" data-pagefind-filter="author">{{ .Title }}</a></span>
-      {{ else }}
-        :: <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
       {{ end }}
-    {{ end }}
-    {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
-      <span class="post-reading-time">:: {{ .ReadingTime }} {{ $.Site.Params.minuteReadingTime | default "min read" }} ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span>
-    {{ end }}
-  </div>
-
-  {{ if .Params.tags }}
-    <span class="post-tags">
-      {{ range .Params.tags }}
-      #<a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}" data-pagefind-filter="tag">{{ . }}</a>&nbsp;
+      {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
+        <span class="post-reading-time"
+          >:: {{ .ReadingTime }}
+          {{ $.Site.Params.minuteReadingTime | default "min read" }}
+          ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span
+        >
       {{ end }}
-    </span>
-  {{ end }}
-
-  {{ if (.Params.Toc | default .Site.Params.Toc) }}
-    <div class="table-of-contents">
-      <h2>
-        {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}
-      </h2>
-      {{ .TableOfContents }}
     </div>
-  {{ end }}
 
-  <div class="post-content">
-    {{- with .Content -}}
-      <div>
-        {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
-      </div>
-    {{- end -}}
-  </div>
+    {{ if .Params.tags }}
+      <span class="post-tags">
+        {{ range .Params.tags }}
+          #<a
+            href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"
+            data-pagefind-filter="tag"
+            >{{ . }}</a
+          >&nbsp;
+        {{ end }}
+      </span>
+    {{ end }}
 
-  {{ if eq .Type $.Site.Params.contentTypeName }}
-    {{ partial "posts_pagination.html" . }}
-  {{ end }}
-
-  <div class="author-list-group">
-    {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
-    {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
-    {{ $pages := where (where $.Site.Pages "Type" "in" $contentTypeName) "Params.Author" "==" .Title }}
-    {{ if $pages }}
-      <div class="list">
-        <h3 class="list-heading">Posts</h3>
-
-        {{ $postContext := dict "Pages" $pages "Parent" . }}
-        {{ partial "post-list.html" $postContext }}
+    {{ if (.Params.Toc | default .Site.Params.Toc) }}
+      <div class="table-of-contents">
+        <h2>
+          {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}
+        </h2>
+        {{ .TableOfContents }}
       </div>
     {{ end }}
 
-    {{ $pages = where (where $.Site.Pages "Type" "in" "notes") "Params.Author" "==" .Title }}
-    {{ if $pages }}
-      <div class="list">
-        <h3 class="list-heading">Notes</h3>
 
-        {{ $postContext := dict "Pages" $pages "Parent" . }}
-        {{ partial "post-list.html" $postContext }}
-      </div>
+    <div class="post-content">
+      {{- with .Content -}}
+        <div>
+          {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
+        </div>
+      {{- end -}}
+    </div>
+
+    {{ if eq .Type $.Site.Params.contentTypeName }}
+      {{ partial "posts_pagination.html" . }}
     {{ end }}
-  </div>
 
-  {{ if not (.Params.hideComments | default false) }}
-    {{ partial "comments.html" . }}
-  {{ end }}
-</article>
+
+    <div class="author-list-group">
+      {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
+      {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
+      {{ $pages := where (where $.Site.Pages "Type" "in" $contentTypeName) "Params.Author" "==" .Title }}
+      {{ if $pages }}
+        <div class="list">
+          <h3 class="list-heading">Posts</h3>
+
+          {{ $postContext := dict "Pages" $pages "Parent" . }}
+          {{ partial "post-list.html" $postContext }}
+        </div>
+      {{ end }}
+
+      {{ $pages = where (where $.Site.Pages "Type" "in" "notes") "Params.Author" "==" .Title }}
+      {{ if $pages }}
+        <div class="list">
+          <h3 class="list-heading">Notes</h3>
+
+          {{ $postContext := dict "Pages" $pages "Parent" . }}
+          {{ partial "post-list.html" $postContext }}
+        </div>
+      {{ end }}
+    </div>
+
+    {{ if not (.Params.hideComments | default false) }}
+      {{ partial "comments.html" . }}
+    {{ end }}
+  </article>
 {{ end }}

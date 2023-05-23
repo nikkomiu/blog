@@ -1,13 +1,15 @@
-import { loadScript } from './util'
+import { loadScript } from "./util";
 
-const pagefindUIID = 'pagefind-ui-script'
-const searchSelector = '#siteSearch'
+const pagefindUIID = "pagefind-ui-script";
+const searchSelector = "#site-search";
 
 function toggleSearch(e) {
-  if (e.ctrlKey && e.keyCode === 'K'.charCodeAt(0)) {
+  if (e.ctrlKey && e.keyCode === "K".charCodeAt(0)) {
     e.preventDefault();
 
-    const searchElement = document.querySelector(`${searchSelector} input[type="text"]`);
+    const searchElement = document.querySelector(
+      `${searchSelector} input[type="text"]`
+    );
     if (searchElement) {
       searchElement.focus();
     }
@@ -15,7 +17,7 @@ function toggleSearch(e) {
 }
 
 function loadSearchFailed() {
-  console.warn('Could not load search');
+  console.warn("Could not load search");
 
   document.querySelector(searchSelector).innerHTML = `
     <div class="alert alert-error">
@@ -28,7 +30,7 @@ function loadSearchFailed() {
 export async function loadSearch() {
   try {
     // Load search
-    await loadScript('/_pagefind/pagefind-ui.js', pagefindUIID);
+    await loadScript("/_pagefind/pagefind-ui.js", pagefindUIID);
 
     const searchElement = document.querySelector(searchSelector);
     if (!searchElement) {
@@ -41,7 +43,7 @@ export async function loadSearch() {
     new PagefindUI({ element: searchSelector });
 
     // Add search triggers
-    document.addEventListener('keydown', toggleSearch);
+    document.addEventListener("keydown", toggleSearch);
   } catch (err) {
     loadSearchFailed();
   }

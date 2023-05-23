@@ -1,11 +1,11 @@
-import './menu'
+import "./menu";
 
-import { loadSearch } from './search'
-import { loadCodeActions } from './code'
+import { loadSearch } from "./search";
+import { loadCodeActions } from "./code";
 
 function onDocumentLoad() {
   loadSearch();
   loadCodeActions();
 }
 
-window.addEventListener('load', onDocumentLoad);
+window.addEventListener("load", onDocumentLoad);

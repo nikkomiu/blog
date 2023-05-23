@@ -2,10 +2,6 @@
   position: relative;
   background: #000;
 
-  &:hover .copy-button, .copy-button.active {
-    opacity: 0.8;
-  }
-
   .copy-button {
     position: absolute;
     top: 0;
@@ -15,12 +11,15 @@
     opacity: 0;
     transition: opacity .4s ease-in-out;
     transition: background-color 0.2s ease-in-out;
-
     padding: 0.25rem 0.5rem;
 
     &:hover {
       background-color: desaturate(lighten($accent, 10), 10);
     }
+  }
+
+  &:hover .copy-button, .copy-button.active {
+    opacity: 0.8;
   }
 
   pre {

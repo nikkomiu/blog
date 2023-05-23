@@ -3,8 +3,8 @@ date: 2020-01-26T23:11:13Z
 title: My First Post
 author: Nikko Miu
 tags:
-- foo
-- bar
+  - foo
+  - bar
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

@@ -5,6 +5,18 @@
   width: 100%;
   margin: 40px 0;
 
+  pre {
+    margin-top: 0;
+
+    &::first-line {
+      line-height: 0;
+    }
+  }
+
+  .code-toolbar {
+    margin: 0;
+  }
+
   input[type="checkbox"] {
     position: absolute;
     visibility: hidden;
@@ -27,7 +39,7 @@
       }
     }
 
-    ~ label .collapsable-code__toggle:after {
+    ~ label .collapsable-code-toggle::after {
       content: attr(data-label-expand);
     }
   }
@@ -65,20 +77,8 @@
     font-size: 16px;
     padding: 3px 10px;
 
-    &:after {
+    &::after {
       content: attr(data-label-collapse);
     }
-  }
-
-  pre {
-    margin-top: 0;
-
-    &::first-line {
-      line-height: 0;
-    }
-  }
-
-  .code-toolbar {
-    margin: 0;
   }
 }

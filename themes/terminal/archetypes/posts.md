@@ -1,6 +1,6 @@
 ---
-date: {{ .Date }}
-title: {{ replace .TranslationBaseName "-" " " | title }}
+date: "{{ .Date }}"
+title: "{{ replace .TranslationBaseName "-" " " | title }}"
 description: ""
 author: ""
 authorTwitter: "" # do not include @

@@ -31,11 +31,12 @@
   &-meta {
     font-size: 1rem;
     margin-bottom: 10px;
-    color: transparentize($accent, .3);
+    color: transparentize($accent, 0.3);
   }
 
   &-title {
     $border: 3px dotted $accent;
+
     position: relative;
     color: $accent;
     margin: 0 0 15px;
@@ -47,8 +48,8 @@
       padding-bottom: 10px;
     }
 
-    &:not(.small):after {
-      content: '';
+    &:not(.small)::after {
+      content: "";
       position: absolute;
       bottom: 2px;
       display: block;
@@ -57,13 +58,13 @@
     }
 
     .draft-label {
-      color: #FFEFE6;
-      font-size: .8rem;
+      color: #ffefe6;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: .1em;
+      letter-spacing: 0.1em;
       margin-left: 0.25rem;
       padding: 0.25rem 0.5rem;
-      background-color: #C65D21;
+      background-color: #c65d21;
       border-radius: 1rem;
       user-select: none;
       position: relative;
@@ -79,7 +80,7 @@
     display: block;
     margin-bottom: 20px;
     font-size: 1rem;
-    opacity: .5;
+    opacity: 0.5;
 
     a {
       text-decoration: none;
@@ -105,8 +106,8 @@
   ul {
     list-style: none;
 
-    li:not(:empty):before {
-      content: '-';
+    li:not(:empty)::before {
+      content: "-";
       position: absolute;
       left: -20px;
       color: $accent;
@@ -114,7 +115,7 @@
   }
 }
 
-.post--regulation {
+.post-regulation {
   h1 {
     justify-content: center;
   }
@@ -137,16 +138,19 @@
 }
 
 .hanchor {
-  color: transparentize($accent, .1);
+  color: transparentize($accent, 0.1);
   text-decoration: none;
   margin-left: 10px;
   visibility: hidden;
 }
 
-h1:hover a, h2:hover a, h3:hover a, h4:hover a {
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a {
   visibility: visible;
 }
 
 .footnotes {
-  color: transparentize($color, .5);
+  color: transparentize($color, 0.5);
 }

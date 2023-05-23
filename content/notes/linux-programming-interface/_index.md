@@ -3,7 +3,7 @@ title: The Linux Programming Interface
 author: Nikko Miu
 date: 2022-05-22T15:00:00Z
 categories:
-- linux programming interface
+  - linux programming interface
 ---
 
 Personal notes around the book [The Linux Programming Interface](https://www.amazon.com/Linux-Programming-Interface-System-Handbook/dp/1593272200) by Michael Kerrisk.

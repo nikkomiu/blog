@@ -1,32 +1,29 @@
 // $border-color: mix($accent, #999, 90%);
 
 body {
-  --pagefind-ui-primary: #eeeeee;
+  --pagefind-ui-primary: #eee;
   --pagefind-ui-text: #ddd;
   --pagefind-ui-background: #{mix($background, #999, 95%)};
   --pagefind-ui-border: #{mix($accent, #000, 30%)};
   --pagefind-ui-tag: #152028;
-  --pagefind-ui-font: 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace;
-
+  --pagefind-ui-font: "Fira Code", monaco, "Ubuntu Mono", consolas, monospace;
   --pagefind-ui-border-radius: 0;
 }
 
-#siteSearch {
+#site-search {
   margin-top: 1rem;
   min-height: 52px;
 
   li::before {
-    content: '';
+    content: "";
   }
 
   .alert {
     height: 52px;
-
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-
     background: #911111;
     color: #f29b9b;
     border-radius: 0.25rem;
