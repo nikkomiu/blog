@@ -6,11 +6,8 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
-        "node_modules/": true,
+        "**/node_modules/": true,
         "**/resources/_gen": true
     },
-    "azureFunctions.deploySubpath": "api",
-    "azureFunctions.projectLanguage": "JavaScript",
-    "azureFunctions.projectRuntime": "~4",
     "debug.internalConsoleOptions": "neverOpen"
 }
