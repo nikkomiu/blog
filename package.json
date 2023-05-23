@@ -17,12 +17,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@tailwindcss/typography": "^0.5.9",
-    "flowbite": "^1.6.3",
-    "prismjs": "^1.29.0",
-    "tailwindcss": "^3.2.7"
-  },
   "devDependencies": {
     "@azure/static-web-apps-cli": "^1.0.6",
     "autoprefixer": "^10.4.13",

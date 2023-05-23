@@ -29,3 +29,14 @@ suspendisse potenti nullam ac. Tincidunt id aliquet risus feugiat in. Varius
 quam quisque id diam vel. Egestas erat imperdiet sed euismod nisi. Scelerisque
 felis imperdiet proin fermentum leo vel orci porta non. Ut faucibus pulvinar
 elementum integer. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl.
+
+```c
+void main(int argc, char *argv[]) {
+    printf("Hello, World!\n");
+}
+```
+
+```bash
+$ echo "Hello, World!"
+Some output
+```
