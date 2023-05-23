@@ -3,7 +3,13 @@
 const common = require('./common');
 
 async function buildHugo() {
-  const [procName] = common.runProcess('npm', ['run', 'build:hugo']);
+  const extraArgs = ['--'];
+  if (process.env.WITH_DRAFTS) {
+    console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`)
+    extraArgs.push('--buildDrafts');
+  }
+
+  const [procName] = common.runProcess('npm', ['run', 'build:hugo', ...extraArgs]);
 
   await Promise.all([
     common.waitForProcess(procName),
