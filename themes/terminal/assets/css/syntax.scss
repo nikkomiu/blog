@@ -151,3 +151,17 @@ pre[class*="language-"] {
     }
   }
 }
+
+.highlight .toolbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 4px;
+  margin-right: 4px;
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.highlight:hover .toolbar {
+  opacity: 1;
+}
