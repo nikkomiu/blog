@@ -2,9 +2,13 @@
   {{ with .Content }}
     <div class="index-content" data-pagefind-body>
       {{ with $.Title }}
-      <h1 class="post-title">
-        {{ . | markdownify }}
-      </h1>
+        <h1 class="post-title">
+          {{ . | markdownify }}
+
+          {{ if $.Draft }}
+            <span class="draft-label">Draft</span>
+          {{ end }}
+        </h1>
       {{ end }}
       {{ . }}
     </div>
@@ -16,7 +20,7 @@
     {{ end }}
 
     {{ $postContext := dict "Pages" $pages "Parent" . }}
-    {{ partial "post-list-item.html" $postContext }}
+    {{ partial "post-list.html" $postContext }}
 
     {{ partial "pagination.html" . }}
   </div>

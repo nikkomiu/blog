@@ -46,6 +46,7 @@ params:
   noindex: true
 
   readMore: Continue Reading
+  noPostsMessage: There are no %s 😭
 
   # automatically set the cover image from cover.(jpg|png|webp)
   autoCover: true

@@ -20,7 +20,7 @@
     {{ $paginator := .Paginate (where $PageContext.RegularPages "Type" $contentTypeName) }}
 
     {{ $postContext := dict "Pages" $paginator.Pages "Parent" . }}
-    {{ partial "post-list-item.html" $postContext }}
+    {{ partial "post-list.html" $postContext }}
 
     {{ partial "pagination.html" . }}
   </div>

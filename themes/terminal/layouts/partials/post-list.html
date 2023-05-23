@@ -1,3 +1,6 @@
+{{ if eq (len .Pages) 0 }}
+  <p class="no-posts">{{ printf $.Parent.Site.Params.NoPostsMessage .Parent.Type }}</p>
+{{ end }}
 {{ range .Pages }}
   <article class="post on-list">
     <h3 class="post-title {{ if (and $.Parent.Content $.Parent.Title) }}small{{ end }}">
