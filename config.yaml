@@ -8,6 +8,9 @@ copyright: Nikko Miu
 
 menu:
   main:
+    - name: Posts
+      weight: 1
+      url: /posts/
     - name: Notes
       weight: 2
       url: /notes/
@@ -18,20 +21,23 @@ menu:
     - name: Home
       weight: 1
       url: /
-    - name: Notes
+    - name: Posts
       weight: 2
+      url: /posts/
+    - name: Notes
+      weight: 3
       url: /notes/
     - name: Guides
-      weight: 3
+      weight: 4
       url: /guides/
     - name: Authors
-      weight: 6
+      weight: 5
       url: /authors/
     - name: Categories
-      weight: 7
+      weight: 6
       url: /categories/
     - name: Tags
-      weight: 8
+      weight: 7
       url: /tags/
 
 params:
