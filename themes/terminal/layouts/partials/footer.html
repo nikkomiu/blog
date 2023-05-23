@@ -11,15 +11,19 @@
     {{ if $.Site.Copyright }}
       <div class="copyright copyright--user">
         <span>@ {{ $.Site.Copyright | safeHTML }} :: {{ now.Year }}</span>
+      </div>
     {{ else }}
       <div class="copyright">
-        <span>© {{ now.Year }} Powered by <a href="http://gohugo.io">Hugo</a></span>
-    {{ end }}
+        <span
+          >© {{ now.Year }} Powered by <a href="http://gohugo.io">Hugo</a></span
+        >
       </div>
+    {{ end }}
   </div>
 </footer>
 
 {{ $base := resources.Get "js/base.js" | js.Build }}
 {{ $bundle := slice $base | resources.Concat "bundle.js" | resources.Minify }}
+
 
 <script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
