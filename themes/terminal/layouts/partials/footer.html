@@ -20,7 +20,6 @@
 </footer>
 
 {{ $base := resources.Get "js/base.js" | js.Build }}
-{{ $prism := resources.Get "js/prism.js" | js.Build }}
-{{ $bundle := slice $base $prism | resources.Concat "bundle.js" | resources.Minify }}
+{{ $bundle := slice $base | resources.Concat "bundle.js" | resources.Minify }}
 
 <script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>

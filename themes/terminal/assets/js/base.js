@@ -1,5 +1,5 @@
-import './prism'
-import './menu' // TODO: modularize this
+import 'prismjs'
+import './menu'
 
 import { loadSearch } from './search'
 
