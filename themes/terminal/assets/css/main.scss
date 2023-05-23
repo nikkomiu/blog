@@ -3,33 +3,45 @@ html {
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace;
+  font-family: "Fira Code", Monaco, "Ubuntu Mono", Consolas, monospace;
   font-size: 1rem;
   line-height: 1.54;
   letter-spacing: -0.02em;
   background-color: $background;
   color: $color;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga", "tnum", "zero", "ss01", "locl";
   font-variant-ligatures: contextual;
   -webkit-overflow-scrolling: touch;
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 
   @media ($phone) {
     font-size: 1rem;
   }
 }
 
-.headings--one-size {
+.headings-one-size {
+  h1,
+  h2,
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1.2rem;
+  }
+
   h1,
   h2,
   h3,
@@ -42,27 +54,10 @@ body {
       margin-top: 40px;
     }
   }
-
-  h1,
-  h2,
-  h3 {
-    font-size: 1.4rem;
-  }
-
-  h4,
-  h5,
-  h6 {
-    font-size: 1.2rem;
-  }
 }
 
 a {
   color: inherit;
-
-  /* Waiting for a better times... */
-  /* &:has(code) {
-    text-decoration-color: $accent;
-  } */
 }
 
 img {
@@ -111,6 +106,7 @@ figure {
     margin-top: 5px;
     background: $accent;
     color: $background;
+
     /* opacity: .8; */
 
     &.left {
@@ -127,16 +123,18 @@ figure {
   }
 }
 
-code, kbd {
-  font-family: 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace !important;
+code,
+kbd {
+  font-family: "Fira Code", Monaco, "Ubuntu Mono", Consolas, monospace !important;
   font-feature-settings: normal;
-  background: transparentize($accent, .8);
+  background: transparentize($accent, 0.8);
   color: $accent;
   padding: 1px 6px;
   margin: 0 2px;
-  font-size: .95rem;
+  font-size: 0.95rem;
 
-  code, kbd {
+  code,
+  kbd {
     background: transparent;
     padding: 0;
     margin: 0;
@@ -147,10 +145,10 @@ pre {
   background: transparent !important;
   padding: 20px 10px;
   margin: 40px 0;
-  font-size: .95rem !important;
+  font-size: 0.95rem !important;
   overflow: auto;
-  border-top: 1px solid rgba(255, 255, 255, .1);
-  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  border-top: 1px solid rgba(255, 255, 255, 10%);
+  border-bottom: 1px solid rgba(255, 255, 255, 10%);
 
   + pre {
     border-top: 0;
@@ -181,6 +179,10 @@ blockquote {
     padding-right: 0;
   }
 
+  p {
+    position: relative;
+  }
+
   p:first-of-type {
     margin-top: 0;
   }
@@ -189,12 +191,8 @@ blockquote {
     margin-bottom: 0;
   }
 
-  p {
-    position: relative;
-  }
-
-  p:first-of-type:before {
-    content: '>';
+  p:first-of-type::before {
+    content: ">";
     display: block;
     position: absolute;
     left: -25px;
@@ -203,18 +201,18 @@ blockquote {
 
   &.twitter-tweet {
     position: relative;
-    background: transparentize($accent, .9);
+    background: transparentize($accent, 0.9);
     font: inherit;
     color: inherit;
     border: 1px solid $accent;
     padding-top: 60px;
 
-    p:before {
-      content: '';
+    p::before {
+      content: "";
     }
 
-    &:before {
-      content: '> From Twitter:';
+    &::before {
+      content: "> From Twitter:";
       position: absolute;
       top: 20px;
       color: $accent;
@@ -267,7 +265,7 @@ ol {
     counter-increment: li;
   }
 
-  li:before {
+  li::before {
     content: counter(li);
     position: absolute;
     right: calc(100% + 10px);
@@ -283,7 +281,7 @@ ol {
       counter-increment: li;
     }
 
-    li:before {
+    li::before {
       content: counters(li, ".") " ";
     }
   }
@@ -300,7 +298,7 @@ mark {
   padding: 20px;
   max-width: 864px;
   min-height: 100vh;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 10%);
 
   &.full,
   &.center {
@@ -342,5 +340,5 @@ hr {
 }
 
 sup {
- line-height: 0;
+  line-height: 0;
 }

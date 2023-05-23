@@ -1,4 +1,14 @@
-input, textarea, select {
+select {
+  background: $background;
+
+  option {
+    background: $background;
+  }
+}
+
+input,
+textarea,
+select {
   background: transparent;
   color: $accent;
   border: 1px solid $accent;
@@ -7,7 +17,8 @@ input, textarea, select {
   font: inherit;
   appearance: none;
 
-  &:focus, :active {
+  &:focus,
+  :active {
     border-color: $color;
     outline: 1px solid $color;
   }
@@ -17,14 +28,6 @@ input, textarea, select {
   }
 }
 
-select {
-  background: $background;
-
-  option {
-    background: $background;
-  }
-}
-
 ::placeholder {
-  color: transparentize($accent, .5);
+  color: transparentize($accent, 0.5);
 }

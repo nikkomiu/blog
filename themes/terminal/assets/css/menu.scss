@@ -1,8 +1,11 @@
 @mixin menu {
   display: none;
   flex-direction: column;
-  $shadow-color: transparentize($background, .2);
-  $shadow: 0 10px $shadow-color, -10px 10px $shadow-color, 10px 10px $shadow-color;
+
+  $shadow-color: transparentize($background, 0.2);
+  $shadow: 0 10px $shadow-color, -10px 10px $shadow-color,
+    10px 10px $shadow-color;
+
   position: absolute;
   background: $background;
   box-shadow: $shadow;
@@ -110,7 +113,7 @@
 
   &--desktop {
     @media ($phone) {
-      display: none
+      display: none;
     }
   }
 

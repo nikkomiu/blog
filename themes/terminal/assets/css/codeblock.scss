@@ -9,7 +9,7 @@
     margin-top: 0.5rem;
     margin-right: 0.5rem;
     opacity: 0;
-    transition: opacity .4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
     transition: background-color 0.2s ease-in-out;
     padding: 0.25rem 0.5rem;
 
@@ -18,7 +18,8 @@
     }
   }
 
-  &:hover .copy-button, .copy-button.active {
+  &:hover .copy-button,
+  .copy-button.active {
     opacity: 0.8;
   }
 

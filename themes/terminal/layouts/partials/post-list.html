@@ -1,9 +1,15 @@
 {{ if eq (len .Pages) 0 }}
-  <p class="no-posts">{{ printf $.Parent.Site.Params.NoPostsMessage .Parent.Type }}</p>
+  <p class="no-posts">
+    {{ printf $.Parent.Site.Params.NoPostsMessage .Parent.Type }}
+  </p>
 {{ end }}
 {{ range .Pages }}
   <article class="post on-list">
-    <h3 class="post-title {{ if (and $.Parent.Content $.Parent.Title) }}small{{ end }}">
+    <h3
+      class="post-title {{ if (and $.Parent.Content $.Parent.Title) }}
+        small
+      {{ end }}"
+    >
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       {{ if .Draft }}
         <span class="draft-label">Draft</span>
@@ -18,9 +24,15 @@
       {{ with .Params.Author }}
         {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
         {{ with $.Parent.Site.GetPage $authorPagePath }}
-          :: <span class="post-author"><a href="{{ .RelPermalink }}" data-pagefind-filter="author">{{ .Title }}</a></span>
+          ::
+          <span class="post-author"
+            ><a href="{{ .RelPermalink }}" data-pagefind-filter="author"
+              >{{ .Title }}</a
+            ></span
+          >
         {{ else }}
-          :: <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
+          ::
+          <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
         {{ end }}
       {{ end }}
     </div>
@@ -28,14 +40,15 @@
     {{ if .Params.tags }}
       <span class="post-tags">
         {{ range .Params.tags }}
-        #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
-          {{- . -}}
-        </a>&nbsp;
+          #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
+            {{- . -}} </a
+          >&nbsp;
         {{ end }}
       </span>
     {{ end }}
 
     {{ partial "cover.html" . }}
+
 
     <div class="post-content">
       {{ if .Params.showFullContent }}
@@ -49,7 +62,9 @@
 
     {{ if not .Params.showFullContent }}
       <div>
-        <a class="read-more button" href="{{.RelPermalink}}">{{ $.Parent.Site.Params.ReadMore }} →</a>
+        <a class="read-more button" href="{{ .RelPermalink }}"
+          >{{ $.Parent.Site.Params.ReadMore }} →</a
+        >
       </div>
     {{ end }}
   </article>
