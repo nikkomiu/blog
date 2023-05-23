@@ -2,6 +2,9 @@
 <article class="post" data-pagefind-body>
   <h1 class="post-title">
     <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+    {{ if .Draft }}
+      <span class="draft-label">Draft</span>
+    {{ end }}
   </h1>
   <div class="post-meta">
     {{ if .Date }}

@@ -57,6 +57,20 @@
       border-bottom: $border;
     }
 
+    .draft-label {
+      color: #FFEFE6;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-left: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      background-color: #C65D21;
+      border-radius: 1rem;
+      user-select: none;
+      position: relative;
+      bottom: 3px;
+    }
+
     a {
       text-decoration: none;
     }
