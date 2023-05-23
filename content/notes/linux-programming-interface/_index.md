@@ -2,7 +2,6 @@
 title: The Linux Programming Interface
 author: Nikko Miu
 date: 2022-05-22T15:00:00Z
-draft: true
 categories:
 - linux programming interface
 ---
