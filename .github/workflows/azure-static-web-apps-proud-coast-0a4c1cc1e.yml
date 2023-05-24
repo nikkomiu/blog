@@ -10,9 +10,9 @@ on:
       - main
 
 jobs:
-  markdown_lint:
+  lint:
     runs-on: ubuntu-latest
-    name: Markdown Lint Job
+    name: Lint Job
     steps:
       - uses: actions/checkout@v3
         with:
@@ -32,8 +32,12 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install Dependencies
         run: npm install
+      - name: Prettier Check
+        run: npm run prettier:check
       - name: Markdown Lint
         run: npm run markdownlint
+      # - name: Stylelint
+      #   run: npm run stylelint
 
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
