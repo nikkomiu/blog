@@ -13,9 +13,9 @@
     "build:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css",
     "build:hugo": "hugo --enableGitInfo --minify --cleanDestinationDir",
     "build:search": "pagefind --source public",
-    "prettier": "prettier {themes,content}/**/*.{css,scss,html,js,json,md,yml,yaml}",
-    "prettier:check": "npm run prettier -- --check",
-    "prettier:fix": "npm run prettier -- --write",
+    "prettier:cmd": "prettier {.devcontainer,.github,.vscode,api,archetypes,static,themes,content}/**/*.{css,scss,html,js,json,md,yml,yaml}",
+    "prettier": "npm run prettier:cmd -- --write",
+    "prettier:check": "npm run prettier:cmd -- --check",
     "stylelint": "stylelint **/*.scss"
   },
   "keywords": [],

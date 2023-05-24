@@ -18,14 +18,14 @@
     "vscode": {
       "extensions": [
         "davidanson.vscode-markdownlint",
-        "EditorConfig.EditorConfig"
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "GitHub.copilot"
       ],
       "settings": {
         "html.format.templating": true
       }
     }
   },
-  "forwardPorts": [
-    4280
-  ]
+  "forwardPorts": [4280]
 }
