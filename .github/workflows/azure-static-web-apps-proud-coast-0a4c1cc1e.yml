@@ -18,14 +18,12 @@ jobs:
         with:
           submodules: true
       - name: Markdown Lint
-        id: markdownlint
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
           cache: npm
       # cache npm
       - name: Cache npm
-        id: cache-npm
         uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -33,10 +31,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install Dependencies
-        id: installdependencies
         run: npm install
       - name: Markdown Lint
-        id: markdownlint
         run: npm run markdownlint
 
   build_and_deploy_job:
