@@ -8,12 +8,3 @@ categories:
 ---
 
 This guide covers the basics of Phoenix LiveView.
-We will cover the following topics:
-
-- [Development Environment](#development-environment)
-- [Creating a New Project](#creating-a-new-project)
-- [Adding Authentication](#adding-authentication)
-- [Creating a Project Resource](#creating-a-project-resource)
-- [Database Migrations](#database-migrations)
-- [Adding Permissions](#adding-permissions)
-- [Adding a Child Resource](#adding-a-child-resource)

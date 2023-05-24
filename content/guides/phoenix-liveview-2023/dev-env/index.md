@@ -5,7 +5,9 @@ author: Nikko Miu
 draft: true
 ---
 
-Let's start by setting up our development environment. If you'd rather not install all of these tools on your local machine, you can follow my post on setting up a Dev Container in VS Code to do development in.
+Let's start by setting up our development environment.
+If you'd rather not install all of these tools on your local machine,
+you can follow my post on setting up a Dev Container in VS Code to do development in.
 
 <!--more-->
 

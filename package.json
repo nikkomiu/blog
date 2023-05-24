@@ -2,7 +2,6 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "node ./bin/start",
     "start:hugo": "hugo server --watch --buildDrafts --buildFuture --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public",
@@ -16,7 +15,8 @@
     "prettier:cmd": "prettier {.devcontainer,.github,.vscode,api,archetypes,static,themes,content}/**/*.{css,scss,html,js,json,md,yml,yaml}",
     "prettier": "npm run prettier:cmd -- --write",
     "prettier:check": "npm run prettier:cmd -- --check",
-    "stylelint": "stylelint **/*.scss"
+    "stylelint": "stylelint **/*.scss",
+    "markdownlint": "markdownlint content/**/*.md"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@azure/static-web-apps-cli": "^1.0.6",
     "autoprefixer": "^10.4.13",
+    "markdownlint-cli": "^0.34.0",
     "pagefind": "^0.12.0",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
