@@ -20,7 +20,7 @@ jobs:
       - name: Markdown Lint
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: "16.x"
           cache: npm
       # cache npm
       - name: Cache npm
