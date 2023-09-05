@@ -20,11 +20,11 @@ const common = require('./common');
 // }
 
 async function startHugo() {
-  const listenPort = 4280;
+  const listenPort = 4290;
 
   let hugoArgs = ['--appendPort=false'];
   if (process.env.CODESPACE_NAME) {
-    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-4280.githubpreview.dev/`)
+    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-4290.githubpreview.dev/`)
   } else {
     hugoArgs.push('--baseURL', `http://localhost:${listenPort}/`)
   }

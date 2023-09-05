@@ -16,7 +16,7 @@ RUN export HUGO_VERSION=$(curl -s https://api.github.com/repos/gohugoio/hugo/rel
     chmod +x /usr/bin/hugo
 
 # Install Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash && \
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash && \
     apt-get install -y nodejs && \
     npm install -g npm
 
@@ -35,4 +35,4 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
     sed -i 's/plugins=(git)/plugins=(git npm)/g' ~/.zshrc
 
 # Hugo dev server port
-EXPOSE 4280
+EXPOSE 4290

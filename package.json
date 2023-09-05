@@ -7,7 +7,7 @@
     "start:hugo": "hugo server --watch --buildDrafts --buildFuture --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public",
     "start:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css --watch",
     "start:search": "pagefind --source public --serve",
-    "start:api": "swa start public --api-location api -D http://localhost:1313",
+    "start:api": "swa start public --api-location api -D http://localhost:1313 -p 4290",
     "build": "node ./bin/build",
     "build:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css",
     "build:hugo": "hugo --enableGitInfo --minify --cleanDestinationDir",
