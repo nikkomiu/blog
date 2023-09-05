@@ -25,5 +25,4 @@
 {{ $base := resources.Get "js/base.js" | js.Build }}
 {{ $bundle := slice $base | resources.Concat "bundle.js" | resources.Minify }}
 
-
 <script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>

@@ -28,6 +28,7 @@ async function buildSearch() {
 
 async function main() {
   await buildHugo();
+  await common.loadManualCSS();
   await buildSearch();
 }
 

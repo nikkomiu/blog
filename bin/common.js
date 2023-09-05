@@ -1,5 +1,6 @@
 const { spawn } = require('child_process')
 const { promises: fs } = require('fs')
+const glob = require('fast-glob')
 
 const runningProcesses = {}
 
@@ -74,6 +75,16 @@ function killAllProcesses() {
   Object.values(runningProcesses).forEach(({ kill }) => kill('SIGINT'))
 }
 
+async function loadManualCSS() {
+  // copy katex css from node modules to public
+  await fs.copyFile('node_modules/katex/dist/katex.min.css', 'public/katex.min.css');
+
+  const fontFiles = await glob('node_modules/katex/dist/fonts/*');
+  await Promise.all(fontFiles.map(async (fontFile) => {
+    await fs.copyFile(fontFile, `public/fonts/${fontFile.split('/').pop()}`)
+  }));
+}
+
 module.exports = {
   // Utilities
   sleep,
@@ -86,4 +97,7 @@ module.exports = {
   waitForProcess,
   waitForAnyProcess,
   killAllProcesses,
+
+  // CSS
+  loadManualCSS,
 }
