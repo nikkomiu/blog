@@ -50,4 +50,8 @@ body {
   input::placeholder {
     color: $accent;
   }
+
+  .pagefind-ui__search-clear {
+    background-color: transparent;
+  }
 }
