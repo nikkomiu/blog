@@ -21,7 +21,12 @@
 @import "author";
 @import "pagefind";
 
-.katex-html {
-  font-size: 1.5rem;
+.katex-display {
+  font-size: 1.2rem;
   user-select: none;
+}
+
+::selection {
+  background: desaturate(darken($accent, 35), 55);
+  color: white;
 }

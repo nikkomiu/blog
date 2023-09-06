@@ -51,6 +51,7 @@ body {
     color: $accent;
   }
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .pagefind-ui__search-clear {
     background-color: transparent;
   }
