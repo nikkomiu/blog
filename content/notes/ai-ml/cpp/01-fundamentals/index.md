@@ -2,6 +2,7 @@
 title: Fundamentals of ML
 author: Nikko Miu
 date: 2023-09-05T15:00:00Z
+coverQuality: 30
 tags:
   - ai
   - machine-learning

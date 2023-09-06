@@ -2,6 +2,7 @@
 title: Linear Algebra for ML
 author: Nikko Miu
 date: 2023-09-05T15:00:00Z
+coverQuality: 40
 tags:
   - ai
   - machine-learning

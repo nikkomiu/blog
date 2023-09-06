@@ -16,7 +16,9 @@
 {{- end -}}
 
 {{ if $cover -}}
-  {{ $cover := $cover.Resize "744x webp q40" }}
+  {{ $coverQ := default 60 .Params.CoverQuality }}
+  {{ $coverResizeArg := printf "744x webp q%d" $coverQ }}
+  {{ $cover := $cover.Resize $coverResizeArg }}
   <img
     src="{{ $cover.RelPermalink }}"
     class="post-cover"
