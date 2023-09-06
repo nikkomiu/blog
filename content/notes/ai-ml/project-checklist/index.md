@@ -86,6 +86,8 @@ Explore the data to gain insights and to get a better understanding of the probl
 
 > Note: Work on copies of the data (keep the original dataset intact).
 
+&nbsp;
+
 > Note: Write functions for all data transformations you apply, for five reasons:
 >
 > 1. So you can easily prepare the data the next time you get a fresh dataset.
