@@ -3,24 +3,24 @@
 
 {{- if index .Params "cover" -}}
   {{- if .Resources.GetMatch .Params.Cover }}
-    {{- $cover = (.Resources.GetMatch .Params.Cover).RelPermalink -}}
+    {{- $cover = (.Resources.GetMatch .Params.Cover) -}}
   {{- else -}}
     {{- $cover = absURL .Params.Cover -}}
   {{- end -}}
 {{- else if $.Site.Params.AutoCover -}}
   {{- if (not .Params.Cover) -}}
     {{- if .Resources.GetMatch "cover.*" -}}
-      {{- $cover = (.Resources.GetMatch "cover.*").RelPermalink -}}
+      {{- $cover = (.Resources.GetMatch "cover.*") -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
 {{ if $cover -}}
-  <!-- Cover image found -->
+  {{ $cover := $cover.Resize "744x webp q40" }}
   <img
-    src="{{ $cover }}"
+    src="{{ $cover.RelPermalink }}"
     class="post-cover"
     alt="{{ .Title | plainify | default " " }}"
-    title="{{ .Params.CoverCredit |plainify|default "Cover Image" }}"
+    title="{{ .Params.CoverCredit | plainify | default "Cover Image" }}"
   />
 {{- end }}

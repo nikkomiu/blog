@@ -2,10 +2,12 @@
 title: Linear Algebra for ML
 author: Nikko Miu
 date: 2023-09-05T15:00:00Z
-categories:
+tags:
   - ai
   - machine-learning
   - c++
+  - math
+  - linear-algebra
 ---
 
 This will cover some basic linear algebra terms, concepts, and algorithms that are useful for ML.

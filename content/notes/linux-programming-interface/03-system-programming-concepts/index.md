@@ -3,8 +3,8 @@ title: System Programming Concepts
 author: Nikko Miu
 date: 2022-05-22T16:00:00Z
 toc: true
-categories:
-  - linux programming interface
+tags:
+  - linux-programming-interface
 ---
 
 Introduction to prerequisite concepts of Linux system programming.
