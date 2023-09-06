@@ -7,6 +7,10 @@ categories:
   - machine-learning
 ---
 
+This is a basic list of open data sets for machine learning as acquired from various sources.
+
+<!--more-->
+
 ## Open Data Repositories
 
 These are popular data repositories:

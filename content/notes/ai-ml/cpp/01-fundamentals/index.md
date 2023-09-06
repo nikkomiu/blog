@@ -8,6 +8,10 @@ categories:
   - c++
 ---
 
+This will cover some basic ML concepts around learning and learning algorithm parameters.
+
+<!--more-->
+
 ## Learning Techniques
 
 The two main learning techniques for ML models are **Supervised** and **Unsupervised** learning.

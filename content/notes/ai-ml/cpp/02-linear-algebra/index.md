@@ -8,6 +8,10 @@ categories:
   - c++
 ---
 
+This will cover some basic linear algebra terms, concepts, and algorithms that are useful for ML.
+
+<!--more-->
+
 ## General Terms
 
 - **Scalar:** This is a single number.
