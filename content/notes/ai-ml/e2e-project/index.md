@@ -155,3 +155,122 @@ Data columns (total 10 columns):
 dtypes: float64(9), object(1)
 memory usage: 1.6+ MB
 ```
+
+We can see that all of the attributes of the data are numerical, except for the `ocean_proximity` field.
+Its type is `object`, so it could hold any kind of Python object, but since we loaded this data from a CSV file,
+it must be a text attribute.
+When we looked at the top five rows, we probably noticed that the values in that column were repetitive,
+which means that it is probably a categorical attribute.
+We can find out what categories exist and how many districts belong to each category by using the `value_counts()` method.
+
+```python
+housing["ocean_proximity"].value_counts()
+```
+
+```text
+<1H OCEAN     9136
+INLAND        6551
+NEAR OCEAN    2658
+NEAR BAY      2290
+ISLAND           5
+Name: ocean_proximity, dtype: int64
+```
+
+We can get a summary of the numerical attributes by using the `describe()` method.
+
+```python
+housing.describe()
+```
+
+|       | longitude | latitude | housing_median_age | total_rooms | total_bedrooms | population | households | median_income | median_house_value |
+| ----- | --------- | -------- | ------------------ | ----------- | -------------- | ---------- | ---------- | ------------- | ------------------ |
+| count | 20640.0   | 20640.0  | 20640.0            | 20640.0     | 20433.0        | 20640.0    | 20640.0    | 20640.0       | 20640.0            |
+| mean  | -119.6    | 35.6     | 28.6               | 2635.8      | 537.9          | 1425.5     | 499.5      | 3.9           | 206855.8           |
+| std   | 2.0       | 2.1      | 12.6               | 2181.6      | 421.4          | 1132.5     | 382.3      | 1.9           | 115395.6           |
+| min   | -124.3    | 32.5     | 1.0                | 2.0         | 1.0            | 3.0        | 1.0        | 0.5           | 14999.0            |
+| 25%   | -121.8    | 33.9     | 18.0               | 1447.8      | 296.0          | 787.0      | 280.0      | 2.6           | 119600.0           |
+| 50%   | -118.5    | 34.3     | 29.0               | 2127.0      | 435.0          | 1166.0     | 409.0      | 3.5           | 179700.0           |
+| 75%   | -118.0    | 37.7     | 37.0               | 3148.0      | 647.0          | 1725.0     | 605.0      | 4.7           | 264725.0           |
+| max   | -114.3    | 42.0     | 52.0               | 39320.0     | 6445.0         | 35682.0    | 6082.0     | 15.0          | 500001.0           |
+
+> **Note:** Null values are ignored (so, for example, count of total_bedrooms is 20433, not 20640).
+
+The `count`, `mean`, `min`, and `max` rows are self-explanatory.
+The `std` row shows the standard deviation (which measures how dispersed the values are).
+The 25%, 50%, and 75% rows show the corresponding percentiles:
+a percentile indicates the value below which a given percentage of observations in a group of observations falls.
+
+Another quick way to get a feel of the type of data we are dealing with is to plot a histogram for each numerical attribute.
+
+```python
+import matplotlib.pyplot as plt
+
+housing.hist(bins=50, figsize=(20, 15))
+plt.show()
+```
+
+{{< figure src="histograms.png" title="Histograms of numerical attributes" accentBackdrop=true >}}
+
+After looking at the histograms, we can see a few things:
+
+- The median income attribute does not look like it is expressed in US dollars.
+  The data has been scaled and capped at 15 (actually 15.0001) for higher median incomes,
+  and at 0.5 (actually 0.4999) for lower median incomes.
+  The numbers represent roughly tens of thousands of dollars (e.g., 3 actually means about $30,000).
+  It is common to work with preprocessed data in Machine Learning, and it is not necessarily a problem,
+  we just need to understand what the data represents.
+- The housing median age and the median house value were also capped.
+  The latter may be an issue since it is our target attribute (our labels).
+  This is bad because our ML system may learn that prices never go beyond that limit.
+  If we need precise predictions even beyond $500,000, then we have two options:
+    1. Collect proper labels for the districts whose labels were capped.
+    2. Remove those districts from the training set (and also from the test set,
+       since our system should not be evaluated poorly if it predicts values beyond $500,000).
+- The attributes have very different scales. We will need to scale the data later on.
+- Many histograms are _tail-heavy_: they extend much farther to the right of the median than to the left.
+  This may make it a bit harder for some Machine Learning algorithms to detect patterns.
+  We will try transforming these attributes later on to have more bell-shaped distributions.
+
+## Create a Test Set
+
+It's good practice to create a test set and set it aside before inspecting the data closely.
+We should do this now because our brains are amazing pattern detection systems, which means that we are prone to overfitting.
+This is because we may stumble upon some seemingly interesting pattern in the test set if we look at it.
+If we estimate the generalization error using the test set,
+our estimate will be too optimistic and we will launch a system that will not perform as well as expected.
+This is called _data snooping bias_.
+
+Creating a test set is theoretically quite simple: just pick some instances randomly, typically 20% of the dataset,
+and set them aside.
+
+```python
+import numpy as np
+
+def split_train_test(data, test_ratio):
+    shuffled_indices = np.random.permutation(len(data))
+    test_set_size = int(len(data) * test_ratio)
+    test_indices = shuffled_indices[:test_set_size]
+    train_indices = shuffled_indices[test_set_size:]
+    return data.iloc[train_indices], data.iloc[test_indices]
+```
+
+This function can be used like so:
+
+```python
+>>> train_set, test_set = split_train_test(housing, 0.2)
+>>> len(train_set)
+16512
+>>> len(test_set)
+4128
+```
+
+This works, but it is not perfect: if we run the program again, it will generate a different test set!
+
+One solution is to save the test set on the first run and then load it in subsequent runs.
+Another option is to set the random number generator's seed (e.g., `np.random.seed(42)`)
+But both of these solutions will break next time we fetch an updated dataset.
+A common solution is to use each instance's identifier to decide whether or not it should go in the test set.
+For example, we could compute a hash of each instance's identifier, keep only the last byte of the hash,
+and put the instance in the test set if this value is lower or equal to 51 (~20% of 256).
+This ensures that the test set will remain consistent across multiple runs,
+even if we refresh the dataset.

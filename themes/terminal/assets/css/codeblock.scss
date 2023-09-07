@@ -23,11 +23,11 @@
     top: -1.7rem;
     right: 0;
     color: $accent;
-    border: 0.1rem solid transparentize($color: $accent, $amount: 0.7);
+    border: 0.1rem solid transparentize($color: $accent, $amount: 0.8);
     background-color: transparentize($color: $accent, $amount: 0.9);
-    border-bottom-color: transparent;
     padding: 0 0.5rem;
     user-select: none;
+    font-size: 0.85rem;
   }
 
   &:hover .copy-button,

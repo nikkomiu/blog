@@ -100,6 +100,10 @@ figure {
     margin-left: auto;
   }
 
+  &.fig-accent-bg {
+    background-color: transparentize($color: desaturate($color: $accent, $amount: 20), $amount: 0.4);
+  }
+
   figcaption {
     font-size: 14px;
     padding: 5px 10px;
