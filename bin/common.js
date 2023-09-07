@@ -62,7 +62,13 @@ function logTask(task, content, from) {
   }
 
   for (let line of content.split('\n')) {
-    if (!line) {
+    // if the line is blank or is just swa prefix, skip it
+    if (!line || line.trim() === '[swa]') {
+      continue
+    }
+
+    // If it is a successful GET request from SWA, skip it
+    if (line.includes('GET') && line.includes('- 200')) {
       continue
     }
 
