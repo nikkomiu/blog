@@ -2,6 +2,7 @@ const { spawn } = require('child_process')
 const { promises: fs } = require('fs')
 const glob = require('fast-glob')
 const colors = require('colors')
+const package = require('../package.json')
 
 const runningProcesses = {}
 
@@ -122,6 +123,35 @@ function killAllProcesses() {
   Object.values(runningProcesses).forEach(({ kill }) => kill('SIGINT'))
 }
 
+async function runTailwind(opts = {}) {
+  const { input, output } = package?.config?.tailwind || {};
+
+  if (!input || !output) {
+    return;
+  }
+
+  let cmdArgs = ['run', 'tailwind', '--', '-i', input, '-o', output]
+  if (opts.watch) {
+    cmdArgs.push('--watch')
+  }
+
+  // Delete tailwind css generated file (ignore not found errors)
+  await fs.rm(output).catch(err => {
+    if (err !== 'ENOENT') {
+      throw err;
+    }
+  })
+
+  const [procName] = runProcess('npm', cmdArgs)
+
+  const procArgs = opts.watch ? { throw: true } : null;
+
+  await Promise.race([
+    waitForProcess(procName, procArgs),
+    waitForFile(output)
+  ])
+}
+
 async function loadManualCSS() {
   // copy katex css from node modules to public
   await fs.copyFile('node_modules/katex/dist/katex.min.css', 'public/katex.min.css');
@@ -147,4 +177,5 @@ module.exports = {
 
   // CSS
   loadManualCSS,
+  runTailwind,
 }

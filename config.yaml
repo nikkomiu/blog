@@ -4,7 +4,6 @@ title: RRR
 subtitle: Reduce, Recycle, Recode
 theme: terminal
 
-enableGitInfo: true
 disableHugoGeneratorInject: true
 copyright: Nikko Miu
 

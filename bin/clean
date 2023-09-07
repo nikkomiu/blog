@@ -2,7 +2,7 @@
 
 const { promises: fs } = require('fs');
 const colors = require('colors');
-const { generatedContent } = require('../package.json');
+const package = require('../package.json');
 
 async function deleteProjectFileExists(dirPath) {
   try {
@@ -15,7 +15,7 @@ async function deleteProjectFileExists(dirPath) {
 }
 
 async function main() {
-  const deletePromises = generatedContent.map(deleteProjectFileExists);
+  const deletePromises = package?.config?.generatedContent?.map(deleteProjectFileExists);
 
   await Promise.all(deletePromises);
 }

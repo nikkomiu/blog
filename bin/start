@@ -2,29 +2,15 @@
 
 const { promises: fs } = require('fs')
 const common = require('./common');
+const package = require('../package.json')
 
-// async function startTailwinds() {
-//   const tailCSSFile = 'assets/css/base.gen.css'
-
-//   // Delete tailwind css generated file (ignore errors)
-//   await fs.rm(tailCSSFile).catch(() => { });
-
-//   // Start Tailwindcss dev server
-//   const [procName] = common.runProcess('npm', ['run', 'start:tailwinds'])
-
-//   // Wait for css file to be generated or Tailwind to exit
-//   await Promise.race([
-//     common.waitForProcess(procName, { throw: true }),
-//     common.waitForFile(tailCSSFile),
-//   ]);
-// }
+const listenPort = package?.config?.port || 4280;
 
 async function startHugo() {
-  const listenPort = 4290;
 
   let hugoArgs = ['--appendPort=false'];
   if (process.env.CODESPACE_NAME) {
-    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-4290.githubpreview.dev/`)
+    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-${listenPort}.githubpreview.dev/`)
   } else {
     hugoArgs.push('--baseURL', `http://localhost:${listenPort}/`)
   }
@@ -56,11 +42,11 @@ async function startSearch() {
 }
 
 async function startAPI() {
-  common.runProcess('npm', ['run', 'start:api'])
+  common.runProcess('npm', ['run', 'start:api', '--', '-p', `${listenPort}`])
 }
 
 async function main() {
-  // await startTailwinds();
+  await common.runTailwind({ watch: true });
   await startHugo();
   await common.loadManualCSS();
   await startSearch();
