@@ -4,6 +4,7 @@ title: RRR
 subtitle: Reduce, Recycle, Recode
 theme: terminal
 
+enableGitInfo: true
 disableHugoGeneratorInject: true
 copyright: Nikko Miu
 
@@ -42,6 +43,9 @@ menu:
       url: /tags/
 
 params:
+  gitRepoURL: https://github.com/nikkomiu/blog
+  gitDefaultBranch: main
+
   themeColor: pink
   centerTheme: true
   noindex: true

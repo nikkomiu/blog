@@ -1,7 +1,7 @@
 .footer {
   padding: 20px 0;
   flex-grow: 0;
-  opacity: 0.5;
+  color: rgb(160, 160, 160);
 
   &__inner {
     display: flex;
@@ -74,6 +74,39 @@
 
   .user-info {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .git-info {
+    display: flex;
+    margin-top: 0.75rem;
+
+    & > * {
+      display: flex;
+      margin: 0 0.5rem;
+    }
+
+    .hash {
+      align-items: center;
+
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+
+    a.edit-page {
+      align-items: center;
+
+      svg {
+        height: 1.5rem;
+        width: 1.5rem;
+        margin-right: 0.5rem;
+      }
+    }
   }
 }

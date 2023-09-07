@@ -18,10 +18,10 @@ export async function displayUserInfo() {
 
   document.querySelector('.footer .user-info').innerHTML = `
     <div class="user-name">
-      Currently signed in as ${clientPrincipal.userDetails}
+      Currently signed in as ${clientPrincipal.userDetails} ::
+      <a href="/.auth/logout" class="logout">
+        Sign Out
+      </a>
     </div>
-    <a href="/.auth/logout" class="logout">
-      Sign Out
-    </a>
   `;
 }

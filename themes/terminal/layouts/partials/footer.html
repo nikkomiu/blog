@@ -14,13 +14,52 @@
       </div>
     {{ else }}
       <div class="copyright">
-        <span
-          >© {{ now.Year }} Powered by <a href="http://gohugo.io">Hugo</a></span
-        >
+        <span>
+          © {{ now.Year }} Powered by <a href="http://gohugo.io">Hugo</a>
+        </span>
       </div>
     {{ end }}
 
     <div class="user-info"></div>
+
+    {{ if .GitInfo }}
+      <div class="git-info">
+        {{ if .Site.Params.GitRepoURL }}
+          <a href="https://github.com/nikkomiu/blog/tree/{{ .GitInfo.Hash }}" class="hash">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0 0-1.457"/>
+            </svg>
+            {{ .GitInfo.AbbreviatedHash }}
+          </a>
+        {{ else }}
+          <span class="hash">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0 0-1.457"/>
+            </svg>
+            {{ .GitInfo.AbbreviatedHash }}
+          </span>
+        {{ end }}
+
+        ::
+
+        {{ if and .Site.Params.GitRepoURL .Site.Params.GitDefaultBranch }}
+          <a href="{{ .Site.Params.GitRepoURL }}/blob/{{ .Site.Params.GitDefaultBranch }}/content/{{ .Page.File.Path }}" class="edit-page">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+            {{ if strings.HasSuffix .Page.File.LogicalName "index.md" }}
+              {{ $dirs := split .Page.File.Dir "/" }}
+              {{ index (last 2 $dirs) 0 }}
+            {{ else }}
+              {{ .Page.File.LogicalName }}
+            {{ end }}
+          </a>
+          ::
+        {{ end }}
+
+        <span>Last Updated on {{ .GitInfo.AuthorDate | time.Format ":date_short" }}</span>
+      </div>
+    {{ end }}
   </div>
 </footer>
 
