@@ -3,6 +3,7 @@
     "editorconfig.editorconfig",
     "davidanson.vscode-markdownlint",
     "esbenp.prettier-vscode",
-    "github.copilot"
+    "github.copilot",
+    "valentjn.vscode-ltex"
   ]
 }

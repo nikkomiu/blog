@@ -17,11 +17,12 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "davidanson.vscode-markdownlint",
-        "EditorConfig.EditorConfig",
-        "esbenp.prettier-vscode",
-        "GitHub.copilot"
-      ],
+		"davidanson.vscode-markdownlint",
+		"EditorConfig.EditorConfig",
+		"esbenp.prettier-vscode",
+		"GitHub.copilot",
+		"valentjn.vscode-ltex"
+	],
       "settings": {
         "html.format.templating": true
       }

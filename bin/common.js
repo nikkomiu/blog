@@ -137,7 +137,7 @@ async function runTailwind(opts = {}) {
 
   // Delete tailwind css generated file (ignore not found errors)
   await fs.rm(output).catch(err => {
-    if (err !== 'ENOENT') {
+    if (err.code !== 'ENOENT') {
       throw err;
     }
   })
