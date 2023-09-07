@@ -22,13 +22,3 @@
 @import "pagefind";
 
 @import "collapse";
-
-.katex-display {
-  font-size: 1.2rem;
-  user-select: none;
-}
-
-::selection {
-  background: desaturate(darken($accent, 35), 55);
-  color: white;
-}

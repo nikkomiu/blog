@@ -230,13 +230,35 @@ table {
   border-collapse: collapse;
   width: 100%;
   margin: 40px 0;
+
+  padding: 0;
+  display: block;
+  overflow-x: auto;
+  border: 1px solid transparentize($color: $accent, $amount: 0.5);
 }
 
-table,
 th,
 td {
   border: 1px dashed $accent;
   padding: 10px;
+}
+
+table > *:first-child > tr:first-child > th {
+  border-top: none;
+}
+
+th:first-child,
+td:first-child {
+  border-left: none;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+
+table > *:last-child > tr:last-child > td {
+  border-bottom: none;
 }
 
 th {
@@ -341,4 +363,27 @@ hr {
 
 sup {
   line-height: 0;
+}
+
+.katex-display {
+  font-size: 1.2rem;
+  user-select: none;
+  overflow: auto hidden;
+}
+
+@media ($phone) {
+  .katex-display {
+    font-size: 0.9rem;
+  }
+}
+
+@media ($tablet) {
+  .katex-display {
+    font-size: 1rem;
+  }
+}
+
+::selection {
+  background: desaturate(darken($accent, 35), 55);
+  color: white;
 }
