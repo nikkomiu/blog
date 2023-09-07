@@ -53,6 +53,8 @@ function logTask(task, content, from) {
   let contentColor = colors.gray
   if (from === 'stderr' || lowerContent.includes('error')) {
     contentColor = colors.red
+  } else if (lowerContent.includes('warning')) {
+    contentColor = colors.yellow
   } else if (lowerContent.includes('finished in')) {
     contentColor = colors.green
   } else if (lowerContent.includes('total')) {
@@ -66,7 +68,7 @@ function logTask(task, content, from) {
 
     // Color SWA prefixes
     if (line.startsWith('[')) {
-      line = line.replace(/\[(.*?)\]/, "[$1]".cyan)
+      line = line.replace(/\[([a-z]{1,4})\]/, "[$1]".cyan)
     }
 
     console.log(`${taskFrontmatter} ${contentColor(line)}`)
