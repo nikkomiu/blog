@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
 const common = require('./common');
+const colors = require('colors');
 
 async function buildHugo() {
   const extraArgs = ['--'];
   if (process.env.WITH_DRAFTS === 'true') {
-    console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`)
+    console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
     extraArgs.push('--buildDrafts');
   }
 
@@ -33,6 +34,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(err);
+  console.error(colors.red(err));
   process.exit(1);
 });

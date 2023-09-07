@@ -38,7 +38,7 @@ async function startHugo() {
   // Wait for Hugo initial output to complete or Hugo to exit
   await Promise.race([
     common.waitForProcess(procName, { throw: true }),
-    common.waitForFile('public/index.html'),
+    common.waitForFile('public/index.html', { postTimeout: 500 }),
   ]);
 }
 

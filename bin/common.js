@@ -1,6 +1,7 @@
 const { spawn } = require('child_process')
 const { promises: fs } = require('fs')
 const glob = require('fast-glob')
+const colors = require('colors')
 
 const runningProcesses = {}
 
@@ -10,13 +11,20 @@ async function sleep(ms) {
   });
 }
 
-async function waitForFile(file) {
+async function waitForFile(file, options = {}) {
   while (true) {
     try {
       await fs.access(file);
+      if (options.postTimeout) {
+        await sleep(options.postTimeout);
+      }
+
       return;
     } catch (err) {
-      // console.log(err)
+      if (err.code !== 'ENOENT') {
+        throw err;
+      }
+
       await sleep(50);
     }
   }
@@ -34,13 +42,44 @@ function getTaskName(command, args) {
   return command;
 }
 
+function logTask(task, content, from) {
+  if (Buffer.isBuffer(content)) {
+    content = content.toString()
+  }
+
+  const taskFrontmatter = `[${task}]`.blue
+  const lowerContent = content.toLowerCase()
+
+  let contentColor = colors.gray
+  if (from === 'stderr' || lowerContent.includes('error')) {
+    contentColor = colors.red
+  } else if (lowerContent.includes('finished in')) {
+    contentColor = colors.green
+  } else if (lowerContent.includes('total')) {
+    contentColor = colors.cyan
+  }
+
+  for (let line of content.split('\n')) {
+    if (!line) {
+      continue
+    }
+
+    // Color SWA prefixes
+    if (line.startsWith('[')) {
+      line = line.replace(/\[(.*?)\]/, "[$1]".cyan)
+    }
+
+    console.log(`${taskFrontmatter} ${contentColor(line)}`)
+  }
+}
+
 function runProcess(command, args, options) {
   const name = getTaskName(command, args)
-  console.log(`[${name}] Starting task...`)
+  logTask(name, `Starting task...`, 'stdout')
 
   const proc = spawn(command, args, options)
-  proc.stdout.on('data', data => data.toString().split('\n').forEach(line => line && console.log(`[${name}] ${line}`)))
-  proc.stderr.on('data', data => data.toString().split('\n').forEach(line => line && console.log(`[${name}] ${line}`)))
+  proc.stdout.on('data', data => logTask(name, data, 'stdout'))
+  proc.stderr.on('data', data => logTask(name, data, 'stderr'))
 
   const procData = {
     exitPromise: new Promise(resolve => proc.on('exit', (code) => resolve(code))),

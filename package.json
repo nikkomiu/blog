@@ -12,6 +12,7 @@
     "build:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css",
     "build:hugo": "hugo --enableGitInfo --minify --cleanDestinationDir",
     "build:search": "pagefind --source public",
+    "clean": "node ./bin/clean",
     "prettier:cmd": "prettier {.devcontainer,.github,.vscode,api,archetypes,static,themes,content}/**/*.{css,scss,html,js,json,md,yml,yaml}",
     "prettier": "npm run prettier:cmd -- --write",
     "prettier:check": "npm run prettier:cmd -- --check",
@@ -21,9 +22,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "generatedContent": [
+    "public",
+    "resources/_gen",
+    ".hugo_build.lock"
+  ],
   "devDependencies": {
     "@azure/static-web-apps-cli": "^1.0.6",
     "autoprefixer": "^10.4.13",
+    "colors": "^1.4.0",
     "fast-glob": "^3.3.1",
     "markdownlint-cli": "^0.34.0",
     "pagefind": "^0.12.0",

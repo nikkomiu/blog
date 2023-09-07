@@ -4,5 +4,3 @@ resources/_gen/
 .hugo_build.lock
 
 node_modules/
-
-assets/css/base.gen.css
