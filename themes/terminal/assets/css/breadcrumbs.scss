@@ -1,0 +1,44 @@
+.breadcrumbs {
+  display: flex;
+  list-style: none;
+  overflow-x: auto;
+  align-items: center;
+  margin: 0.25rem 0;
+  padding: 0.5rem 0;
+  flex: 1 1 auto;
+  align-items: stretch;
+
+  li {
+    display: flex;
+    margin-right: 0.5rem;
+    color: #ccc;
+    user-select: none;
+    white-space: nowrap;
+
+    &::after {
+      content: '>';
+      margin-left: 0.5rem;
+    }
+
+    &:last-child {
+      margin-right: 0;
+      color: #999;
+    }
+
+    &:last-child::after {
+      content: '';
+      margin-left: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      transition: color 0.15s ease-in-out;
+
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+}

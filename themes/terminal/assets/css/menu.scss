@@ -35,9 +35,10 @@
 
 .navigation-menu {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
-  margin: 20px 1px;
+  margin-top: 0.75rem;
+  flex-direction: column;
 
   @media ($phone) {
     margin: 0;

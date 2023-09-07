@@ -13,6 +13,13 @@
   {{ if len $.Site.Menus }}
     {{ partial "menu.html" . }}
   {{ end }}
+
+  <ul class="breadcrumbs">
+    {{- range .Ancestors.Reverse }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{- end }}
+    <li>{{ .Title }}</li>
+  </ul>
 </header>
 
 <div id="site-search">
