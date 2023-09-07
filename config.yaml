@@ -41,6 +41,10 @@ menu:
       weight: 7
       url: /tags/
 
+markup:
+  highlight:
+    style: github-dark
+
 params:
   gitRepoURL: https://github.com/nikkomiu/blog
   gitDefaultBranch: main
