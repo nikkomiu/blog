@@ -391,3 +391,28 @@ sup {
   background: desaturate(darken($accent, 35), 55);
   color: white;
 }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes fade-in-perception {
+  0% { opacity: 0; }
+  90% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in-perception {
+  animation-name: fade-in-perception;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}

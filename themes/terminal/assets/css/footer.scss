@@ -73,8 +73,22 @@
   }
 
   .user-info {
+    display: flex;
+    align-items: center;
     text-align: center;
     margin-top: 0.75rem;
+
+    .fade-in-perception {
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-right: 0.5rem;
+    }
   }
 
   .git-info {
