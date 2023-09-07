@@ -19,6 +19,16 @@ async function getUserInfo() {
   `;
 }
 
+function sectionExpandToggle() {
+  document.querySelectorAll('button.section-title').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      console.log('yay')
+      const section = event.target.closest('section');
+      section.classList.toggle('open');
+    });
+  });
+}
+
 function onDocumentLoad() {
   loadSearch();
   loadCodeActions();
@@ -30,6 +40,7 @@ function onDocumentLoad() {
     ],
   });
 
+  sectionExpandToggle();
   getUserInfo();
 }
 

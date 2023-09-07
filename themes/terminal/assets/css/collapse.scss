@@ -1,0 +1,64 @@
+.collapse-section {
+  display: flex;
+  flex-direction: column;
+
+  .section-title {
+    display: flex;
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    color: white;
+    border: 0;
+    justify-content: start;
+    border: 0.125rem solid transparent;
+  }
+
+  .section-title:hover {
+    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+  }
+
+  .section-content {
+    display: none;
+
+    transition: all 0.3s ease-in-out;
+  }
+
+  .title-indicator {
+    height: 1.2rem;
+    width: 1.2rem;
+    margin-right: 0.5rem;
+
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &.open {
+    .title-indicator {
+      transform: rotate(90deg);
+    }
+
+    .section-title {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 0.25rem;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .section-content {
+      display: block;
+      border-top: 0.125rem solid $accent;
+      border-bottom: 0.125rem solid $accent;
+      background:rgba(255, 255, 255, 0.05);
+
+      margin-top: 0.25rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
