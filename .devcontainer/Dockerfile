@@ -1,5 +1,6 @@
 FROM ubuntu
 
+ARG TARGETARCH
 ARG HUGO_VARIANT="hugo"
 
 # Install Core Deps
@@ -10,7 +11,7 @@ RUN apt-get update && \
 # Install Hugo
 RUN export HUGO_VERSION=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4)}') && \
     echo "Hugo variant: $HUGO_VARIANT version: $HUGO_VERSION" && \
-    wget -O ${HUGO_VERSION}.tar.gz https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_VARIANT}_${HUGO_VERSION}_linux-amd64.tar.gz && \
+    wget -O ${HUGO_VERSION}.tar.gz https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_VARIANT}_${HUGO_VERSION}_linux-${TARGETARCH}.tar.gz && \
     tar xf ${HUGO_VERSION}.tar.gz && \
     mv hugo /usr/bin/hugo && \
     chmod +x /usr/bin/hugo
