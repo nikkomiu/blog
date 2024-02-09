@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 
 const common = require('./common');
-const colors = require('colors');
 
 async function buildHugo() {
-  const extraArgs = ['--'];
+  const extraArgs = '--enableGitInfo --minify --cleanDestinationDir'.split(' ');
   if (process.env.WITH_DRAFTS === 'true') {
     console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
     extraArgs.push('--buildDrafts');
   }
 
-  const [procName] = common.runProcess('npm', ['run', 'build:hugo', ...extraArgs]);
+  const [procName] = common.runProcess('hugo', extraArgs);
 
   await Promise.all([
     common.waitForProcess(procName),
@@ -19,16 +18,17 @@ async function buildHugo() {
 }
 
 async function buildSearch() {
-  const [procName] = common.runProcess('npm', ['run', 'build:search']);
+  const [procName] = common.runProcess('pagefind', ['--site', 'public']);
 
   await Promise.all([
     common.waitForProcess(procName),
-    common.waitForFile('public/_pagefind/pagefind.js'),
+    common.waitForFile('public/pagefind/pagefind.js'),
   ]);
 }
 
 async function main() {
   await buildHugo();
+  await common.runTailwind();
   await common.loadManualCSS();
   await buildSearch();
 }

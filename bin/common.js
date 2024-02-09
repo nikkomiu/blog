@@ -1,5 +1,5 @@
 const { spawn } = require('child_process')
-const { promises: fs } = require('fs')
+const { promises: fs, mkdir } = require('fs')
 const glob = require('fast-glob')
 const colors = require('colors')
 const package = require('../package.json')
@@ -109,6 +109,10 @@ async function waitForProcess(name, options) {
   }
 }
 
+function removeProcess(name) {
+  delete runningProcesses[name]
+}
+
 async function waitForAnyProcess() {
   // Get the exit promises from the running processes
   const promises = Object.values(runningProcesses).reduce((prev, { exitPromise }) => {
@@ -124,13 +128,9 @@ function killAllProcesses() {
 }
 
 async function runTailwind(opts = {}) {
-  const { input, output } = package?.config?.tailwind || {};
+  const output = './public/css/base.css'
 
-  if (!input || !output) {
-    return;
-  }
-
-  let cmdArgs = ['run', 'tailwind', '--', '-i', input, '-o', output]
+  let cmdArgs = ['node_modules/.bin/tailwindcss', '--', '-i', './assets/css/base.css', '-o', output]
   if (opts.watch) {
     cmdArgs.push('--watch')
   }
@@ -142,7 +142,7 @@ async function runTailwind(opts = {}) {
     }
   })
 
-  const [procName] = runProcess('npm', cmdArgs)
+  const [procName] = runProcess('node', cmdArgs)
 
   const procArgs = opts.watch ? { throw: true } : null;
 
@@ -153,12 +153,11 @@ async function runTailwind(opts = {}) {
 }
 
 async function loadManualCSS() {
-  // copy katex css from node modules to public
-  await fs.copyFile('node_modules/katex/dist/katex.min.css', 'public/katex.min.css');
+  fs.mkdir('public/css/fonts', { recursive: true });
 
   const fontFiles = await glob('node_modules/katex/dist/fonts/*');
   await Promise.all(fontFiles.map(async (fontFile) => {
-    await fs.copyFile(fontFile, `public/fonts/${fontFile.split('/').pop()}`)
+    await fs.copyFile(fontFile, `public/css/fonts/${fontFile.split('/').pop()}`)
   }));
 }
 
@@ -169,6 +168,7 @@ module.exports = {
 
   // Generic process runner
   runProcess,
+  removeProcess,
 
   // Process synchronization
   waitForProcess,

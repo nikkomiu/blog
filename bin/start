@@ -2,13 +2,13 @@
 
 const { promises: fs } = require('fs')
 const common = require('./common');
-const package = require('../package.json')
 
-const listenPort = package?.config?.port || 4280;
+const listenPort = 1313;
+
+const defaultHugoArgs = 'server --watch --buildDrafts --buildFuture --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public --appendPort=false';
 
 async function startHugo() {
-
-  let hugoArgs = ['--appendPort=false'];
+  let hugoArgs = defaultHugoArgs.split(' ');
   if (process.env.CODESPACE_NAME) {
     hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-${listenPort}.githubpreview.dev/`)
   } else {
@@ -19,7 +19,7 @@ async function startHugo() {
   await fs.rm('public', { recursive: true }).catch(() => { });
 
   // Start Hugo dev server
-  const [procName] = common.runProcess('npm', ['run', 'start:hugo', '--', ...hugoArgs])
+  const [procName] = common.runProcess('hugo', hugoArgs);
 
   // Wait for Hugo initial output to complete or Hugo to exit
   await Promise.race([
@@ -30,27 +30,21 @@ async function startHugo() {
 
 async function startSearch() {
   // Start Pagefind dev server
-  const [procName] = common.runProcess('npm', ['run', 'start:search'])
+  const [procName] = common.runProcess('pagefind', ['--site', 'public'], { ignoreProcess: true });
 
   // TODO: listen for rebuild on Hugo instead to manually trigger a rebuild of pagefind
 
   // Wait for the Pagefine initial output to complete
-  await Promise.race([
-    common.waitForProcess(procName, { throw: true }),
-    common.waitForFile('public/_pagefind/pagefind.js'),
-  ]);
-}
+  await common.waitForFile('public/pagefind/pagefind.js');
 
-async function startAPI() {
-  common.runProcess('npm', ['run', 'start:api', '--', '-p', `${listenPort}`])
+  common.removeProcess(procName);
 }
 
 async function main() {
-  await common.runTailwind({ watch: true });
   await startHugo();
+  await common.runTailwind({ watch: true });
   await common.loadManualCSS();
   await startSearch();
-  await startAPI();
 
   await common.waitForAnyProcess();
   common.killAllProcesses();

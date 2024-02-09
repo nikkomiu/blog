@@ -1,48 +1,31 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "RRR Blog",
+  "author": "Nikko Miu <nikkoamiu@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-    "start": "node ./bin/start",
-    "start:hugo": "hugo server --watch --buildDrafts --buildFuture --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public",
-    "start:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css --watch",
-    "start:search": "pagefind --source public --serve",
-    "start:api": "swa start public --api-location api -D http://localhost:1313",
-    "build": "node ./bin/build",
-    "build:tailwinds": "tailwindcss -i ./assets/css/base.css -o ./assets/css/base.gen.css",
-    "build:hugo": "hugo --enableGitInfo --minify --cleanDestinationDir",
-    "build:search": "pagefind --source public",
-    "clean": "node ./bin/clean",
-    "prettier:cmd": "prettier {.devcontainer,.github,.vscode,api,archetypes,static,themes,content}/**/*.{css,scss,html,js,json,md,yml,yaml}",
+    "start": "bin/start",
+    "build": "bin/build",
+    "clean": "bin/clean",
     "prettier": "npm run prettier:cmd -- --write",
     "prettier:check": "npm run prettier:cmd -- --check",
+    "prettier:cmd": "prettier {.devcontainer,.github,.vscode,api,archetypes,static,content}/**/*.{css,scss,html,js,json,md,yml,yaml}",
     "stylelint": "stylelint **/*.scss",
     "markdownlint": "markdownlint content/**/*.md"
   },
-  "author": "Nikko Miu <nikkoamiu@gmail.com>",
-  "license": "SEE LICENSE IN LICENSE",
-  "config": {
-    "port": 4290,
-    "generatedContent": [
-      "public",
-      "resources/_gen",
-      ".hugo_build.lock"
-    ]
-  },
   "devDependencies": {
-    "@azure/static-web-apps-cli": "^1.1.4",
     "autoprefixer": "^10.4.13",
     "colors": "^1.4.0",
-    "fast-glob": "^3.3.1",
     "markdownlint-cli": "^0.34.0",
-    "pagefind": "^0.12.0",
+    "pagefind": "^1.0",
     "postcss": "^8.4.21",
-    "postcss-cli": "^10.1.0",
     "prettier": "^2.8.8",
     "prettier-plugin-go-template": "^0.0.13",
     "stylelint": "^15.6.2",
     "stylelint-config-prettier-scss": "^1.0.0",
-    "stylelint-config-standard-scss": "^9.0.0"
+    "stylelint-config-standard-scss": "^9.0.0",
+    "tailwindcss": "^3.4.1"
   },
   "dependencies": {
     "katex": "^0.16.8"

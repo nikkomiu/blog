@@ -2,7 +2,12 @@
 
 const { promises: fs } = require('fs');
 const colors = require('colors');
-const package = require('../package.json');
+
+const files = [
+  "public",
+  "resources/_gen",
+  ".hugo_build.lock"
+]
 
 async function deleteProjectFileExists(dirPath) {
   try {
@@ -15,7 +20,7 @@ async function deleteProjectFileExists(dirPath) {
 }
 
 async function main() {
-  const deletePromises = package?.config?.generatedContent?.map(deleteProjectFileExists);
+  const deletePromises = files.map(deleteProjectFileExists);
 
   await Promise.all(deletePromises);
 }

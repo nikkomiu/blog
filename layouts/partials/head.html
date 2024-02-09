@@ -6,21 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="{{ if .IsHome }}
+  content="{{ if .IsHome -}}
     {{ $.Site.Params.Subtitle }}
-  {{ else if .Description }}
+  {{- else if .Description -}}
     {{ .Description | plainify }}
-  {{ else }}
+  {{- else -}}
     {{ .Summary | plainify }}
-  {{ end }}"
+  {{- end }}"
 />
 <meta
   name="keywords"
-  content="{{ with .Params.Keywords }}
+  content="{{ with .Params.Keywords -}}
     {{ delimit . ", " }}
-  {{ else }}
+  {{- else -}}
     {{ $.Site.Params.Keywords }}
-  {{ end }}"
+  {{- end }}"
 />
 {{ if .Params.noindex }}
   {{ if or (eq (.Param "noindex") true) (eq (.Param "noindex") "true") }}
@@ -31,37 +31,9 @@
 {{ end }}
 <link rel="canonical" href="{{ .Permalink }}" />
 
-{{ template "_internal/google_analytics.html" . }}
-
-{{ $defaultStyles := resources.Get "css/style.scss" }}
-<!-- Local Theme Variables -->
-{{ if and (isset .Params "color") (not (eq .Params.color "")) }}
-  {{ $localColorCss := resources.Get (printf "css/color/%s.scss" .Params.color) }}
-  {{ $localCss := slice $localColorCss $defaultStyles | resources.Concat (printf "css/%s-local.scss" .Params.color) }}
-  {{ $localColorStyles := $localCss | resources.ToCSS }}
-  <link rel="stylesheet" href="{{ $localColorStyles.Permalink }}" />
-{{ else }}
-  <!-- Theme Variables -->
-  {{ $colorCss := resources.Get (printf "css/color/%s.scss" ($.Site.Params.ThemeColor | default "orange")) }}
-  {{ $css := slice $colorCss $defaultStyles | resources.Concat "css/base.scss" }}
-  {{ $options := (dict "targetPath" "styles.css" "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
-  {{ $styles := $css | resources.ToCSS $options }}
-  <link rel="stylesheet" href="{{ $styles.Permalink }}" />
-{{ end }}
-
 <!-- Icons -->
-{{ if isset $.Site.Params "favicon" }}
-  <link rel="shortcut icon" href="{{ $.Site.Params.favicon | absURL }}" />
-{{ else }}
-  <link
-    rel="shortcut icon"
-    href="{{ printf "img/theme-colors/%s.png" (or .Params.color $.Site.Params.ThemeColor | default "orange") | absURL }}"
-  />
-  <link
-    rel="apple-touch-icon"
-    href="{{ printf "img/theme-colors/%s.png" (or .Params.color $.Site.Params.ThemeColor | default "orange") | absURL }}"
-  />
-{{ end }}
+<link rel="shortcut icon" href="{{ "img/favicon-32x32.png" | relURL }}" />
+<link rel="apple-touch-icon" href="{{ "img/apple-touch-icon.png" | relURL }}" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
@@ -71,13 +43,13 @@
   {{ end }}
   <meta
     name="twitter:creator"
-    content="{{ if .IsHome }}
+    content="{{ if .IsHome -}}
       {{ $.Site.Params.Twitter.creator }}
-    {{ else if isset .Params "authortwitter" }}
+    {{- else if isset .Params "authortwitter" -}}
       {{ .Params.authorTwitter }}
-    {{ else }}
+    {{- else -}}
       {{ .Params.Author }}
-    {{ end }}"
+    {{- end }}"
   />
 {{ end }}
 
@@ -85,29 +57,29 @@
 <meta property="og:locale" content="{{ $.Site.Language.Lang }}" />
 <meta
   property="og:type"
-  content="{{ if .IsPage }}
+  content="{{ if .IsPage -}}
     article
-  {{ else }}
+  {{- else -}}
     website
-  {{ end }}"
+  {{- end }}"
 />
 <meta
   property="og:title"
-  content="{{ if .IsHome }}
+  content="{{ if .IsHome -}}
     {{ $.Site.Title }}
-  {{ else }}
+  {{- else -}}
     {{ .Title }}
-  {{ end }}"
+  {{- end }}"
 />
 <meta
   property="og:description"
-  content="{{ if .IsHome }}
+  content="{{ if .IsHome -}}
     {{ $.Site.Params.Subtitle }}
-  {{ else if .Description }}
+  {{- else if .Description -}}
     {{ .Description | plainify }}
-  {{ else }}
+  {{- else -}}
     {{ .Summary | plainify }}
-  {{ end }}"
+  {{- end }}"
 />
 <meta property="og:url" content="{{ .Permalink }}" />
 <meta property="og:site_name" content="{{ $.Site.Title }}" />
@@ -118,14 +90,7 @@
   {{ end }}
   <meta property="og:image" content="{{ $pageCover | absURL }}" />
 {{ else }}
-  {{ if isset $.Site.Params "favicon" }}
-    <meta property="og:image" content="{{ $.Site.Params.favicon | absURL }}" />
-  {{ else }}
-    <meta
-      property="og:image"
-      content="{{ printf "img/favicon/%s.png" $.Site.Params.ThemeColor | absURL }}"
-    />
-  {{ end }}
+  <meta property="og:image" content="{{ "img/favicon-32x32.png" | relURL }}" />
 {{ end }}
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="627" />
@@ -156,16 +121,12 @@
   />
 {{ end }}
 
-<!-- KaTeX CSS -->
-<link
-  href="{{ .Site.BaseURL }}katex.min.css"
-  rel="stylesheet"
-  type="text/css"
-/>
+{{ $styleCSS := resources.Get "scss/style.scss" }}
+{{ $styleOpts := (dict "targetPath" "css/style.css" "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
+{{ $styleOut := $styleCSS | resources.ToCSS $styleOpts }}
+<link rel="stylesheet" href="{{ $styleOut.RelPermalink }}" />
 
-<!-- Pagefind CSS -->
-<link
-  href="{{ .Site.BaseURL }}_pagefind/pagefind-ui.css"
-  rel="stylesheet"
-  type="text/css"
-/>
+{{ partial "defer-css" ("pagefind/pagefind-ui.css" | relURL) }}
+
+{{ $base := resources.Get "js/base.js" | js.Build (dict "sourceMap" "external" "minify" true) }}
+<script type="text/javascript" src="{{ $base.RelPermalink }}" defer async></script>

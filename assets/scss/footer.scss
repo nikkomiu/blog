@@ -36,6 +36,8 @@
       }
 
       @media ($phone) {
+        margin: 0.25rem 0;
+
         &:not(:last-child)::after {
           content: "";
           margin: 0;

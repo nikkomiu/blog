@@ -4,7 +4,6 @@ import katexAutoRender from 'katex/contrib/auto-render';
 
 import { loadSearch } from "./search";
 import { displayLanguageTabs, loadCodeActions } from "./code";
-import { displayUserInfo } from './user';
 
 function sectionExpandToggle() {
   document.querySelectorAll('button.section-title').forEach((button) => {
@@ -29,7 +28,6 @@ function onDocumentLoad() {
 
   displayLanguageTabs();
   sectionExpandToggle();
-  displayUserInfo();
 }
 
 window.addEventListener("load", onDocumentLoad);

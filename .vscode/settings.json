@@ -10,7 +10,8 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     "**/node_modules/": true,
-    "**/resources/_gen": true
+    "**/resources/_gen": true,
+    ".hugo_build.lock": true
   },
   "debug.internalConsoleOptions": "neverOpen"
 }

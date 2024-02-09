@@ -30,7 +30,7 @@ function loadSearchFailed() {
 export async function loadSearch() {
   try {
     // Load search
-    await loadScript("/_pagefind/pagefind-ui.js", pagefindUIID);
+    await loadScript("/pagefind/pagefind-ui.js", pagefindUIID);
 
     const searchElement = document.querySelector(searchSelector);
     if (!searchElement) {

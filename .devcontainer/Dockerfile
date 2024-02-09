@@ -34,6 +34,3 @@ USER coder
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/g' ~/.zshrc && \
     sed -i 's/plugins=(git)/plugins=(git npm)/g' ~/.zshrc
-
-# Hugo dev server port
-EXPOSE 4290

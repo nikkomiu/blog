@@ -2,7 +2,6 @@ baseURL: /
 languageCode: en-us
 title: RRR
 subtitle: Reduce, Recycle, Recode
-theme: terminal
 
 disableHugoGeneratorInject: true
 copyright: Nikko Miu
@@ -49,7 +48,6 @@ params:
   gitRepoURL: https://github.com/nikkomiu/blog
   gitDefaultBranch: main
 
-  themeColor: pink
   centerTheme: true
   noindex: true
 
