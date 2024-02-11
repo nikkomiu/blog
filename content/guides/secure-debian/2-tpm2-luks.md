@@ -1,12 +1,12 @@
 ---
 title: Debian Unlock LUKS with TPM2
-date: 2024-02-05T01:00:00Z
+date: 2024-02-05T03:00:00Z
 draft: false
 tags:
   - debian
   - luks
   - tpm2
-  - auto-unlock
+  - auto unlock
 ---
 
 ## Install OS Dependencies

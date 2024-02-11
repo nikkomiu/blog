@@ -5,7 +5,7 @@ draft: false
 tags:
   - debian
   - nvidia
-  - nvidia-driver
+  - nvidia driver
 ---
 
 ## Add Package Channel

@@ -1,6 +1,6 @@
 ---
 title: Debian Secure Boot
-date: 2024-02-05T01:00:00Z
+date: 2024-02-05T04:00:00Z
 draft: false
 tags:
   - debian
