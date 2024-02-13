@@ -21,8 +21,9 @@
   {{ $cover := $cover.Resize $coverResizeArg }}
   <img
     src="{{ $cover.RelPermalink }}"
-    class="post-cover"
+    class="post-cover {{ if index .Params "coverClass" }}{{ .Params.CoverClass }}{{ end }}"
     alt="{{ .Title | plainify | default " " }}"
     title="{{ .Params.CoverCredit | plainify | default "Cover Image" }}"
+    {{ if index .Params "coverWidth" }}width="{{ .Params.CoverWidth }}"{{ end }}
   />
 {{- end }}

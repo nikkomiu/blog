@@ -1,0 +1,13 @@
+{
+  "name": "Reduce Recycle Reuse",
+  "short_name": "RRR",
+  "icons": [
+    {
+      "src": "/img/android-chrome-icon.png",
+      "sizes": "512x512"
+    }
+  ],
+  "theme_color": "#fff",
+  "background_color": "#000",
+  "display": "fullscreen"
+}

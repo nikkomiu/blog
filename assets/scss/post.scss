@@ -62,7 +62,7 @@
       display: flex;
       align-items: center;
       color: #ffefe6;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-left: 0.75rem;
@@ -70,8 +70,6 @@
       background-color: #c65d21;
       border-radius: 1rem;
       user-select: none;
-      position: relative;
-      bottom: 3px;
     }
 
     a {
@@ -95,10 +93,10 @@
   }
 
   &-cover {
-    border: 20px solid $accent;
+    border: 10px solid $accent;
     background: transparent;
     margin: 40px auto;
-    padding: 20px;
+    padding: 10px;
 
     @media ($phone) {
       padding: 10px;

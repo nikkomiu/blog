@@ -32,8 +32,11 @@
 <link rel="canonical" href="{{ .Permalink }}" />
 
 <!-- Icons -->
-<link rel="shortcut icon" href="{{ "img/favicon-32x32.png" | relURL }}" />
+<link rel="icon" href="{{ "img/icon.svg" | relURL }}" />
+<link rel="mask-icon" href="{{ "img/icon.svg" | relURL }}" color="#fff" />
 <link rel="apple-touch-icon" href="{{ "img/apple-touch-icon.png" | relURL }}" />
+
+<meta name="theme-color" content="#000" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
@@ -120,6 +123,8 @@
     title="{{ $.Site.Title }}"
   />
 {{ end }}
+
+<link rel="stylesheet" href="{{ "css/base.css" | relURL }}" />
 
 {{ $styleCSS := resources.Get "scss/style.scss" }}
 {{ $styleOpts := (dict "targetPath" "css/style.css" "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
