@@ -17,27 +17,27 @@
   "customizations": {
     "vscode": {
       "extensions": [
-		"davidanson.vscode-markdownlint",
-		"EditorConfig.EditorConfig",
-		"esbenp.prettier-vscode",
-		"GitHub.copilot",
-		"valentjn.vscode-ltex"
-	],
+        "davidanson.vscode-markdownlint",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "GitHub.copilot",
+        "valentjn.vscode-ltex"
+      ],
       "settings": {
         "html.format.templating": true
       }
     }
   },
   "portsAttributes": {
-		"1313": {
-			"onAutoForward": "ignore"
-		},
-		"1414": {
-			"onAutoForward": "ignore"
-		},
-		"7071": {
-			"onAutoForward": "ignore"
-		}
-	},
+    "1313": {
+      "onAutoForward": "ignore"
+    },
+    "1414": {
+      "onAutoForward": "ignore"
+    },
+    "7071": {
+      "onAutoForward": "ignore"
+    }
+  },
   "forwardPorts": [4290]
 }

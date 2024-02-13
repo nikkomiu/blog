@@ -121,13 +121,13 @@ Let's take a quick look at the top five rows using the `head()` method.
 housing.head()
 ```
 
-|      | longitude | latitude | housing_median_age | total_rooms | total_bedrooms | population | households | median_income | median_house_value | ocean_proximity |
-| ---- | --------- | -------- | ------------------ | ----------- | -------------- | ---------- | ---------- | ------------- | ------------------ | --------------- |
-| 0    | -122.23   | 37.88    | 41.0               | 880.0       | 129.0          | 322.0      | 126.0      | 8.3252        | 452600.0           | NEAR BAY        |
-| 1    | -122.22   | 37.86    | 21.0               | 7099.0      | 1106.0         | 2401.0     | 1138.0     | 8.3014        | 358500.0           | NEAR BAY        |
-| 2    | -122.24   | 37.85    | 52.0               | 1467.0      | 190.0          | 496.0      | 177.0      | 7.2574        | 352100.0           | NEAR BAY        |
-| 3    | -122.25   | 37.85    | 52.0               | 1274.0      | 235.0          | 558.0      | 219.0      | 5.6431        | 341300.0           | NEAR BAY        |
-| 4    | -122.25   | 37.85    | 52.0               | 1627.0      | 280.0          | 565.0      | 259.0      | 3.8462        | 342200.0           | NEAR BAY        |
+|     | longitude | latitude | housing_median_age | total_rooms | total_bedrooms | population | households | median_income | median_house_value | ocean_proximity |
+| --- | --------- | -------- | ------------------ | ----------- | -------------- | ---------- | ---------- | ------------- | ------------------ | --------------- |
+| 0   | -122.23   | 37.88    | 41.0               | 880.0       | 129.0          | 322.0      | 126.0      | 8.3252        | 452600.0           | NEAR BAY        |
+| 1   | -122.22   | 37.86    | 21.0               | 7099.0      | 1106.0         | 2401.0     | 1138.0     | 8.3014        | 358500.0           | NEAR BAY        |
+| 2   | -122.24   | 37.85    | 52.0               | 1467.0      | 190.0          | 496.0      | 177.0      | 7.2574        | 352100.0           | NEAR BAY        |
+| 3   | -122.25   | 37.85    | 52.0               | 1274.0      | 235.0          | 558.0      | 219.0      | 5.6431        | 341300.0           | NEAR BAY        |
+| 4   | -122.25   | 37.85    | 52.0               | 1627.0      | 280.0          | 565.0      | 259.0      | 3.8462        | 342200.0           | NEAR BAY        |
 
 Next we will use the `info()` method to get a quick description of the data,
 in particular the total number of rows, and each attribute's type and number of non-null values.
@@ -223,9 +223,9 @@ After looking at the histograms, we can see a few things:
   The latter may be an issue since it is our target attribute (our labels).
   This is bad because our ML system may learn that prices never go beyond that limit.
   If we need precise predictions even beyond $500,000, then we have two options:
-    1. Collect proper labels for the districts whose labels were capped.
-    2. Remove those districts from the training set (and also from the test set,
-       since our system should not be evaluated poorly if it predicts values beyond $500,000).
+  1. Collect proper labels for the districts whose labels were capped.
+  2. Remove those districts from the training set (and also from the test set,
+     since our system should not be evaluated poorly if it predicts values beyond $500,000).
 - The attributes have very different scales. We will need to scale the data later on.
 - Many histograms are _tail-heavy_: they extend much farther to the right of the median than to the left.
   This may make it a bit harder for some Machine Learning algorithms to detect patterns.

@@ -11,7 +11,7 @@ tags:
 Personal notes around learning AI & ML. This follows the content of several books:
 
 - [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)
-by Aurélien Géron.
+  by Aurélien Géron.
 - [Machine Learning with C++](https://www.oreilly.com/library/view/hands-on-machine-learning/9781789955330/) by Kirill Kolodiazhnyi.
 - [TinyML](https://www.oreilly.com/library/view/tinyml/9788328383630/) by Pete Warden.
 

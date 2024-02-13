@@ -72,7 +72,7 @@ root=UUID=<<UUID>> panic=0 ro quiet
 ```
 
 > **Note:** Make sure to add `panic=0` to this as this prevents a bad actor from corrupting the startup and
-falling back to an emergency shell.
+> falling back to an emergency shell.
 
 Create the script `/etc/kernel/postinst.d/zz-update-efistub` to update our EFI image(s) after the kernel changes:
 

@@ -68,12 +68,12 @@ Explore the data to gain insights and to get a better understanding of the probl
 1. Create a copy of the data for exploration (sampling it down to a manageable size if necessary).
 1. Create a Jupyter notebook to keep a record of your data exploration.
 1. Study each attribute and its characteristics:
-    - Name
-    - Type (categorical, int/float, bounded/unbounded, text, structured, etc.)
-    - % of missing values
-    - Noisiness and type of noise (stochastic, outliers, rounding errors, etc.)
-    - Determine if it is useful for the task?
-    - Type of distribution (Gaussian, uniform, logarithmic, etc.)
+   - Name
+   - Type (categorical, int/float, bounded/unbounded, text, structured, etc.)
+   - % of missing values
+   - Noisiness and type of noise (stochastic, outliers, rounding errors, etc.)
+   - Determine if it is useful for the task?
+   - Type of distribution (Gaussian, uniform, logarithmic, etc.)
 1. For supervised learning tasks, identify the target attribute(s).
 1. Visualize the data.
 1. Study the correlations between attributes.
@@ -90,22 +90,22 @@ Prepare the data to better expose the underlying data patterns to Machine Learni
 >
 > - Work on copies of the data (keep the original dataset intact).
 > - Write functions for all data transformations you apply, for five reasons:
->     1. So you can easily prepare the data the next time you get a fresh dataset.
->     1. So you can apply these transformations in future projects.
->     1. To clean and prepare the test set.
->     1. To clean and prepare new data instances once your solution is live.
->     1. To make it easy to treat your preparation choices as hyperparameters.
+>   1. So you can easily prepare the data the next time you get a fresh dataset.
+>   1. So you can apply these transformations in future projects.
+>   1. To clean and prepare the test set.
+>   1. To clean and prepare new data instances once your solution is live.
+>   1. To make it easy to treat your preparation choices as hyperparameters.
 
 1. Data cleaning:
-    - Fix or remove outliers (optional).
-    - Fill in missing values (e.g., with zero, mean, median...) or drop their rows (or columns).
+   - Fix or remove outliers (optional).
+   - Fill in missing values (e.g., with zero, mean, median...) or drop their rows (or columns).
 1. Feature selection (optional):
-    - Drop the attributes that provide no useful information for the task.
+   - Drop the attributes that provide no useful information for the task.
 1. Feature engineering, where appropriates:
-    - Discretize continuous features.
-    - Decompose features (e.g., categorical, date/time, etc.).
-    - Add promising transformations of features (e.g., $\log x$, $\sqrt x$, $x^2$, etc.).
-    - Aggregate features into promising new features.
+   - Discretize continuous features.
+   - Decompose features (e.g., categorical, date/time, etc.).
+   - Add promising transformations of features (e.g., $\log x$, $\sqrt x$, $x^2$, etc.).
+   - Aggregate features into promising new features.
 1. Feature scaling: standardize or normalize features.
 
 ## Short-list Promising Models
@@ -122,11 +122,11 @@ Explore many different models and short-list the best ones.
 1. Train many quick-and-dirty models from different categories (e.g., linear, naive Bayes,
    SVM, Random Forests, neural net, etc.) using standard parameters.
 1. Measure and compare their performance.
-    - For each model, use N-fold cross-validation and compute the mean and standard deviation of
-      the performance measure on the N folds.
+   - For each model, use N-fold cross-validation and compute the mean and standard deviation of
+     the performance measure on the N folds.
 1. Analyze the most significant variables for each algorithm.
 1. Analyze the types of errors the models make.
-    - What data would a human have used to avoid these errors?
+   - What data would a human have used to avoid these errors?
 1. Have a quick round of feature selection and engineering.
 1. Have one or two more quick iterations of the five previous steps.
 1. Short-list the top three to five most promising models, preferring models that make different
@@ -143,12 +143,12 @@ Fine-tune your models and combine them into a great solution.
 > - As always automate what you can.
 
 1. Fine-tune the hyperparameters using cross-validation:
-    - Treat your data transformation choices as hyperparameters, especially when you are not sure
-      about them (e.g., should I replace missing values with zero or the median value? Or just drop
-      the rows?).
-    - Unless there are very few hyperparameter values to explore, prefer random search over grid
-      search. If training is very long, you may prefer a Bayesian optimization approach (e.g.,
-      using a Gaussian process priors, as described by [Jasper Snoek et al.](https://arxiv.org/abs/1206.2944)).
+   - Treat your data transformation choices as hyperparameters, especially when you are not sure
+     about them (e.g., should I replace missing values with zero or the median value? Or just drop
+     the rows?).
+   - Unless there are very few hyperparameter values to explore, prefer random search over grid
+     search. If training is very long, you may prefer a Bayesian optimization approach (e.g.,
+     using a Gaussian process priors, as described by [Jasper Snoek et al.](https://arxiv.org/abs/1206.2944)).
 1. Try Ensemble methods. Combining your best models will often perform better than running them
    individually.
 1. Once you are confident about your final model, measure its performance on the test set to
@@ -172,9 +172,9 @@ Launch, monitor, and maintain your system.
    etc.).
 1. Write monitoring code to check your system's live performance at regular intervals and trigger
    alerts when it drops.
-    - Beware of slow degradation too: models tend to "rot" as data evolves.
-    - Measuring performance may require a human pipeline (e.g., via a crowdsourcing service).
-    - Also monitor your inputs' quality (e.g., a malfunctioning sensor sending random values, or
-      another team's output becoming stale). This is particularly important for online learning
-      systems.
+   - Beware of slow degradation too: models tend to "rot" as data evolves.
+   - Measuring performance may require a human pipeline (e.g., via a crowdsourcing service).
+   - Also monitor your inputs' quality (e.g., a malfunctioning sensor sending random values, or
+     another team's output becoming stale). This is particularly important for online learning
+     systems.
 1. Retrain your models on a regular basis on fresh data (automate as much as possible).

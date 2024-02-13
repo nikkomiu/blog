@@ -62,6 +62,7 @@
       </div>
     {{ end }}
 
+
     <div class="post-content">
       {{- with .Content -}}
         <div>
@@ -78,10 +79,24 @@
           {{ if .Params.prev }}
             {{ $prev = $.Site.GetPage .Params.prev }}
           {{ end }}
-          <a href="{{ $prev.Permalink }}" class="flex flex-row mr-auto hover:underline">
+          <a
+            href="{{ $prev.Permalink }}"
+            class="flex flex-row mr-auto hover:underline"
+          >
             <div class="flex items-center mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-10 h-10"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5 8.25 12l7.5-7.5"
+                />
               </svg>
             </div>
             <div class="flex flex-col">
@@ -96,14 +111,28 @@
           {{ if .Params.next }}
             {{ $next = $.Site.GetPage .Params.next }}
           {{ end }}
-          <a href="{{ $next.Permalink }}" class="flex flex-row ml-auto text-right hover:underline">
+          <a
+            href="{{ $next.Permalink }}"
+            class="flex flex-row ml-auto text-right hover:underline"
+          >
             <div class="flex flex-col">
               <h2 class="text-gray-300 !mt-0">Next {{ $pt }}</h2>
               <p class="m-0 text-gray-500">{{ $next.Title }}</p>
             </div>
             <div class="flex items-center ml-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-10 h-10"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                />
               </svg>
             </div>
           </a>
@@ -111,11 +140,26 @@
       </div>
     {{ end }}
 
+
     <div class="flex">
-      <a href="{{ .Parent.Permalink }}" class="flex flex-row mx-auto hover:underline lg:order-none mb-4">
+      <a
+        href="{{ .Parent.Permalink }}"
+        class="flex flex-row mx-auto hover:underline lg:order-none mb-4"
+      >
         <div class="flex items-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-10 h-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+            />
           </svg>
         </div>
         <div class="flex flex-col">

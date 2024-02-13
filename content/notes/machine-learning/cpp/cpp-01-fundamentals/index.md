@@ -33,7 +33,7 @@ reasonable predictions for new data.
   - Neural networks
 
 - **Regression Models** predict continuous responses such as changes in temperature or values of currency exchange rates.
-Regression model creation usually makes sense if the output of the given labeled data is _real numbers_.
+  Regression model creation usually makes sense if the output of the given labeled data is _real numbers_.
 
   Typical algorithms include:
 
@@ -83,7 +83,7 @@ If the model contains a fixed number of internal parameters it is called **param
 
 Examples of internal parameters:
 
-- Weights of **artificial neural networks (ANNs)
+- Weights of \*\*artificial neural networks (ANNs)
 - Support vector values for SVM models
 - Polynomial coefficients for linear regression or logistic regression
 

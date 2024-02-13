@@ -6,7 +6,7 @@
         {{ if .IsHome }}
           {{ $.Site.Title }}
         {{ else }}
-          {{- if .Title }}{{ .Title }} :: {{ end -}}
+          {{- if .Title }}{{ .Title }} ::{{ end }}
           {{ $.Site.Title }}
         {{ end }}
       </title>
@@ -16,11 +16,13 @@
   <body>
     {{ $container := cond ($.Site.Params.FullWidthTheme | default false) "container full" (cond ($.Site.Params.CenterTheme | default false) "container center" "container") }}
 
+
     <div
       class="{{- $container -}}{{- cond ($.Site.Params.oneHeadingSize | default true) " headings-one-size" "" }}
       "
     >
       {{ partial "header.html" . }}
+
 
       <div class="content">
         {{ block "main" . }}

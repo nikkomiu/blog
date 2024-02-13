@@ -2,7 +2,6 @@
   display: flex;
   list-style: none;
   overflow-x: auto;
-  align-items: center;
   margin: 0.25rem 0;
   padding: 0.5rem 0;
   flex: 1 1 auto;
@@ -16,7 +15,7 @@
     white-space: nowrap;
 
     &::after {
-      content: '>';
+      content: ">";
       margin-left: 0.5rem;
     }
 
@@ -26,7 +25,7 @@
     }
 
     &:last-child::after {
-      content: '';
+      content: "";
       margin-left: 0;
     }
 

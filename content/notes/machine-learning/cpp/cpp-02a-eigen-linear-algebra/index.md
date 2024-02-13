@@ -136,7 +136,8 @@ m.block(1, 1, 2, 2) *= 4; // changes the values in the original matrix
 
 This is equivalent to:
 
-$$ M =
+$$
+M =
 \begin{bmatrix}
   m_{0,0} & m_{0,1} & m_{0,2} & m_{0,3} \\\\
   m_{1,0} & m_{1,1} & m_{1,2} & m_{1,3} \\\\
@@ -145,14 +146,16 @@ $$ M =
 \end{bmatrix}
 $$
 
-$$ B =
+$$
+B =
 \begin{bmatrix}
   m_{1,1} & m_{1,2} \\\\
   m_{2,1} & m_{2,2}
 \end{bmatrix}
 $$
 
-$$ B = B * 4 =
+$$
+B = B * 4 =
 \begin{bmatrix}
   m_{1,1} * 4 & m_{1,2} * 4 \\\\
   m_{2,1} * 4 & m_{2,2} * 4

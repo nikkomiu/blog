@@ -101,7 +101,10 @@ figure {
   }
 
   &.fig-accent-bg {
-    background-color: transparentize($color: desaturate($color: $accent, $amount: 20), $amount: 0.4);
+    background-color: transparentize(
+      $color: desaturate($color: $accent, $amount: 20),
+      $amount: 0.4
+    );
   }
 
   figcaption {
@@ -235,7 +238,6 @@ table {
   width: fit-content;
   max-width: 100%;
   margin: 40px auto;
-
   padding: 0;
   display: block;
   overflow-x: auto;
@@ -394,8 +396,13 @@ sup {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spin {
@@ -406,9 +413,17 @@ sup {
 }
 
 @keyframes fade-in-perception {
-  0% { opacity: 0; }
-  90% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .fade-in-perception {

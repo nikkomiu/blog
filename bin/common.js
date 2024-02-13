@@ -1,10 +1,10 @@
-const { spawn } = require('child_process')
-const { promises: fs, mkdir } = require('fs')
-const glob = require('fast-glob')
-const colors = require('colors')
-const package = require('../package.json')
+const { spawn } = require("child_process");
+const { promises: fs, mkdir } = require("fs");
+const glob = require("fast-glob");
+const colors = require("colors");
+const package = require("../package.json");
 
-const runningProcesses = {}
+const runningProcesses = {};
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -22,7 +22,7 @@ async function waitForFile(file, options = {}) {
 
       return;
     } catch (err) {
-      if (err.code !== 'ENOENT') {
+      if (err.code !== "ENOENT") {
         throw err;
       }
 
@@ -32,12 +32,12 @@ async function waitForFile(file, options = {}) {
 }
 
 function getTaskName(command, args) {
-  if (command === 'npx') {
-    return args[0]
+  if (command === "npx") {
+    return args[0];
   }
 
-  if (command === 'npm' && args[0] === 'run') {
-    return args[1]
+  if (command === "npm" && args[0] === "run") {
+    return args[1];
   }
 
   return command;
@@ -45,120 +45,134 @@ function getTaskName(command, args) {
 
 function logTask(task, content, from) {
   if (Buffer.isBuffer(content)) {
-    content = content.toString()
+    content = content.toString();
   }
 
-  const taskFrontmatter = `[${task}]`.blue
-  const lowerContent = content.toLowerCase()
+  const taskFrontmatter = `[${task}]`.blue;
+  const lowerContent = content.toLowerCase();
 
-  let contentColor = colors.gray
-  if (from === 'stderr' || lowerContent.includes('error')) {
-    contentColor = colors.red
-  } else if (lowerContent.includes('warning')) {
-    contentColor = colors.yellow
-  } else if (lowerContent.includes('finished in')) {
-    contentColor = colors.green
-  } else if (lowerContent.includes('total')) {
-    contentColor = colors.cyan
+  let contentColor = colors.gray;
+  if (from === "stderr" || lowerContent.includes("error")) {
+    contentColor = colors.red;
+  } else if (lowerContent.includes("warning")) {
+    contentColor = colors.yellow;
+  } else if (lowerContent.includes("finished in")) {
+    contentColor = colors.green;
+  } else if (lowerContent.includes("total")) {
+    contentColor = colors.cyan;
   }
 
-  for (let line of content.split('\n')) {
+  for (let line of content.split("\n")) {
     // if the line is blank or is just swa prefix, skip it
-    if (!line || line.trim() === '[swa]') {
-      continue
+    if (!line || line.trim() === "[swa]") {
+      continue;
     }
 
     // If it is a successful GET request from SWA, skip it
-    if (line.includes('GET') && line.includes('- 200')) {
-      continue
+    if (line.includes("GET") && line.includes("- 200")) {
+      continue;
     }
 
     // Color SWA prefixes
-    if (line.startsWith('[')) {
-      line = line.replace(/\[([a-z]{1,4})\]/, "[$1]".cyan)
+    if (line.startsWith("[")) {
+      line = line.replace(/\[([a-z]{1,4})\]/, "[$1]".cyan);
     }
 
-    console.log(`${taskFrontmatter} ${contentColor(line)}`)
+    console.log(`${taskFrontmatter} ${contentColor(line)}`);
   }
 }
 
 function runProcess(command, args, options) {
-  const name = getTaskName(command, args)
-  logTask(name, `Starting task...`, 'stdout')
+  const name = getTaskName(command, args);
+  logTask(name, `Starting task...`, "stdout");
 
-  const proc = spawn(command, args, options)
-  proc.stdout.on('data', data => logTask(name, data, 'stdout'))
-  proc.stderr.on('data', data => logTask(name, data, 'stderr'))
+  const proc = spawn(command, args, options);
+  proc.stdout.on("data", (data) => logTask(name, data, "stdout"));
+  proc.stderr.on("data", (data) => logTask(name, data, "stderr"));
 
   const procData = {
-    exitPromise: new Promise(resolve => proc.on('exit', (code) => resolve(code))),
-    kill: () => proc.kill('SIGINT'),
+    exitPromise: new Promise((resolve) =>
+      proc.on("exit", (code) => resolve(code))
+    ),
+    kill: () => proc.kill("SIGINT"),
     process,
-  }
+  };
 
   runningProcesses[name] = procData;
   return [name, procData];
 }
 
 async function waitForProcess(name, options) {
-  const { exitPromise } = runningProcesses[name]
-  await exitPromise
+  const { exitPromise } = runningProcesses[name];
+  await exitPromise;
 
   if (options?.throw) {
-    throw new Error(`Process ${name} exited`)
+    throw new Error(`Process ${name} exited`);
   }
 }
 
 function removeProcess(name) {
-  delete runningProcesses[name]
+  delete runningProcesses[name];
 }
 
 async function waitForAnyProcess() {
   // Get the exit promises from the running processes
-  const promises = Object.values(runningProcesses).reduce((prev, { exitPromise }) => {
-    return [...prev, exitPromise]
-  }, [])
+  const promises = Object.values(runningProcesses).reduce(
+    (prev, { exitPromise }) => {
+      return [...prev, exitPromise];
+    },
+    []
+  );
 
-  await Promise.race(promises)
+  await Promise.race(promises);
 }
 
 function killAllProcesses() {
   // console.log(Object.values(runningProcesses))
-  Object.values(runningProcesses).forEach(({ kill }) => kill('SIGINT'))
+  Object.values(runningProcesses).forEach(({ kill }) => kill("SIGINT"));
 }
 
 async function runTailwind(opts = {}) {
-  const output = './public/css/base.css'
+  const output = "./public/css/base.css";
 
-  let cmdArgs = ['node_modules/.bin/tailwindcss', '--', '-i', './assets/css/base.css', '-o', output]
+  let cmdArgs = [
+    "node_modules/.bin/tailwindcss",
+    "--",
+    "-i",
+    "./assets/css/base.css",
+    "-o",
+    output,
+  ];
   if (opts.watch) {
-    cmdArgs.push('--watch')
+    cmdArgs.push("--watch");
   }
 
   // Delete tailwind css generated file (ignore not found errors)
-  await fs.rm(output).catch(err => {
-    if (err.code !== 'ENOENT') {
+  await fs.rm(output).catch((err) => {
+    if (err.code !== "ENOENT") {
       throw err;
     }
-  })
+  });
 
-  const [procName] = runProcess('node', cmdArgs)
+  const [procName] = runProcess("node", cmdArgs);
 
   const procArgs = opts.watch ? { throw: true } : null;
 
-  await Promise.race([
-    waitForProcess(procName, procArgs),
-    waitForFile(output)
-  ])
+  await Promise.race([waitForProcess(procName, procArgs), waitForFile(output)]);
 }
 
 async function loadManualCSS() {
-  fs.mkdir('public/css/fonts', { recursive: true });
+  fs.mkdir("public/css/fonts", { recursive: true });
 
-  const fontFiles = await glob('node_modules/katex/dist/fonts/*');
-  await Promise.all(fontFiles.map(async (fontFile) => {
-    await fs.copyFile(fontFile, `public/css/fonts/${fontFile.split('/').pop()}`)
-  }));
+  const fontFiles = await glob("node_modules/katex/dist/fonts/*");
+  await Promise.all(
+    fontFiles.map(async (fontFile) => {
+      await fs.copyFile(
+        fontFile,
+        `public/css/fonts/${fontFile.split("/").pop()}`
+      );
+    })
+  );
 }
 
 module.exports = {
@@ -178,4 +192,4 @@ module.exports = {
   // CSS
   loadManualCSS,
   runTailwind,
-}
+};

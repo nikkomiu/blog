@@ -1,16 +1,16 @@
 import "./menu";
 
-import katexAutoRender from 'katex/contrib/auto-render';
+import katexAutoRender from "katex/contrib/auto-render";
 
 import { loadSearch } from "./search";
 import { displayLanguageTabs, loadCodeActions } from "./code";
 
 function sectionExpandToggle() {
-  document.querySelectorAll('button.section-title').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      console.log('yay')
-      const section = event.target.closest('section');
-      section.classList.toggle('open');
+  document.querySelectorAll("button.section-title").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      console.log("yay");
+      const section = event.target.closest("section");
+      section.classList.toggle("open");
     });
   });
 }
