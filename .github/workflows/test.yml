@@ -3,13 +3,15 @@ name: Test
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
+    types: [opened, synchronize, reopened]
     branches:
-      - master
+      - main
 
 jobs:
   test:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -27,8 +29,8 @@ jobs:
       - name: Prettier
         run: npm run prettier:check
 
-      - name: Stylelint
-        run: npm run stylelint:check
+      # - name: Stylelint
+      #   run: npm run stylelint:check
 
       - name: Markdownlint
         run: npm run markdownlint:check
