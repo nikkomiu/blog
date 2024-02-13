@@ -145,6 +145,8 @@ async function runTailwind(opts = {}) {
   ];
   if (opts.watch) {
     cmdArgs.push("--watch");
+  } else {
+    cmdArgs.push("--minify");
   }
 
   // Delete tailwind css generated file (ignore not found errors)
