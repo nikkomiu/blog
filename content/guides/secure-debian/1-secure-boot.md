@@ -2,6 +2,7 @@
 title: Debian Secure Boot
 date: 2024-02-05T04:00:00Z
 draft: false
+next: 2-tpm2-luks
 tags:
   - debian
   - secure boot

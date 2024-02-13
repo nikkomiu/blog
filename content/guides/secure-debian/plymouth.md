@@ -2,6 +2,7 @@
 title: Debian Plymouth Setup
 date: 2024-02-05T00:00:00Z
 draft: false
+prev: 4-nvidia.md
 tags:
   - debian
   - plymouth

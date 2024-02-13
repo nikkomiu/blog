@@ -2,6 +2,8 @@
 title: Debian NVIDIA Driver Installation
 date: 2024-02-05T01:00:00Z
 draft: false
+prev: 3-zram
+next: /guides/secure-debian/plymouth.md
 tags:
   - debian
   - nvidia

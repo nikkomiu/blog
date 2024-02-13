@@ -2,6 +2,8 @@
 title: Debian Unlock LUKS with TPM2
 date: 2024-02-05T03:00:00Z
 draft: false
+prev: 1-secure-boot
+next: 3-zram
 tags:
   - debian
   - luks

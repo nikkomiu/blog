@@ -70,6 +70,41 @@
       {{- end -}}
     </div>
 
+    {{ if or .Params.next .Params.prev }}
+      {{ $pt := .Parent.Type | inflect.Singularize | strings.Title }}
+      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0">
+        {{ if .Params.prev }}
+          {{ $prev := $.Site.GetPage .Params.prev }}
+          <a href="{{ $prev.Permalink }}" class="flex flex-row mr-auto hover:underline">
+            <div class="flex items-center mr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+              </svg>
+            </div>
+            <div class="flex flex-col">
+              <h2 class="text-gray-300 !mt-0">Previous {{ $pt }}</h2>
+              <p class="m-0 text-gray-500">{{ $prev.Title }}</p>
+            </div>
+          </a>
+        {{ end }}
+
+        {{ if .Params.next }}
+          {{ $next := $.Site.GetPage .Params.next }}
+          <a href="{{ $next.Permalink }}" class="flex flex-row ml-auto text-right hover:underline">
+            <div class="flex flex-col">
+              <h2 class="text-gray-300 !mt-0">Next {{ $pt }}</h2>
+              <p class="m-0 text-gray-500">{{ $next.Title }}</p>
+            </div>
+            <div class="flex items-center ml-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    {{ end }}
+
     {{ if eq .Type $.Site.Params.contentTypeName }}
       {{ partial "posts_pagination.html" . }}
     {{ end }}

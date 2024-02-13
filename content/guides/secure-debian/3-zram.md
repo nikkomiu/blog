@@ -2,6 +2,8 @@
 title: Debian Setup zRAM
 date: 2024-02-05T02:00:00Z
 draft: false
+prev: 2-tpm2-luks
+next: 4-nvidia.md
 tags:
   - debian
   - zram
