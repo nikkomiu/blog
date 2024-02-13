@@ -4,9 +4,13 @@ const common = require('./common');
 
 async function buildHugo() {
   const extraArgs = '--enableGitInfo --minify --cleanDestinationDir'.split(' ');
-  if (process.env.WITH_DRAFTS === 'true') {
+  if (process.env.BUILD_DRAFTS === 'true') {
     console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
     extraArgs.push('--buildDrafts');
+  }
+
+  if (process.env.BUILD_FUTURES === 'true') {
+    extraArgs.push('--buildFutures');
   }
 
   const [procName] = common.runProcess('hugo', extraArgs);
