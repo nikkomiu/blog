@@ -5,10 +5,10 @@ import katexAutoRender from "katex/contrib/auto-render";
 import { loadSearch } from "./search";
 import { displayLanguageTabs, loadCodeActions } from "./code";
 
+// Add event listeners to expand/collapse sections
 function sectionExpandToggle() {
   document.querySelectorAll("button.section-title").forEach((button) => {
     button.addEventListener("click", (event) => {
-      console.log("yay");
       const section = event.target.closest("section");
       section.classList.toggle("open");
     });

@@ -11,7 +11,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Fira Code", Monaco, "Ubuntu Mono", Consolas, monospace;
   font-size: 1rem;
   line-height: 1.54;
   letter-spacing: -0.02em;
@@ -132,13 +131,11 @@ figure {
 
 code,
 kbd {
-  font-family: "Fira Code", Monaco, "Ubuntu Mono", Consolas, monospace !important;
   font-feature-settings: normal;
   background: transparentize($accent, 0.8);
   color: $accent;
   padding: 1px 6px;
   margin: 0 2px;
-  font-size: 0.95rem;
 
   code,
   kbd {
@@ -250,8 +247,8 @@ td {
   padding: 10px;
 }
 
-table > *:first-child > tr:first-child > th {
-  border-top: none;
+th {
+  color: $accent;
 }
 
 th:first-child,
@@ -264,12 +261,12 @@ td:last-child {
   border-right: none;
 }
 
-table > *:last-child > tr:last-child > td {
-  border-bottom: none;
+table > *:first-child > tr:first-child > th {
+  border-top: none;
 }
 
-th {
-  color: $accent;
+table > *:last-child > tr:last-child > td {
+  border-bottom: none;
 }
 
 ul,

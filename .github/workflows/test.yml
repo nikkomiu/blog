@@ -32,8 +32,8 @@ jobs:
       - name: Prettier
         run: npm run prettier:check
 
-      # - name: Stylelint
-      #   run: npm run stylelint:check
+      - name: Stylelint
+        run: npm run stylelint:check
 
       - name: Markdownlint
         run: npm run markdownlint:check

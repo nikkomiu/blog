@@ -1,0 +1,71 @@
+body {
+  --pagefind-ui-primary: #eee;
+  --pagefind-ui-text: #ddd;
+  --pagefind-ui-background: #000;
+  --pagefind-ui-border: hsl(299, 82%, 30%);
+  --pagefind-ui-tag: #152028;
+  --pagefind-ui-font: "Fira Code", monaco, "Ubuntu Mono", consolas, monospace;
+  --pagefind-ui-border-radius: 0;
+}
+
+#site-search {
+  display: flex;
+  margin-top: 1rem;
+  min-height: 52px;
+}
+
+#site-search .fade-in-perception {
+  display: flex;
+  align-self: center;
+  margin: 0 auto;
+  color: #999;
+}
+
+#site-search .fade-in-perception svg {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+#site-search li::before {
+  content: "";
+}
+
+#site-search .alert {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background: rgb(127, 29, 29);
+  color: rgb(248, 113, 113);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+
+#site-search .alert p {
+  margin: 0;
+}
+
+#site-search .alert p.small {
+  font-size: 0.85rem;
+}
+
+#site-search form::before {
+  background-color: #ee72f1;
+}
+
+#site-search input:focus {
+  outline: none;
+  border-color: hsl(299, 82%, 30%);
+}
+
+#site-search input::placeholder {
+  color: #ee72f1;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+#site-search .pagefind-ui__search-clear {
+  background-color: transparent;
+}

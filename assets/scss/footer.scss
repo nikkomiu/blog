@@ -15,6 +15,10 @@
     }
   }
 
+  a {
+    color: inherit;
+  }
+
   &__menu {
     display: flex;
     flex-wrap: wrap;
@@ -48,48 +52,6 @@
     a:hover {
       color: white;
       text-decoration: underline;
-    }
-  }
-
-  a {
-    color: inherit;
-  }
-
-  .copyright {
-    display: flex;
-    flex-flow: row wrap;
-    flex: 1;
-    align-items: center;
-    font-size: 1rem;
-    justify-content: center;
-    margin: auto;
-    text-align: center;
-
-    & > *:first-child:not(:only-child) {
-      margin-right: 10px;
-    }
-
-    span {
-      white-space: nowrap;
-    }
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 0.75rem;
-
-    .fade-in-perception {
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
-
-    svg {
-      height: 1.5rem;
-      width: 1.5rem;
-      margin-right: 0.5rem;
     }
   }
 
@@ -151,6 +113,25 @@
         width: 1.5rem;
         margin-right: 0.5rem;
       }
+    }
+  }
+
+  .copyright {
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1;
+    align-items: center;
+    font-size: 1rem;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+
+    & > *:first-child:not(:only-child) {
+      margin-right: 10px;
+    }
+
+    span {
+      white-space: nowrap;
     }
   }
 }

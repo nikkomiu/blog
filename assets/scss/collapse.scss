@@ -1,6 +1,7 @@
 .collapse-section {
   display: flex;
   flex-direction: column;
+  margin: 1rem 0;
 
   .section-title {
     display: flex;
@@ -13,12 +14,13 @@
     color: white;
     justify-content: start;
     border: 0.125rem solid transparent;
+    margin-bottom: 0;
+    border-left: 0.25rem solid darken($accent, 15%);
   }
 
   .section-title:hover {
     text-decoration: underline;
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 0.25rem;
   }
 
   .section-content {
@@ -39,21 +41,21 @@
     }
 
     .section-title {
-      background-color: rgba(255, 255, 255, 0.05);
-      border-radius: 0.25rem;
-      border-color: rgba(255, 255, 255, 0.1);
+      background-color: darken($accent, 15%);
+      border-top-color: rgba(0, 0, 0, 0.25);
+      border-left: 0.125rem solid transparent;
     }
 
     .section-title:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: darken($accent, 30%);
     }
 
     .section-content {
       display: block;
-      border-top: 0.125rem solid $accent;
       border-bottom: 0.125rem solid $accent;
       background: rgba(255, 255, 255, 0.05);
-      margin-top: 0.25rem;
+
+      // margin-top: 0.25rem;
       padding: 0.5rem 1rem;
     }
   }

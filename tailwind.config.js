@@ -5,6 +5,14 @@ module.exports = {
     './static/js/*.js',
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ['Fira Code', 'Monaco', "Ubuntu Mono", 'Consolas', 'monospace'],
+      serif: ['Fira Code', 'Monaco', "Ubuntu Mono", 'Consolas', 'monospace'],
+    },
+    extend: {
+      colors: {
+        primary: '#ee72f1',
+      },
+    },
   },
 };
