@@ -1,4 +1,4 @@
-import * as Turbo from "@hotwired/turbo";
+import "@hotwired/turbo";
 import katexAutoRender from "katex/contrib/auto-render";
 
 import "./menu";

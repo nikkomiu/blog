@@ -58,7 +58,8 @@ body {
 
 #site-search input:focus {
   outline: none;
-  border-color: hsl(299, 82%, 30%);
+  border-color: #ee72f1;
+  background: #111;
 }
 
 #site-search input::placeholder {

@@ -4,7 +4,7 @@ const pagefindUIID = "pagefind-ui-script";
 const searchSelector = "#site-search";
 
 function toggleSearch(e) {
-  if (e.ctrlKey && e.keyCode === "K".charCodeAt(0)) {
+  if ((e.ctrlKey || e.metaKey) && e.keyCode === "K".charCodeAt(0)) {
     e.preventDefault();
 
     const searchElement = document.querySelector(
