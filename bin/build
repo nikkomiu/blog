@@ -13,6 +13,10 @@ async function buildHugo() {
     extraArgs.push('--buildFuture');
   }
 
+  if (!!process.env.CF_PAGES && process.env.CF_PAGES_URL) {
+    extraArgs.push('--baseURL', process.env.CF_PAGES_URL);
+  }
+
   const [procName] = common.runProcess('hugo', extraArgs);
 
   await Promise.all([
