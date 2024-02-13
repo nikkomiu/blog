@@ -8,12 +8,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="{{ if .IsHome -}}
-    {{ $.Site.Params.Subtitle }}
-  {{- else if .Description -}}
+  content="{{ if .Description -}}
     {{ .Description | plainify }}
-  {{- else -}}
+  {{- else if .Summary -}}
     {{ .Summary | plainify }}
+  {{- else -}}
+    {{ $.Site.Params.Subtitle }}
   {{- end }}"
 />
 <meta
@@ -79,12 +79,12 @@
 />
 <meta
   property="og:description"
-  content="{{ if .IsHome -}}
-    {{ $.Site.Params.Subtitle }}
-  {{- else if .Description -}}
+  content="{{ if .Description -}}
     {{ .Description | plainify }}
-  {{- else -}}
+  {{- else if .Summary -}}
     {{ .Summary | plainify }}
+  {{- else -}}
+    {{ $.Site.Params.Subtitle }}
   {{- end }}"
 />
 <meta property="og:url" content="{{ .Permalink }}" />

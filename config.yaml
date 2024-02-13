@@ -1,7 +1,6 @@
 baseURL: /
 languageCode: en-us
 title: RRR
-subtitle: Reduce, Recycle, Recode
 
 disableHugoGeneratorInject: true
 copyright: Nikko Miu
@@ -45,6 +44,8 @@ markup:
     style: github-dark
 
 params:
+  subtitle: Reduce, Recycle, Recode
+
   gitRepoURL: https://github.com/nikkomiu/blog
   gitDefaultBranch: main
 
