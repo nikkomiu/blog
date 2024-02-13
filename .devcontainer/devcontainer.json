@@ -21,7 +21,8 @@
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
         "GitHub.copilot",
-        "valentjn.vscode-ltex"
+        "valentjn.vscode-ltex",
+        "csstools.postcss"
       ],
       "settings": {
         "html.format.templating": true

@@ -5,7 +5,7 @@
   "author": "Nikko Miu <nikkoamiu@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-    "start": "bin/start -D -F",
+    "start": "bin/start --draft --future",
     "preview": "bin/start",
     "build": "bin/build",
     "clean": "bin/clean",

@@ -4,6 +4,7 @@
     "davidanson.vscode-markdownlint",
     "esbenp.prettier-vscode",
     "github.copilot",
-    "valentjn.vscode-ltex"
+    "valentjn.vscode-ltex",
+    "csstools.postcss"
   ]
 }

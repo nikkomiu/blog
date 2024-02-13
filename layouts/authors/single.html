@@ -1,10 +1,10 @@
 {{ define "main" }}
-  <article class="post mt-8">
+  <article class="author post mt-8">
     <div class="md:flex items-start">
       {{ partial "cover.html" . }}
 
 
-      <div class="flex flex-col md:ml-6">
+      <div class="flex flex-col md:ml-10 mt-10 md:mt-0">
         <h1 class="post-title flex" style="margin-top:0">
           <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
         </h1>
@@ -46,13 +46,13 @@
     {{ end }}
 
 
-    <div class="author-list-group">
+    <div class="flex flex-col md:flex-row">
       {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
       {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
       {{ $pages := where (where $.Site.Pages "Type" "in" $contentTypeName) "Params.Author" "==" .Title }}
       {{ if $pages }}
-        <div class="list">
-          <h3 class="list-heading">Latest Posts</h3>
+        <div class="flex flex-1 flex-col sm:pr-4">
+          <h3 class="mb-0">Latest Posts</h3>
 
           {{ $postContext := dict "Pages" $pages "Parent" . }}
           {{ partial "post-list.html" $postContext }}
@@ -61,8 +61,8 @@
 
       {{ $pages = where (where $.Site.Pages "Type" "in" "notes") "Params.Author" "==" .Title }}
       {{ if $pages }}
-        <div class="list">
-          <h3 class="list-heading">Recent Notes</h3>
+        <div class="flex flex-1 flex-col sm:pl-4">
+          <h3 class="mb-0">Recent Notes</h3>
 
           {{ $postContext := dict "Pages" $pages "Parent" . }}
           {{ partial "post-list.html" $postContext }}
