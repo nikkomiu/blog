@@ -1,6 +1,6 @@
 {{ if eq (len .Pages) 0 }}
   <p class="no-posts">
-    {{ printf $.Parent.Site.Params.NoPostsMessage .Parent.Type }}
+    {{ printf $.Parent.Site.Params.NoPostsMessage (pluralize .Parent.Type) }}
   </p>
 {{ end }}
 {{ range .Pages }}

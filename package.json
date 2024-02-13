@@ -5,7 +5,8 @@
   "author": "Nikko Miu <nikkoamiu@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-    "start": "bin/start",
+    "start": "bin/start -D -F",
+    "preview": "bin/start",
     "build": "bin/build",
     "clean": "bin/clean",
     "prettier": "npm run prettier:cmd -- --write",

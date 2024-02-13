@@ -5,10 +5,13 @@ const common = require('./common');
 
 const listenPort = 1313;
 
-const defaultHugoArgs = 'server --watch --buildDrafts --buildFuture --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public --appendPort=false';
+const defaultHugoArgs = 'server --watch --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public --appendPort=false';
 
 async function startHugo() {
   let hugoArgs = defaultHugoArgs.split(' ');
+  process.argv.indexOf('-D') !== -1 && hugoArgs.push('--buildDrafts', listenPort.toString());
+  process.argv.indexOf('-F') !== -1 && hugoArgs.push('--buildFuture', listenPort.toString());
+
   if (process.env.CODESPACE_NAME) {
     hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-${listenPort}.githubpreview.dev/`)
   } else {
