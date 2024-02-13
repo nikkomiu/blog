@@ -11,7 +11,7 @@
     "clean": "bin/clean",
     "prettier": "npm run prettier:cmd -- --write",
     "prettier:check": "npm run prettier:cmd -- --check",
-    "prettier:cmd": "prettier {.devcontainer,.vscode,archetypes,assets,bin,content,layouts,resources,static}/**/*.{css,scss,html,js,json,md,yml,yaml}",
+    "prettier:cmd": "prettier .",
     "stylelint": "stylelint **/*.scss --fix",
     "stylelint:check": "stylelint **/*.scss",
     "markdownlint:check": "markdownlint content/**/*.md"

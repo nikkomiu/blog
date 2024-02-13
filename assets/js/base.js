@@ -35,5 +35,5 @@ function onPageLoad() {
   sectionExpandToggle();
 }
 
-window.addEventListener('load', onDocumentLoad);
+window.addEventListener("load", onDocumentLoad);
 window.addEventListener("turbo:load", onPageLoad);
