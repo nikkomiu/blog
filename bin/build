@@ -13,8 +13,12 @@ async function buildHugo() {
     extraArgs.push('--buildFuture');
   }
 
-  if (!!process.env.CF_PAGES && process.env.CF_PAGES_URL) {
-    extraArgs.push('--baseURL', process.env.CF_PAGES_URL);
+  if (!!process.env.CF_PAGES) {
+    if (process.env.CF_PAGES_BRANCH === 'main') {
+      extraArgs.push('--baseURL', 'https://blog.miu.guru/');
+    } else if (process.env.CF_PAGES_URL) {
+      extraArgs.push('--baseURL', process.env.CF_PAGES_URL);
+    }
   }
 
   const [procName] = common.runProcess('hugo', extraArgs);
