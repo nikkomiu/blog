@@ -1,6 +1,7 @@
-import "./menu";
-
+import * as Turbo from "@hotwired/turbo";
 import katexAutoRender from "katex/contrib/auto-render";
+
+import "./menu";
 
 import { loadSearch } from "./search";
 import { displayLanguageTabs, loadCodeActions } from "./code";
@@ -15,8 +16,12 @@ function sectionExpandToggle() {
   });
 }
 
+// Load elements that are carried over between page loads
 function onDocumentLoad() {
   loadSearch();
+}
+
+function onPageLoad() {
   loadCodeActions();
 
   katexAutoRender(document.body, {
@@ -30,4 +35,5 @@ function onDocumentLoad() {
   sectionExpandToggle();
 }
 
-window.addEventListener("load", onDocumentLoad);
+window.addEventListener('load', onDocumentLoad);
+window.addEventListener("turbo:load", onPageLoad);
