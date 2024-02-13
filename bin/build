@@ -10,7 +10,7 @@ async function buildHugo() {
   }
 
   if (process.env.BUILD_FUTURES === 'true') {
-    extraArgs.push('--buildFutures');
+    extraArgs.push('--buildFuture');
   }
 
   const [procName] = common.runProcess('hugo', extraArgs);
