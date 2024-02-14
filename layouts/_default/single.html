@@ -3,7 +3,10 @@
     <h1 class="post-title">
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       {{ if .Draft }}
-        <span class="draft-label flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full">Draft</span>
+        <span
+          class="draft-label flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full"
+          >Draft</span
+        >
       {{ end }}
     </h1>
     <div class="post-meta">

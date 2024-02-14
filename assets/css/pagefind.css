@@ -1,9 +1,9 @@
 body {
   --pagefind-ui-primary: rgb(250 232 255); /* fuchsia-100 */
-  --pagefind-ui-text: rgb(250 232 255);    /* fuchsia-100 */
-  --pagefind-ui-background: #000;          /* black */
-  --pagefind-ui-border: rgb(217 70 239);   /* fuchsia-500 */
-  --pagefind-ui-tag: rgb(74 4 78);         /* fuchsia-900 */
+  --pagefind-ui-text: rgb(250 232 255); /* fuchsia-100 */
+  --pagefind-ui-background: #000; /* black */
+  --pagefind-ui-border: rgb(217 70 239); /* fuchsia-500 */
+  --pagefind-ui-tag: rgb(74 4 78); /* fuchsia-900 */
   --pagefind-ui-font: "Fira Code", monaco, "Ubuntu Mono", consolas, monospace;
   --pagefind-ui-border-radius: 0;
 }
@@ -26,6 +26,7 @@ body {
 
 .site-search input:focus {
   @apply outline-none border-fuchsia-400 bg-neutral-900;
+
   /* border-color: #ee72f1;
   background: #111; */
 }
