@@ -4,12 +4,13 @@
   {{ else }}
     {{ $.Site.BaseURL }}
   {{ end }}"
+  class="flex"
 >
   <div class="flex items-center bg-fuchsia-500 text-black px-2 py-1">
     {{ with $.Site.Params.Logo.logoText }}
       {{ . }}
     {{ else }}
-      Terminal
+      Blog
     {{ end }}
   </div>
 </a>

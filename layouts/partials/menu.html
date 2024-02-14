@@ -1,5 +1,5 @@
-<nav class="hidden md:flex flex-col items-center pl-2">
-  <ul class="flex flex-1 space-x-4">
+<nav class="hidden md:flex flex-col items-center pl-2 justify-center">
+  <ul class="flex space-x-4">
     {{ if or $.Site.Params.showMenuItems ( eq .Site.Params.showMenuItems 0 ) }}
       {{ range first $.Site.Params.showMenuItems $.Site.Menus.main }}
         {{ if not .HasChildren }}

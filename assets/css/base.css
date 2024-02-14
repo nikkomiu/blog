@@ -125,3 +125,10 @@ body {
   background: rgba(255, 255, 255, 0.05);
   padding: 0.5rem 1rem;
 }
+
+.header__logo::after {
+  @apply flex flex-1 w-full;
+
+  content: "";
+  background: repeating-linear-gradient(90deg,#d946ef,#d946ef 2px,transparent 0,transparent 10px);
+}
