@@ -40,7 +40,10 @@
 {{ end }}
 <link rel="icon" href="{{ $iconSVG.RelPermalink }}" />
 <link rel="mask-icon" href="{{ $iconSVG.RelPermalink }}" color="#fff" />
-<link rel="apple-touch-icon" href="{{ resources.Get "img/apple-touch-icon.png" }}" />
+<link
+  rel="apple-touch-icon"
+  href="{{ resources.Get "img/apple-touch-icon.png" }}"
+/>
 
 <meta name="theme-color" content="#000" />
 
@@ -132,7 +135,6 @@
     title="{{ $.Site.Title }}"
   />
 {{ end }}
-
 
 {{ $baseCSS := resources.Get "css/base.css" }}
 {{ $baseOpts := (dict "noMap" (not hugo.IsDevelopment)) }}

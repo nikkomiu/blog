@@ -14,7 +14,9 @@ export function loadMenu() {
         menu.classList.remove("open");
       } else {
         // Close all menus...
-        document.querySelectorAll(menuSelector).forEach((m) => m.classList.remove("open"));
+        document
+          .querySelectorAll(menuSelector)
+          .forEach((m) => m.classList.remove("open"));
         // ...before opening the current one
         menu.classList.add("open");
       }
