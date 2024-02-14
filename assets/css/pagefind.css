@@ -8,6 +8,10 @@ body {
   --pagefind-ui-border-radius: 0;
 }
 
+.site-search {
+  @apply mt-0 mb-8;
+}
+
 .site-search .fade-in-perception {
   @apply flex mx-auto self-center text-neutral-400;
 }

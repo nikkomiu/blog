@@ -1,0 +1,53 @@
+.prose blockquote {
+  @apply py-2 border-x-0 my-6 pl-8 pr-0 py-4 sm:pr-4 border-y-2 border-fuchsia-500 bg-black relative;
+}
+
+.prose blockquote::before {
+  @apply absolute left-2 text-fuchsia-500;
+
+  content: ">";
+}
+
+.prose blockquote p {
+  @apply relative text-neutral-200 my-4;
+}
+
+.prose blockquote p::before {
+  content: "";
+}
+
+.prose blockquote p:first-of-type {
+  @apply mt-0;
+}
+
+.prose blockquote p:last-of-type {
+  @apply mb-0;
+}
+
+.prose blockquote p strong {
+  @apply text-neutral-50;
+}
+
+.prose code::before {
+  content: "";
+}
+
+.prose code::after {
+  content: "";
+}
+
+.prose a {
+  @apply text-fuchsia-500 underline;
+}
+
+.prose a:hover {
+  @apply text-fuchsia-300;
+}
+
+.prose pre {
+  @apply rounded-none mt-10 !bg-black;
+}
+
+.prose ol li::marker {
+  @apply text-fuchsia-500 font-bold;
+}

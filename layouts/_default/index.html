@@ -5,7 +5,7 @@
         {{ . | markdownify }}
       </h1>
     {{ end }}
-    <div class="index-content {{ if .Params.framed -}}framed{{- end -}}">
+    <div class="mt-8">
       {{ .Content }}
     </div>
   {{ end }}

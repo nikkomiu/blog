@@ -13,6 +13,14 @@ module.exports = {
       colors: {
         primary: "#ee72f1",
       },
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            "--tw-prose-headings": theme("colors.fuchsia[500]"),
+          },
+        },
+      }),
     },
   },
+  plugins: [require("@tailwindcss/typography")],
 };

@@ -1,5 +1,5 @@
 <header class="header">
-  <div class="header__inner">
+  <div class="flex header__inner">
     <div class="header__logo">
       {{ partial "logo.html" . }}
     </div>
@@ -9,11 +9,11 @@
     {{ if and $.Site.Params.showLanguageSelector (len $.Site.Home.AllTranslations) }}
       {{ partial "language-menu.html" . }}
     {{ end }}
-  </div>
-  {{ if len $.Site.Menus }}
-    {{ partial "menu.html" . }}
-  {{ end }}
 
+    {{ if len $.Site.Menus }}
+      {{ partial "menu.html" . }}
+    {{ end }}
+  </div>
 
   <ul class="breadcrumbs flex items-stretch overflow-x-auto">
     {{- range .Ancestors.Reverse }}

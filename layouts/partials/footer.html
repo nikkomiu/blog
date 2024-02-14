@@ -50,7 +50,7 @@
         {{ if and .Site.Params.GitRepoURL .Site.Params.GitDefaultBranch }}
           <span>
             <a
-              href="{{ .Site.Params.GitRepoURL }}/blob/{{ .Site.Params.GitDefaultBranch }}/content/{{ .Page.File.Path }}"
+              href="{{ .Site.Params.GitRepoURL }}/blob/{{ default (os.Getenv "CF_PAGES_BRANCH") .Site.Params.GitDefaultBranch }}/content/{{ .Page.File.Path }}"
               class="edit-page"
             >
               <svg

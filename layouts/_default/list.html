@@ -1,13 +1,13 @@
 {{ define "main" }}
   {{ with .Content }}
-    <div class="index-content" data-pagefind-body>
+    <div class="mt-8" data-pagefind-body>
       {{ with $.Title }}
-        <h1 class="post-title">
+        <h1 class="post-title text-2xl">
           {{ . | markdownify }}
 
           {{ if $.Draft }}
             <span
-              class="draft-label flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full"
+              class="flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full"
               >Draft</span
             >
           {{ end }}
@@ -16,7 +16,7 @@
       {{ . }}
     </div>
   {{ end }}
-  <div class="posts">
+  <div class="posts w-full">
     {{ $pages := .Paginator.Pages }}
     {{ if .Params.showAllSubPages }}
       {{ $pages = .Pages }}

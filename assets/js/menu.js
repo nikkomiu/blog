@@ -1,33 +1,16 @@
-const container = document.querySelector(".container");
-const menuSelector = ".menu";
+const menuSelector = ".mobile-menu";
+const dropdownSelector = ".mobile-menu-dropdown";
 
 // Handle desktop menu
 export function loadMenu() {
   document.querySelectorAll(menuSelector).forEach((menu) => {
-    const trigger = menu.querySelector(".menu__trigger");
-    const dropdown = menu.querySelector(".menu__dropdown");
+    const trigger = menu.querySelector(".mobile-menu-trigger");
+    const dropdown = menu.querySelector(dropdownSelector);
 
     trigger.addEventListener("click", (e) => {
       e.stopPropagation();
 
-      if (menu.classList.contains("open")) {
-        menu.classList.remove("open");
-      } else {
-        // Close all menus...
-        document
-          .querySelectorAll(menuSelector)
-          .forEach((m) => m.classList.remove("open"));
-        // ...before opening the current one
-        menu.classList.add("open");
-      }
-
-      if (
-        dropdown.getBoundingClientRect().right >
-        container.getBoundingClientRect().right
-      ) {
-        dropdown.style.left = "auto";
-        dropdown.style.right = 0;
-      }
+      dropdown.classList.toggle("hidden");
     });
 
     dropdown.addEventListener("click", (e) => e.stopPropagation());
@@ -36,8 +19,9 @@ export function loadMenu() {
   // Hide menus on body click
   document.body.addEventListener("click", () => {
     document.querySelectorAll(menuSelector).forEach((menu) => {
-      if (menu.classList.contains("open")) {
-        menu.classList.remove("open");
+      const dropdown = menu.querySelector(dropdownSelector);
+      if (!dropdown.classList.contains("hidden")) {
+        dropdown.classList.add("hidden");
       }
     });
   });
@@ -45,7 +29,10 @@ export function loadMenu() {
   // Reset menus on resize
   window.addEventListener("resize", () => {
     document.querySelectorAll(menuSelector).forEach((menu) => {
-      menu.classList.remove("open");
+      const dropdown = menu.querySelector(dropdownSelector);
+      if (!dropdown.classList.contains("hidden")) {
+        dropdown.classList.add("hidden");
+      }
     });
   });
 }

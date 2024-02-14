@@ -20,7 +20,7 @@ function loadSearchFailed(err) {
   console.warn(`failed to load search: ${err}`);
 
   document.querySelector(searchSelector).innerHTML = `
-    <div class="flex flex-col w-full bg-red-800 text-red-200 px-2 place-content-around rounded-lg">
+    <div class="flex flex-col w-full bg-red-700 text-red-300 px-2 place-content-around border-2 border-red-900">
       <p class="m-0">Search is currently unavailable.</p>
       <p class="m-0 text-sm">Please try again later.</p>
     </div>

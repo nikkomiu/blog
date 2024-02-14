@@ -1,13 +1,92 @@
+.table-of-contents {
+  @apply my-4;
+}
+
 .table-of-contents h2 {
-  font-weight: bold;
-  margin-bottom: 1rem;
+  @apply text-xl font-bold my-3 text-fuchsia-400;
+}
+
+.table-of-contents ul {
+  @apply my-0 ml-6 relative;
+}
+
+.table-of-contents li {
+  @apply my-0;
+}
+
+.table-of-contents li::before {
+  @apply text-fuchsia-500;
+
+  content: "-";
+  position: absolute;
+  left: -20px;
 }
 
 .table-of-contents a {
-  text-decoration: underline;
-  color: #ee72f1;
+  @apply underline text-fuchsia-300;
 }
 
 .table-of-contents a:hover {
-  text-decoration: none;
+  @apply no-underline text-fuchsia-500;
+}
+
+.posts .post:first-of-type {
+  @apply pt-0;
+}
+
+.posts .post:last-of-type {
+  @apply pb-0;
+}
+
+.post:not(:last-of-type) {
+  @apply border-b-2 border-neutral-700;
+}
+
+.post-title {
+  @apply relative flex text-2xl items-center text-fuchsia-500 border-dotted border-fuchsia-500;
+
+  margin: 0 0 15px;
+  padding-bottom: 15px;
+  border-bottom-width: 3px;
+}
+
+.post-title a {
+  @apply text-2xl text-inherit hover:text-fuchsia-300;
+}
+
+.post-title.small {
+  font-size: 1.1rem;
+  padding-bottom: 10px;
+}
+
+.post-title:not(.small)::after {
+  @apply block absolute left-0 w-full h-1 bg-fuchsia-500 bg-transparent border-dotted border-fuchsia-500;
+
+  content: "";
+  bottom: 2px;
+  border-bottom-width: 3px;
+}
+
+.post-meta {
+  @apply text-fuchsia-700 mb-2;
+}
+
+.post-meta a {
+  @apply text-fuchsia-600 hover:underline hover:text-fuchsia-400;
+}
+
+.post-cover {
+  @apply border-8 border-solid border-fuchsia-700 bg-transparent p-2 my-6 mx-auto;
+}
+
+.hanchor-block {
+  @apply relative;
+}
+
+.hanchor-block .hanchor-link {
+  @apply lg:absolute lg:left-[-2.5rem] lg:pr-[53rem] lg:pb-2 hidden hover:text-fuchsia-500;
+}
+
+.hanchor-block:hover .hanchor-link {
+  @apply inline;
 }

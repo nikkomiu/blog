@@ -7,8 +7,15 @@ copyright: Nikko Miu
 
 module:
   mounts:
+    - source: static
+      target: static
     - source: "node_modules/katex/dist/fonts"
       target: "static/css/fonts"
+
+security:
+  funcs:
+    getenv:
+      - ^CF_PAGES
 
 menu:
   main:

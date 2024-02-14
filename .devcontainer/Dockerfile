@@ -14,7 +14,8 @@ RUN export HUGO_VERSION=$(curl -s https://api.github.com/repos/gohugoio/hugo/rel
     wget -O ${HUGO_VERSION}.tar.gz https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_VARIANT}_${HUGO_VERSION}_linux-${TARGETARCH}.tar.gz && \
     tar xf ${HUGO_VERSION}.tar.gz && \
     mv hugo /usr/bin/hugo && \
-    chmod +x /usr/bin/hugo
+    chmod +x /usr/bin/hugo && \
+    rm -rf ${HUGO_VERSION}.tar.gz
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash && \

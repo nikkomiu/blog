@@ -1,23 +1,23 @@
 {{ if eq (len .Pages) 0 }}
-  <p class="no-posts">
+  <p class="text-center text-xl my-10">
     {{ printf $.Parent.Site.Params.NoPostsMessage (pluralize .Parent.Type) }}
   </p>
 {{ end }}
 {{ range .Pages }}
-  <article class="post on-list">
-    <h3
-      class="post-title {{ if (and $.Parent.Content $.Parent.Title) }}
+  <article class="post py-8">
+    <h2
+      class="post-title flex items-center text-fuchsia-300 {{ if (and $.Parent.Content $.Parent.Title) -}}
         small
-      {{ end }}"
+      {{- end }}"
     >
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       {{ if .Draft }}
         <span
-          class="draft-label flex center uppercase items-center text-sm px-2 ml-auto select-none text-orange-100 bg-orange-600 rounded-full"
+          class="flex center uppercase items-center text-sm px-2 ml-auto select-none text-orange-100 bg-orange-600 rounded-full"
           >Draft</span
         >
       {{ end }}
-    </h3>
+    </h2>
     <div class="post-meta">
       {{ if .Date }}
         <time class="post-date">
@@ -41,13 +41,13 @@
     </div>
 
     {{ if .Params.tags }}
-      <span class="post-tags">
+      <div class="text-neutral-500 mb-4">
         {{ range .Params.tags }}
-          #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}">
+          #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}" class="no-underline hover:underline text-neutral-500 hover:text-neutral-300">
             {{- . -}} </a
           >&nbsp;
         {{ end }}
-      </span>
+      </div>
     {{ end }}
 
     {{ partial "cover.html" . }}
@@ -65,7 +65,7 @@
 
     {{ if not .Params.showFullContent }}
       <div>
-        <a class="read-more button" href="{{ .RelPermalink }}"
+        <a class="block text-fuchsia-500 font-bold py-1 mt-3 mb-1 hover:text-fuchsia-300" href="{{ .RelPermalink }}"
           >{{ $.Parent.Site.Params.ReadMore }} →</a
         >
       </div>
