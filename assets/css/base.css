@@ -4,9 +4,9 @@
 
 @import "katex/dist/katex";
 
-@import "./author";
-@import "./post";
-@import "./pagefind";
+@import "assets/css/author";
+@import "assets/css/post";
+@import "assets/css/pagefind";
 
 @font-face {
   font-display: swap;

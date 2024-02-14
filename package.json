@@ -6,7 +6,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "start": "bin/start --draft --future",
-    "preview": "bin/start",
+    "preview": "bin/start --staging",
     "build": "bin/build",
     "clean": "bin/clean",
     "prettier": "prettier --write .",
@@ -22,6 +22,7 @@
     "markdownlint-cli": "^0.34.0",
     "pagefind": "^1.0",
     "postcss": "^8.4.21",
+    "postcss-cli": "^11.0.0",
     "postcss-import": "^16.0.0",
     "prettier": "^2.8.8",
     "prettier-plugin-go-template": "^0.0.13",

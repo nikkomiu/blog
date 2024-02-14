@@ -1,10 +1,9 @@
 import "@hotwired/turbo";
 import katexAutoRender from "katex/contrib/auto-render";
 
-import "./menu";
-
-import { loadSearch } from "./search";
 import { displayLanguageTabs, loadCodeActions } from "./code";
+import { loadMenu } from "./menu";
+import { loadSearch } from "./search";
 
 // Add event listeners to expand/collapse sections
 function sectionExpandToggle() {
@@ -22,6 +21,8 @@ function onDocumentLoad() {
 }
 
 function onPageLoad() {
+  loadMenu();
+
   loadCodeActions();
 
   katexAutoRender(document.body, {

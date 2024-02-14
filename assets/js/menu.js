@@ -1,47 +1,49 @@
 const container = document.querySelector(".container");
-const allMenus = document.querySelectorAll(".menu");
-
-// Hide menus on body click
-document.body.addEventListener("click", () => {
-  allMenus.forEach((menu) => {
-    if (menu.classList.contains("open")) {
-      menu.classList.remove("open");
-    }
-  });
-});
-
-// Reset menus on resize
-window.addEventListener("resize", () => {
-  allMenus.forEach((menu) => {
-    menu.classList.remove("open");
-  });
-});
+const menuSelector = ".menu";
 
 // Handle desktop menu
-allMenus.forEach((menu) => {
-  const trigger = menu.querySelector(".menu__trigger");
-  const dropdown = menu.querySelector(".menu__dropdown");
+export function loadMenu() {
+  document.querySelectorAll(menuSelector).forEach((menu) => {
+    const trigger = menu.querySelector(".menu__trigger");
+    const dropdown = menu.querySelector(".menu__dropdown");
 
-  trigger.addEventListener("click", (e) => {
-    e.stopPropagation();
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
 
-    if (menu.classList.contains("open")) {
-      menu.classList.remove("open");
-    } else {
-      // Close all menus...
-      allMenus.forEach((m) => m.classList.remove("open"));
-      // ...before opening the current one
-      menu.classList.add("open");
-    }
+      if (menu.classList.contains("open")) {
+        menu.classList.remove("open");
+      } else {
+        // Close all menus...
+        document.querySelectorAll(menuSelector).forEach((m) => m.classList.remove("open"));
+        // ...before opening the current one
+        menu.classList.add("open");
+      }
 
-    if (
-      dropdown.getBoundingClientRect().right >
-      container.getBoundingClientRect().right
-    ) {
-      dropdown.style.left = "auto";
-      dropdown.style.right = 0;
-    }
+      if (
+        dropdown.getBoundingClientRect().right >
+        container.getBoundingClientRect().right
+      ) {
+        dropdown.style.left = "auto";
+        dropdown.style.right = 0;
+      }
+    });
+
+    dropdown.addEventListener("click", (e) => e.stopPropagation());
   });
 
-  dropdown.addEventListener("click", (e) => e.stopPropagation());
-});
+  // Hide menus on body click
+  document.body.addEventListener("click", () => {
+    document.querySelectorAll(menuSelector).forEach((menu) => {
+      if (menu.classList.contains("open")) {
+        menu.classList.remove("open");
+      }
+    });
+  });
+
+  // Reset menus on resize
+  window.addEventListener("resize", () => {
+    document.querySelectorAll(menuSelector).forEach((menu) => {
+      menu.classList.remove("open");
+    });
+  });
+}

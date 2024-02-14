@@ -7,6 +7,7 @@ async function buildHugo() {
   if (process.env.BUILD_DRAFTS === 'true') {
     console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
     extraArgs.push('--buildDrafts');
+    extraArgs.push('--environment', 'staging');
   }
 
   if (process.env.BUILD_FUTURES === 'true') {
@@ -40,7 +41,6 @@ async function buildSearch() {
 
 async function main() {
   await buildHugo();
-  await common.runTailwind();
   await common.loadManualCSS();
   await buildSearch();
 }

@@ -34,9 +34,13 @@
 <link rel="canonical" href="{{ .Permalink }}" />
 
 <!-- Icons -->
-<link rel="icon" href="{{ "img/icon.svg" | relURL }}" />
-<link rel="mask-icon" href="{{ "img/icon.svg" | relURL }}" color="#fff" />
-<link rel="apple-touch-icon" href="{{ "img/apple-touch-icon.png" | relURL }}" />
+{{ $iconSVG := resources.Get "img/icon.svg" }}
+{{ if not hugo.IsDevelopment }}
+  {{ $iconSVG = $iconSVG | minify }}
+{{ end }}
+<link rel="icon" href="{{ $iconSVG.RelPermalink }}" />
+<link rel="mask-icon" href="{{ $iconSVG.RelPermalink }}" color="#fff" />
+<link rel="apple-touch-icon" href="{{ resources.Get "img/apple-touch-icon.png" }}" />
 
 <meta name="theme-color" content="#000" />
 
@@ -130,19 +134,36 @@
 {{ end }}
 
 
-<link rel="stylesheet" href="{{ "css/base.css" | relURL }}" />
+{{ $baseCSS := resources.Get "css/base.css" }}
+{{ $baseOpts := (dict "noMap" (not hugo.IsDevelopment)) }}
+{{ $baseOut := $baseCSS | postCSS $baseOpts }}
+{{ if not hugo.IsDevelopment }}
+  {{ $baseOut = $baseOut | minify | fingerprint }}
+{{ end }}
+<link rel="stylesheet" href="{{ $baseOut.RelPermalink }}" />
 
 {{ $styleCSS := resources.Get "scss/style.scss" }}
-{{ $styleOpts := (dict "targetPath" "css/style.css" "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
+{{ $styleOpts := (dict "targetPath" "css/style.css" "enableSourceMap" hugo.IsDevelopment "precision" 6 "includePaths" (slice "node_modules")) }}
 {{ $styleOut := $styleCSS | resources.ToCSS $styleOpts }}
+{{ if not hugo.IsDevelopment }}
+  {{ $styleOut = $styleOut | minify | fingerprint }}
+{{ end }}
 <link rel="stylesheet" href="{{ $styleOut.RelPermalink }}" />
 
 {{ partial "defer-css" ("pagefind/pagefind-ui.css" | relURL) }}
 
-{{ $base := resources.Get "js/base.js" | js.Build (dict "sourceMap" "external" "minify" true) }}
+{{ $baseSourceMap := "" }}
+{{ if hugo.IsDevelopment }}
+  {{ $baseSourceMap = "external" }}
+{{ end }}
+{{ $base := resources.Get "js/base.js" | js.Build (dict "sourceMap" $baseSourceMap) }}
+{{ if not hugo.IsDevelopment }}
+  {{ $base = $base | minify | fingerprint }}
+{{ end }}
 <script
   type="text/javascript"
   src="{{ $base.RelPermalink }}"
+  integrity="{{ $base.Data.Integrity }}"
   defer
   async
 ></script>
