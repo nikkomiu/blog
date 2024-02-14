@@ -10,9 +10,6 @@ module.exports = {
       serif: ["Fira Code", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
     },
     extend: {
-      colors: {
-        primary: "#ee72f1",
-      },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
