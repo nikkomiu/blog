@@ -132,51 +132,6 @@ function killAllProcesses() {
   Object.values(runningProcesses).forEach(({ kill }) => kill("SIGINT"));
 }
 
-async function runTailwind(opts = {}) {
-  const output = "./public/css/base.css";
-
-  let cmdArgs = [
-    "node_modules/.bin/tailwindcss",
-    "--",
-    "-i",
-    "./assets/css/base.css",
-    "-o",
-    output,
-  ];
-  if (opts.watch) {
-    cmdArgs.push("--watch");
-  } else {
-    cmdArgs.push("--minify");
-  }
-
-  // Delete tailwind css generated file (ignore not found errors)
-  await fs.rm(output).catch((err) => {
-    if (err.code !== "ENOENT") {
-      throw err;
-    }
-  });
-
-  const [procName] = runProcess("node", cmdArgs);
-
-  const procArgs = opts.watch ? { throw: true } : null;
-
-  await Promise.race([waitForProcess(procName, procArgs), waitForFile(output)]);
-}
-
-async function loadManualCSS() {
-  fs.mkdir("public/css/fonts", { recursive: true });
-
-  const fontFiles = await glob("node_modules/katex/dist/fonts/*");
-  await Promise.all(
-    fontFiles.map(async (fontFile) => {
-      await fs.copyFile(
-        fontFile,
-        `public/css/fonts/${fontFile.split("/").pop()}`
-      );
-    })
-  );
-}
-
 module.exports = {
   // Utilities
   sleep,
@@ -190,8 +145,4 @@ module.exports = {
   waitForProcess,
   waitForAnyProcess,
   killAllProcesses,
-
-  // CSS
-  loadManualCSS,
-  runTailwind,
 };

@@ -46,7 +46,6 @@ async function startSearch() {
 
 async function main() {
   await startHugo();
-  await common.loadManualCSS();
   await startSearch();
 
   await common.waitForAnyProcess();

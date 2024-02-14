@@ -5,6 +5,11 @@ title: RRR
 disableHugoGeneratorInject: true
 copyright: Nikko Miu
 
+module:
+  mounts:
+    - source: "node_modules/katex/dist/fonts"
+      target: "static/css/fonts"
+
 menu:
   main:
     - name: Posts

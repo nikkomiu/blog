@@ -15,11 +15,13 @@
   {{ end }}
 
 
-  <ul class="breadcrumbs">
+  <ul class="breadcrumbs flex items-stretch overflow-x-auto">
     {{- range .Ancestors.Reverse }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      <li class="flex mr-2 select-none whitespace-nowrap">
+        <a class="underline transition-all ease-in-out text-neutral-300 hover:text-white hover:no-underline" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </li>
     {{- end }}
-    <li>{{ .Title }}</li>
+    <li class="flex text-neutral-500 select-none whitespace-nowrap">{{ .Title }}</li>
   </ul>
 </header>
 

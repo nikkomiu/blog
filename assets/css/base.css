@@ -23,3 +23,48 @@
   font-weight: 800;
   src: url("../fonts/FiraCode-Bold.woff") format("woff");
 }
+
+.breadcrumbs {
+  margin: 0.25rem 0;
+  padding: 0.5rem 0;
+}
+
+.breadcrumbs li::after {
+  content: ">";
+  margin-left: 0.5rem;
+}
+
+.breadcrumbs li:last-child::after {
+  content: "";
+  margin-left: 0;
+}
+
+.collapse-section .title-indicator {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.collapse-section.open .title-indicator {
+  transform: rotate(90deg);
+}
+
+.collapse-section.open .section-title {
+  @apply bg-fuchsia-800 border-0;
+
+  border-top-color: rgba(0, 0, 0, 0.25);
+}
+
+.collapse-section.open .section-title:hover {
+  @apply bg-fuchsia-600;
+}
+
+.collapse-section.open .section-content {
+  @apply border-y-4 border-fuchsia-600;
+
+  display: block;
+  background: rgba(255, 255, 255, 0.05);
+
+  padding: 0.5rem 1rem;
+}
