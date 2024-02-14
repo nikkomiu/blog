@@ -1,7 +1,7 @@
 import { loadScript } from "./util";
 
 const pagefindUIID = "pagefind-ui-script";
-const searchSelector = "#site-search";
+const searchSelector = ".site-search";
 
 function toggleSearch(e) {
   if ((e.ctrlKey || e.metaKey) && e.keyCode === "K".charCodeAt(0)) {
@@ -16,13 +16,13 @@ function toggleSearch(e) {
   }
 }
 
-function loadSearchFailed() {
-  console.warn("Could not load search");
+function loadSearchFailed(err) {
+  console.warn(`failed to load search: ${err}`);
 
   document.querySelector(searchSelector).innerHTML = `
-    <div class="alert alert-error">
-      <p>Search is currently unavailable.</p>
-      <p class="small">Please try again later.</p>
+    <div class="flex flex-col w-full bg-red-800 text-red-200 px-2 place-content-around rounded-lg">
+      <p class="m-0">Search is currently unavailable.</p>
+      <p class="m-0 text-sm">Please try again later.</p>
     </div>
   `;
 }
@@ -45,6 +45,6 @@ export async function loadSearch() {
     // Add search triggers
     document.addEventListener("keydown", toggleSearch);
   } catch (err) {
-    loadSearchFailed();
+    loadSearchFailed(err);
   }
 }

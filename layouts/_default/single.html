@@ -3,7 +3,7 @@
     <h1 class="post-title">
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       {{ if .Draft }}
-        <span class="draft-label">Draft</span>
+        <span class="draft-label flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full">Draft</span>
       {{ end }}
     </h1>
     <div class="post-meta">
@@ -100,8 +100,8 @@
               </svg>
             </div>
             <div class="flex flex-col">
-              <h2 class="text-gray-300 !mt-0">Previous {{ $pt }}</h2>
-              <p class="m-0 text-gray-500">{{ $prev.Title }}</p>
+              <h2 class="text-neutral-300 !mt-0">Previous {{ $pt }}</h2>
+              <p class="m-0 text-neutral-500">{{ $prev.Title }}</p>
             </div>
           </a>
         {{ end }}
@@ -116,8 +116,8 @@
             class="flex flex-row ml-auto text-right hover:underline"
           >
             <div class="flex flex-col">
-              <h2 class="text-gray-300 !mt-0">Next {{ $pt }}</h2>
-              <p class="m-0 text-gray-500">{{ $next.Title }}</p>
+              <h2 class="text-neutral-300 !mt-0">Next {{ $pt }}</h2>
+              <p class="m-0 text-neutral-500">{{ $next.Title }}</p>
             </div>
             <div class="flex items-center ml-2">
               <svg
@@ -162,9 +162,8 @@
             />
           </svg>
         </div>
-        <div class="flex flex-col">
-          <h2 class="text-gray-300 !mt-0">To Parent</h2>
-          <p class="m-0 text-gray-500">{{ .Parent.Title }}</p>
+        <div class="flex flex-col justify-center">
+          <h2 class="text-neutral-300 !mt-0">Back to {{ .Parent.Title }}</h2>
         </div>
       </a>
     </div>

@@ -5,6 +5,7 @@
 @import "katex/dist/katex";
 
 @import "./author";
+@import "./post";
 @import "./pagefind";
 
 @font-face {

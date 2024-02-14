@@ -1,0 +1,13 @@
+.table-of-contents h2 {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.table-of-contents a {
+  text-decoration: underline;
+  color: #ee72f1;
+}
+
+.table-of-contents a:hover {
+  text-decoration: none;
+}

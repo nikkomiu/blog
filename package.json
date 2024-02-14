@@ -9,11 +9,11 @@
     "preview": "bin/start",
     "build": "bin/build",
     "clean": "bin/clean",
-    "prettier": "npm run prettier:cmd -- --write",
-    "prettier:check": "npm run prettier:cmd -- --check",
-    "prettier:cmd": "prettier .",
-    "stylelint": "stylelint **/*.scss --fix",
-    "stylelint:check": "stylelint **/*.scss",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "stylelint": "stylelint assets/**/*.{scss,css} --fix",
+    "stylelint:check": "stylelint assets/**/*.{scss,css}",
+    "markdownlint": "markdownlint content/**/*.md --fix",
     "markdownlint:check": "markdownlint content/**/*.md"
   },
   "devDependencies": {

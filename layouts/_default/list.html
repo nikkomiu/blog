@@ -6,7 +6,7 @@
           {{ . | markdownify }}
 
           {{ if $.Draft }}
-            <span class="draft-label">Draft</span>
+            <span class="draft-label flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full">Draft</span>
           {{ end }}
         </h1>
       {{ end }}
