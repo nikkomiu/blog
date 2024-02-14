@@ -136,7 +136,6 @@
   />
 {{ end }}
 
-<!-- Styles -->
 {{ $baseCSS := resources.Get "css/base.css" }}
 {{ $baseOpts := (dict "noMap" (not hugo.IsDevelopment)) }}
 {{ $baseOut := $baseCSS | postCSS $baseOpts }}
