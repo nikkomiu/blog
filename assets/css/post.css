@@ -37,7 +37,7 @@
 }
 
 .post-title {
-  @apply relative flex text-2xl items-center text-fuchsia-500 border-dotted border-fuchsia-500;
+  @apply relative flex text-2xl items-center text-fuchsia-500 border-dotted border-fuchsia-500 text-lg sm:text-2xl;
 
   margin: 0 0 15px;
   padding-bottom: 15px;
@@ -45,7 +45,7 @@
 }
 
 .post-title a {
-  @apply text-2xl text-inherit hover:text-fuchsia-300;
+  @apply text-inherit hover:text-fuchsia-300;
 }
 
 .post-title.small {

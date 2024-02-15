@@ -13,9 +13,20 @@
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       {{ if .Draft }}
         <span
-          class="flex center uppercase items-center text-sm px-2 ml-auto select-none text-orange-300 bg-orange-800 rounded-full"
-          >Draft</span
+          class="flex center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            class="sm:mr-1 w-4 h-4"
+          >
+            <use href="#hi-beaker" />
+          </svg>
+          <span class="hidden sm:inline">Draft</span>
+        </span>
       {{ end }}
     </h2>
     <div class="post-meta">
@@ -28,11 +39,11 @@
         {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
         {{ with $.Parent.Site.GetPage $authorPagePath }}
           ::
-          <span class="post-author"
-            ><a href="{{ .RelPermalink }}" data-pagefind-filter="author"
-              >{{ .Title }}</a
-            ></span
-          >
+          <span class="post-author">
+            <a href="{{ .RelPermalink }}" data-pagefind-filter="author">
+              {{ .Title }}
+            </a>
+          </span>
         {{ else }}
           ::
           <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
@@ -71,8 +82,9 @@
         <a
           class="block text-fuchsia-500 font-bold py-1 mt-3 mb-1 hover:text-fuchsia-300"
           href="{{ .RelPermalink }}"
-          >{{ $.Parent.Site.Params.ReadMore }} →</a
         >
+          {{ $.Parent.Site.Params.ReadMore }} →
+        </a>
       </div>
     {{ end }}
   </article>

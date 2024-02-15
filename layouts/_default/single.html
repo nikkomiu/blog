@@ -4,9 +4,20 @@
       {{ .Title | markdownify }}
       {{ if .Draft }}
         <span
-          class="flex center uppercase items-center text-sm px-2 select-none text-orange-300 bg-orange-800 ml-auto rounded-full"
-          >Draft</span
+          class="flex center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            class="sm:mr-1 w-4 h-4"
+          >
+            <use href="#hi-beaker" />
+          </svg>
+          <span class="hidden sm:inline">Draft</span>
+        </span>
       {{ end }}
     </h1>
     <div class="post-meta">
@@ -23,16 +34,16 @@
         {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
         {{ with $.Site.GetPage $authorPagePath }}
           ::
-          <span
-            ><a href="{{ .RelPermalink }}" data-pagefind-filter="author"
-              >{{ .Title }}</a
-            ></span
-          >
+          <span>
+            <a href="{{ .RelPermalink }}" data-pagefind-filter="author">
+              {{ .Title }}
+            </a>
+          </span>
         {{ else }}
           ::
-          <span class="text-fuchsia-300" data-pagefind-filter="author"
-            >{{ . }}</span
-          >
+          <span class="text-fuchsia-300" data-pagefind-filter="author">
+            {{ . }}
+          </span>
         {{ end }}
       {{ end }}
       {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
@@ -40,8 +51,8 @@
           >::
           {{ .ReadingTime }}
           {{ $.Site.Params.minuteReadingTime | default "min read" }}
-          ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span
-        >
+          ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})
+        </span>
       {{ end }}
     </div>
 
@@ -52,7 +63,8 @@
             href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"
             class="no-underline hover:underline text-neutral-500 hover:text-neutral-300"
             data-pagefind-filter="tag"
-            >{{ . }}</a
+          >
+            {{ . }} </a
           >&nbsp;
         {{ end }}
       </span>
@@ -72,13 +84,16 @@
     <div class="post-content prose prose-neutral prose-invert max-w-none">
       {{- with .Content -}}
         <div>
-          {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `<div class="hanchor-block">
+          {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `
+            <div class="hanchor-block">
             ${1}
             <a href="#${2}" ariaLabel="Anchor" class="hanchor-link">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+            <use href="#hi-link" />
             </svg>
-            </a></div> ${3}` | safeHTML
+            </a>
+            </div>
+            ${3}` | safeHTML
           }}
         </div>
       {{- end -}}
@@ -106,11 +121,7 @@
               stroke="currentColor"
               class="w-10 h-10"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 19.5 8.25 12l7.5-7.5"
-              />
+              <use href="#hi-chevron-left" />
             </svg>
           </div>
           <div class="flex flex-col">
@@ -142,11 +153,7 @@
               stroke="currentColor"
               class="w-10 h-10"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              />
+              <use href="#hi-chevron-right" />
             </svg>
           </div>
         </a>
@@ -169,11 +176,7 @@
           stroke="currentColor"
           class="w-8 h-8"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-          />
+          <use href="#hi-arrow-uturn-up" />
         </svg>
       </div>
       <div class="flex flex-col justify-center">

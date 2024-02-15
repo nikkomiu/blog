@@ -6,8 +6,20 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Source Code Pro", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
-      serif: ["Source Code Pro", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
+      sans: [
+        "Source Code Pro",
+        "Monaco",
+        "Ubuntu Mono",
+        "Consolas",
+        "monospace",
+      ],
+      serif: [
+        "Source Code Pro",
+        "Monaco",
+        "Ubuntu Mono",
+        "Consolas",
+        "monospace",
+      ],
     },
     extend: {
       typography: ({ theme }) => ({

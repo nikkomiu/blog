@@ -1,11 +1,21 @@
 <div class="mobile-menu flex md:hidden relative">
   <button
-    class="mobile-menu-trigger border-2 border-fuchsia-500 text-fuchsia-500 py-[2px] px-2 cursor-pointer hover:bg-fuchsia-500 hover:text-fuchsia-50 select-none"
+    class="mobile-menu-trigger border-2 border-fuchsia-800 text-fuchsia-600 py-[2px] px-2 cursor-pointer hover:bg-fuchsia-800 hover:text-fuchsia-50 select-none flex items-center"
   >
-    Menu&nbsp;▾
+    Menu
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+      class="ml-1"
+    >
+      <use href="#hi-chevron-down-mini" />
+    </svg>
   </button>
   <ul
-    class="mobile-menu-dropdown absolute top-8 right-0 z-10 hidden bg-black border-2 border-fuchsia-500"
+    class="mobile-menu-dropdown absolute top-8 right-0 z-10 hidden bg-black border-2 border-fuchsia-800"
   >
     {{ range $.Site.Menus.main }}
       {{ if not .HasChildren }}
@@ -13,8 +23,9 @@
           <a
             href="{{ .URL }}"
             class="flex px-4 py-1 underline hover:no-underline"
-            >{{ .Name }}</a
           >
+            {{ .Name }}
+          </a>
         </li>
       {{ end }}
     {{ end }}
