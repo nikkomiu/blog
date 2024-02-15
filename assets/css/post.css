@@ -3,7 +3,7 @@
 }
 
 .table-of-contents h2 {
-  @apply text-xl font-bold my-3 text-fuchsia-400;
+  @apply text-xl font-bold my-3 text-fuchsia-600;
 }
 
 .table-of-contents ul {
@@ -15,19 +15,17 @@
 }
 
 .table-of-contents li::before {
-  @apply text-fuchsia-500;
+  @apply absolute left-[-20px] text-fuchsia-500;
 
   content: "-";
-  position: absolute;
-  left: -20px;
 }
 
 .table-of-contents a {
-  @apply underline text-fuchsia-300;
+  @apply text-fuchsia-300 hover:underline hover:text-fuchsia-500;
 }
 
-.table-of-contents a:hover {
-  @apply no-underline text-fuchsia-500;
+.post:not(:last-of-type) {
+  @apply border-b-2 border-fuchsia-950;
 }
 
 .posts .post:first-of-type {
@@ -36,10 +34,6 @@
 
 .posts .post:last-of-type {
   @apply pb-0;
-}
-
-.post:not(:last-of-type) {
-  @apply border-b-2 border-fuchsia-950;
 }
 
 .post-title {

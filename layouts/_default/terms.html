@@ -7,12 +7,11 @@
         {{ $count := .Count }}
         {{ with $.Site.GetPage (printf "/%s/%s" $type .Name) }}
           <li class="flex items-center">
-            <a class="py-1 pr-2" href="{{ .Permalink }}"
-              >{{ .Name }}</a>
+            <a class="py-1 pr-2" href="{{ .Permalink }}">{{ .Name }}</a>
             <span class="bg-fuchsia-950 text-fuchsia-500 px-2 rounded-full">
               {{ $count }}
             </span>
-        </li>
+          </li>
         {{ end }}
       {{ end }}
     </ul>

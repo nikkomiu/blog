@@ -13,7 +13,7 @@
       <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
       {{ if .Draft }}
         <span
-          class="flex center uppercase items-center text-sm px-2 ml-auto select-none text-orange-100 bg-orange-600 rounded-full"
+          class="flex center uppercase items-center text-sm px-2 ml-auto select-none text-orange-400 bg-orange-800 rounded-full"
           >Draft</span
         >
       {{ end }}
@@ -43,7 +43,10 @@
     {{ if .Params.tags }}
       <div class="text-neutral-500 mb-4">
         {{ range .Params.tags }}
-          #<a href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}" class="no-underline hover:underline text-neutral-500 hover:text-neutral-300">
+          #<a
+            href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}"
+            class="no-underline hover:underline text-neutral-500 hover:text-neutral-300"
+          >
             {{- . -}} </a
           >&nbsp;
         {{ end }}
@@ -65,7 +68,9 @@
 
     {{ if not .Params.showFullContent }}
       <div>
-        <a class="block text-fuchsia-500 font-bold py-1 mt-3 mb-1 hover:text-fuchsia-300" href="{{ .RelPermalink }}"
+        <a
+          class="block text-fuchsia-500 font-bold py-1 mt-3 mb-1 hover:text-fuchsia-300"
+          href="{{ .RelPermalink }}"
           >{{ $.Parent.Site.Params.ReadMore }} →</a
         >
       </div>

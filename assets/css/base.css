@@ -51,11 +51,13 @@ body {
 
 .breadcrumbs li::after {
   @apply ml-2 text-fuchsia-900;
+
   content: ">";
 }
 
 .breadcrumbs li:last-child::after {
   @apply ml-0;
+
   content: "";
 }
 
@@ -81,7 +83,13 @@ body {
   @apply flex flex-1 w-full;
 
   content: "";
-  background: repeating-linear-gradient(90deg,#86198f,#86198f 2px,transparent 0,transparent 10px);
+  background: repeating-linear-gradient(
+    90deg,
+    #86198f,
+    #86198f 2px,
+    transparent 0,
+    transparent 10px
+  );
 }
 
 .terms h1 {

@@ -29,18 +29,20 @@
 }
 
 .prose pre {
-  @apply flex;
+  @apply flex rounded-none mt-10 !bg-black;
+}
+
+.prose code,
+.prose kbd {
+  @apply text-fuchsia-500 bg-fuchsia-950 py-1 px-2;
 }
 
 .prose pre code {
   @apply px-0 bg-transparent;
 }
 
-.prose code, .prose kbd {
-  @apply text-fuchsia-500 bg-fuchsia-950 py-1 px-2;
-}
-
-.prose code code, .prose kbd kbd {
+.prose code code,
+.prose kbd kbd {
   @apply p-0 m-0;
 }
 
@@ -58,10 +60,6 @@
 
 .prose a:hover {
   @apply text-fuchsia-300;
-}
-
-.prose pre {
-  @apply rounded-none mt-10 !bg-black;
 }
 
 .prose ol li::marker {

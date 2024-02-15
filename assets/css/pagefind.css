@@ -8,6 +8,27 @@ body {
   --pagefind-ui-border-radius: 0;
 }
 
+@keyframes fade-in-perception {
+  0% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in-perception {
+  animation-name: fade-in-perception;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
 .site-search {
   @apply mt-0 mb-14;
 }
@@ -55,26 +76,5 @@ body {
   animation-name: spin;
   animation-duration: 1500ms;
   animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes fade-in-perception {
-  0% {
-    opacity: 0;
-  }
-
-  90% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.fade-in-perception {
-  animation-name: fade-in-perception;
-  animation-duration: 2000ms;
-  animation-iteration-count: 1;
   animation-timing-function: linear;
 }

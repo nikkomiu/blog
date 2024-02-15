@@ -3,7 +3,13 @@
     {{ if or $.Site.Params.showMenuItems ( eq .Site.Params.showMenuItems 0 ) }}
       {{ range first $.Site.Params.showMenuItems $.Site.Menus.main }}
         {{ if not .HasChildren }}
-          <li><a href="{{ .URL }}" class="text-fuchsia-300 hover:text-fuchsia-50 hover:underline">{{ .Name }}</a></li>
+          <li>
+            <a
+              href="{{ .URL }}"
+              class="text-fuchsia-300 hover:text-fuchsia-50 hover:underline"
+              >{{ .Name }}</a
+            >
+          </li>
         {{ end }}
       {{ end }}
       {{ if gt (len $.Site.Menus.main) $.Site.Params.showMenuItems }}
@@ -14,7 +20,13 @@
               <ul class="menu__dropdown">
                 {{ range last (sub (len $.Site.Menus.main) $.Site.Params.showMenuItems) $.Site.Menus.main }}
                   {{ if not .HasChildren }}
-                    <li><a href="{{ .URL }}" class="text-fuchsia-300 hover:text-fuchsia-50 hover:underline">{{ .Name }}</a></li>
+                    <li>
+                      <a
+                        href="{{ .URL }}"
+                        class="text-fuchsia-300 hover:text-fuchsia-50 hover:underline"
+                        >{{ .Name }}</a
+                      >
+                    </li>
                   {{ end }}
                 {{ end }}
               </ul>
@@ -25,7 +37,13 @@
     {{ else }}
       {{ range $.Site.Menus.main }}
         {{ if not .HasChildren }}
-          <li><a href="{{ .URL }}" class="text-fuchsia-300 hover:text-fuchsia-50 hover:underline">{{ .Name }}</a></li>
+          <li>
+            <a
+              href="{{ .URL }}"
+              class="text-fuchsia-300 hover:text-fuchsia-50 hover:underline"
+              >{{ .Name }}</a
+            >
+          </li>
         {{ end }}
       {{ end }}
     {{ end }}

@@ -1,13 +1,10 @@
 {{ define "main" }}
-  <article
-    class="post"
-    data-pagefind-body
-  >
+  <article class="post" data-pagefind-body>
     <h1 class="post-title flex items-center text-fuchsia-300">
       {{ .Title | markdownify }}
       {{ if .Draft }}
         <span
-          class="flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full"
+          class="flex center uppercase items-center text-sm px-2 select-none text-orange-400 bg-orange-800 ml-auto rounded-full"
           >Draft</span
         >
       {{ end }}
@@ -27,9 +24,7 @@
         {{ with $.Site.GetPage $authorPagePath }}
           ::
           <span
-            ><a
-              href="{{ .RelPermalink }}"
-              data-pagefind-filter="author"
+            ><a href="{{ .RelPermalink }}" data-pagefind-filter="author"
               >{{ .Title }}</a
             ></span
           >
