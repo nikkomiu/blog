@@ -1,46 +1,20 @@
-/* TODO: Switch to PostCSS */
-
 .highlight {
-  position: relative;
-  background: #000;
+  @apply relative bg-black;
 }
 
 .highlight .copy-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
-  transition: background-color 0.2s ease-in-out;
-  padding: 0.25rem 0.5rem;
-}
-
-.highlight .copy-button:hover {
-  background-color: #dd7cec;
+  @apply absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-500 duration-300;
 }
 
 .highlight .lang-tab {
-  position: absolute;
-  top: -1.7rem;
-  right: 0;
-  color: #d946ef;
-  border: 0.1rem solid rgba(217, 70, 239, 0.2);
-  background-color: rgba(217, 70, 239, 0.1);
-  padding: 0 0.5rem;
-  user-select: none;
-  font-size: 0.85rem;
+  @apply absolute right-0 select-none text-sm border border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
 }
 
 .highlight:hover .copy-button,
 .highlight .copy-button.active {
-  opacity: 0.8;
+  @apply opacity-80;
 }
 
 .highlight pre {
-  overflow-x: auto;
-  white-space: pre;
-  padding: 0.75rem 1rem;
-  border: 1px solid rgba(217, 70, 239, 0.4);
+  @apply overflow-x-auto whitespace-pre border border-fuchsia-900 px-4 py-3;
 }
