@@ -4,14 +4,15 @@
     <ul>
       {{ $type := .Type }}
       {{ range $key, $value := .Data.Terms.Alphabetical }}
-        {{ $name := .Name }}
         {{ $count := .Count }}
-        {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
-          <li>
-            <a class="terms-title" href="{{ .Permalink }}"
-              >{{ .Name }} ({{ $count }})</a
-            >
-          </li>
+        {{ with $.Site.GetPage (printf "/%s/%s" $type .Name) }}
+          <li class="flex items-center">
+            <a class="py-1 pr-2" href="{{ .Permalink }}"
+              >{{ .Name }}</a>
+            <span class="bg-fuchsia-950 text-fuchsia-500 px-2 rounded-full">
+              {{ $count }}
+            </span>
+        </li>
         {{ end }}
       {{ end }}
     </ul>

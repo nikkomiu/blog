@@ -1,6 +1,6 @@
 <header class="header">
   <div class="flex">
-    <div class="flex flex-1 header__logo">
+    <div class="flex flex-1 header-logo">
       {{ partial "logo.html" . }}
     </div>
     {{ if len $.Site.Menus }}
@@ -15,17 +15,17 @@
     {{ end }}
   </div>
 
-  <ul class="breadcrumbs flex items-stretch overflow-x-auto">
+  <ul class="breadcrumbs flex items-stretch overflow-x-auto py-6">
     {{- range .Ancestors.Reverse }}
       <li class="flex mr-2 select-none whitespace-nowrap">
         <a
-          class="underline transition-all ease-in-out text-neutral-300 hover:text-white hover:no-underline"
+          class="underline transition-all ease-in-out text-neutral-400 hover:text-neutral-50 hover:no-underline"
           href="{{ .RelPermalink }}"
           >{{ .Title }}</a
         >
       </li>
     {{- end }}
-    <li class="flex text-neutral-500 select-none whitespace-nowrap">
+    <li class="flex text-neutral-700 select-none whitespace-nowrap">
       {{ .Title }}
     </li>
   </ul>

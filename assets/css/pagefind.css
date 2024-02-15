@@ -9,7 +9,7 @@ body {
 }
 
 .site-search {
-  @apply mt-0 mb-8;
+  @apply mt-0 mb-14;
 }
 
 .site-search .fade-in-perception {
@@ -30,9 +30,6 @@ body {
 
 .site-search input:focus {
   @apply outline-none border-fuchsia-400 bg-neutral-900;
-
-  /* border-color: #ee72f1;
-  background: #111; */
 }
 
 .site-search input::placeholder {
@@ -41,5 +38,43 @@ body {
 
 /* stylelint-disable-next-line selector-class-pattern */
 .site-search .pagefind-ui__search-clear {
-  @apply bg-transparent;
+  background: transparent !important;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes fade-in-perception {
+  0% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in-perception {
+  animation-name: fade-in-perception;
+  animation-duration: 2000ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
 }

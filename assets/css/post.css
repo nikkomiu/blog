@@ -39,7 +39,7 @@
 }
 
 .post:not(:last-of-type) {
-  @apply border-b-2 border-neutral-700;
+  @apply border-b-2 border-fuchsia-950;
 }
 
 .post-title {

@@ -26,42 +26,8 @@
   src: url("../fonts/FiraCode-Bold.woff") format("woff");
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spin {
-  animation-name: spin;
-  animation-duration: 1500ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes fade-in-perception {
-  0% {
-    opacity: 0;
-  }
-
-  90% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.fade-in-perception {
-  animation-name: fade-in-perception;
-  animation-duration: 2000ms;
-  animation-iteration-count: 1;
-  animation-timing-function: linear;
+::selection {
+  @apply bg-fuchsia-900 text-fuchsia-50;
 }
 
 html {
@@ -83,26 +49,14 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.breadcrumbs {
-  margin: 0.25rem 0;
-  padding: 0.5rem 0;
-}
-
 .breadcrumbs li::after {
+  @apply ml-2 text-fuchsia-900;
   content: ">";
-  margin-left: 0.5rem;
 }
 
 .breadcrumbs li:last-child::after {
+  @apply ml-0;
   content: "";
-  margin-left: 0;
-}
-
-.collapse-section .title-indicator {
-  height: 1.2rem;
-  width: 1.2rem;
-  margin-right: 0.5rem;
-  transition: transform 0.2s ease-in-out;
 }
 
 .collapse-section.open .title-indicator {
@@ -110,25 +64,34 @@ body {
 }
 
 .collapse-section.open .section-title {
-  @apply bg-fuchsia-800 border-0;
+  @apply bg-fuchsia-950 text-fuchsia-500 border-0;
 
   border-top-color: rgba(0, 0, 0, 0.25);
 }
 
 .collapse-section.open .section-title:hover {
-  @apply bg-fuchsia-600;
+  @apply bg-fuchsia-800 text-fuchsia-200;
 }
 
 .collapse-section.open .section-content {
-  @apply block border-y-4 border-fuchsia-600;
-
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem 1rem;
+  @apply block border-y-4 border-fuchsia-700 bg-neutral-900 p-4;
 }
 
-.header__logo::after {
+.header-logo::after {
   @apply flex flex-1 w-full;
 
   content: "";
-  background: repeating-linear-gradient(90deg,#d946ef,#d946ef 2px,transparent 0,transparent 10px);
+  background: repeating-linear-gradient(90deg,#86198f,#86198f 2px,transparent 0,transparent 10px);
+}
+
+.terms h1 {
+  @apply text-4xl font-bold text-fuchsia-700 mb-8;
+}
+
+.terms h3 {
+  @apply text-2xl font-bold text-fuchsia-500 mb-4;
+}
+
+.terms ul li a {
+  @apply text-fuchsia-400 hover:underline hover:text-fuchsia-500;
 }
