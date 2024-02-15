@@ -1,26 +1,24 @@
 {{/* https://gohugo.io/content-management/comments/#readout */}}
 
-{{ if not hugo.IsDevelopment }}
-  <script
-    src="https://giscus.app/client.js"
-    data-repo="nikkomiu/blog"
-    data-repo-id="R_kgDOJGrgKw"
-    {{ if hugo.IsProduction -}}
-      data-category="Post Comments" data-category-id="DIC_kwDOJGrgK84CdQdl"
-    {{- else -}}
-      data-category="[DEV] Post Comments"
-      data-category-id="DIC_kwDOJGrgK84CdQec"
-    {{- end }}
-    data-mapping="specific"
-    data-term="{{ .RelPermalink }}"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="1"
-    data-input-position="top"
-    data-theme="transparent_dark"
-    data-lang="en"
-    data-loading="lazy"
-    crossorigin="anonymous"
-    async
-  ></script>
-{{ end }}
+
+<script
+  src="https://giscus.app/client.js"
+  data-repo="nikkomiu/blog"
+  data-repo-id="R_kgDOJGrgKw"
+  {{ if hugo.IsProduction -}}
+    data-category="Post Comments" data-category-id="DIC_kwDOJGrgK84CdQdl"
+  {{- else -}}
+    data-category="[DEV] Post Comments" data-category-id="DIC_kwDOJGrgK84CdQec"
+  {{- end }}
+  data-mapping="specific"
+  data-term="{{ .RelPermalink }}"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="1"
+  data-input-position="top"
+  data-theme="transparent_dark"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async
+></script>
