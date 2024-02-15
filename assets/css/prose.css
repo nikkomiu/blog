@@ -1,0 +1,91 @@
+.prose blockquote {
+  @apply py-2 border-x-0 my-6 pl-8 pr-0 py-4 sm:pr-4 border-y-2 border-fuchsia-500 bg-black relative;
+}
+
+.prose blockquote::before {
+  @apply absolute left-2 text-fuchsia-500;
+
+  content: ">";
+}
+
+.prose blockquote p {
+  @apply relative text-neutral-200 my-4;
+}
+
+.prose blockquote p::before {
+  content: "";
+}
+
+.prose blockquote p:first-of-type {
+  @apply mt-0;
+}
+
+.prose blockquote p:last-of-type {
+  @apply mb-0;
+}
+
+.prose blockquote p strong {
+  @apply text-neutral-50;
+}
+
+.prose pre {
+  @apply flex rounded-none mt-10 !bg-black;
+}
+
+.prose code,
+.prose kbd {
+  @apply text-fuchsia-500 bg-fuchsia-950 py-1 px-2;
+}
+
+.prose pre code {
+  @apply px-0 bg-transparent;
+}
+
+.prose code code,
+.prose kbd kbd {
+  @apply p-0 m-0;
+}
+
+.prose code::before {
+  content: "";
+}
+
+.prose code::after {
+  content: "";
+}
+
+.prose a {
+  @apply text-fuchsia-500 underline;
+}
+
+.prose a:hover {
+  @apply text-fuchsia-300;
+}
+
+.prose ol li::marker {
+  @apply text-fuchsia-500 font-bold;
+}
+
+.prose table {
+  @apply block bg-black border-2 border-fuchsia-700 border-collapse w-fit max-w-full mx-auto overflow-x-auto;
+}
+
+.prose table th {
+  @apply bg-fuchsia-950 text-fuchsia-600 font-bold border-r border-fuchsia-700 py-2 px-3;
+}
+
+.prose table th:last-of-type {
+  @apply border-r-0;
+}
+
+.prose table td {
+  @apply text-fuchsia-400 border-r border-fuchsia-700 py-2 px-3;
+}
+
+.prose table td:last-of-type {
+  @apply border-r-0;
+}
+
+.prose table * {
+  @apply border-fuchsia-700 border-dashed;
+}

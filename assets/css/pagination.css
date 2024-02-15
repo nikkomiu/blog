@@ -1,0 +1,52 @@
+/* TODO: Switch to PostCSS */
+/* stylelint-disable */
+
+.pagination {
+  margin-top: 50px;
+}
+@media print {
+  .pagination {
+    display: none;
+  }
+}
+
+.pagination__title {
+  display: flex;
+  text-align: center;
+  position: relative;
+  margin: 100px 0 20px;
+}
+
+.pagination__title-h {
+  text-align: center;
+  margin: 0 auto;
+  padding: 5px 10px;
+  background: #0a0a0a;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  z-index: 1;
+}
+
+.pagination__title hr {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin-top: 15px;
+  z-index: 0;
+}
+
+.pagination__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  gap: 10px;
+}
+
+.pagination__buttons a {
+  text-decoration: none;
+}

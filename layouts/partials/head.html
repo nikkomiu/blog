@@ -144,14 +144,6 @@
 {{ end }}
 <link rel="stylesheet" href="{{ $baseOut.RelPermalink }}" />
 
-{{ $styleCSS := resources.Get "scss/style.scss" }}
-{{ $styleOpts := (dict "targetPath" "css/style.css" "enableSourceMap" hugo.IsDevelopment "precision" 6 "includePaths" (slice "node_modules")) }}
-{{ $styleOut := $styleCSS | resources.ToCSS $styleOpts }}
-{{ if not hugo.IsDevelopment }}
-  {{ $styleOut = $styleOut | minify | fingerprint }}
-{{ end }}
-<link rel="stylesheet" href="{{ $styleOut.RelPermalink }}" />
-
 {{ partial "defer-css" ("pagefind/pagefind-ui.css" | relURL) }}
 
 {{ $baseSourceMap := "" }}

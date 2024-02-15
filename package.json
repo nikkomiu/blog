@@ -17,6 +17,7 @@
     "markdownlint:check": "markdownlint content/**/*.md"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.13",
     "colors": "^1.4.0",
     "markdownlint-cli": "^0.34.0",

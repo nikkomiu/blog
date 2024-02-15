@@ -10,10 +10,11 @@
         </h1>
 
         {{ if .Params.tags }}
-          <span class="post-tags">
+          <span class="text-neutral-500">
             {{ range .Params.tags }}
               #<a
                 href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"
+                class="no-underline hover:underline text-neutral-500 hover:text-neutral-300"
                 data-pagefind-filter="tag"
                 >{{ . }}</a
               >&nbsp;
@@ -34,7 +35,14 @@
         <div class="post-content mt-2">
           {{- with .Content -}}
             <div>
-              {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
+              {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `<div class="hanchor-block">
+                ${1}
+                <a href="#${2}" ariaLabel="Anchor" class="hanchor-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6">
+                <use href="#hi-link" />
+                </svg>
+                </a></div> ${3}` | safeHTML
+              }}
             </div>
           {{- end -}}
         </div>

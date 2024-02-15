@@ -1,5 +1,5 @@
 {
   "origins": ["https://blog.miu.guru"],
-  "originsRegex": ["https://.*blog-amk.pages.dev"],
+  "originsRegex": ["https://.*blog-amk.pages.dev", "http://localhost:1313"],
   "defaultCommentOrder": "newest"
 }

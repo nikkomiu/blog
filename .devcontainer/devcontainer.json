@@ -11,9 +11,6 @@
   "postCreateCommand": {
     "npm-install": "npm install"
   },
-  "containerEnv": {
-    "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "1"
-  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -29,16 +26,5 @@
       }
     }
   },
-  "portsAttributes": {
-    "1313": {
-      "onAutoForward": "ignore"
-    },
-    "1414": {
-      "onAutoForward": "ignore"
-    },
-    "7071": {
-      "onAutoForward": "ignore"
-    }
-  },
-  "forwardPorts": [4290]
+  "forwardPorts": [1313]
 }

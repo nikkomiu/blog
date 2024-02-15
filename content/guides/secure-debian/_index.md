@@ -1,6 +1,6 @@
 ---
 date: 2024-02-05T00:00:00Z
-title: Secure Debian Installation
+title: Secure Debian Installation Guide
 author: Nikko Miu
 tags:
   - debian

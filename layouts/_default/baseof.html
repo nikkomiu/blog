@@ -13,14 +13,8 @@
     {{ end }}
     {{ partial "head.html" . }}
   </head>
-  <body>
-    {{ $container := cond ($.Site.Params.FullWidthTheme | default false) "container full" (cond ($.Site.Params.CenterTheme | default false) "container center" "container") }}
-
-
-    <div
-      class="{{- $container -}}{{- cond ($.Site.Params.oneHeadingSize | default true) " headings-one-size" "" }}
-      "
-    >
+  <body class="flex bg-neutral-950 text-white">
+    <div class="flex flex-col w-full max-w-4xl mx-auto p-6">
       {{ partial "header.html" . }}
 
 
@@ -32,6 +26,8 @@
       {{ block "footer" . }}
         {{ partial "footer.html" . }}
       {{ end }}
+
+      {{ partial "svg.html" . }}
     </div>
   </body>
 </html>

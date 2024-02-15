@@ -1,12 +1,23 @@
 {{ define "main" }}
   <article class="post" data-pagefind-body>
-    <h1 class="post-title">
-      <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+    <h1 class="post-title flex items-center text-fuchsia-300">
+      {{ .Title | markdownify }}
       {{ if .Draft }}
         <span
-          class="draft-label flex center uppercase items-center text-sm px-2 select-none text-orange-100 bg-orange-600 ml-auto rounded-full"
-          >Draft</span
+          class="flex center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            class="sm:mr-1 w-4 h-4"
+          >
+            <use href="#hi-beaker" />
+          </svg>
+          <span class="hidden sm:inline">Draft</span>
+        </span>
       {{ end }}
     </h1>
     <div class="post-meta">
@@ -23,14 +34,16 @@
         {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
         {{ with $.Site.GetPage $authorPagePath }}
           ::
-          <span class="post-author"
-            ><a href="{{ .RelPermalink }}" data-pagefind-filter="author"
-              >{{ .Title }}</a
-            ></span
-          >
+          <span>
+            <a href="{{ .RelPermalink }}" data-pagefind-filter="author">
+              {{ .Title }}
+            </a>
+          </span>
         {{ else }}
           ::
-          <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
+          <span class="text-fuchsia-300" data-pagefind-filter="author">
+            {{ . }}
+          </span>
         {{ end }}
       {{ end }}
       {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
@@ -38,18 +51,20 @@
           >::
           {{ .ReadingTime }}
           {{ $.Site.Params.minuteReadingTime | default "min read" }}
-          ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span
-        >
+          ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})
+        </span>
       {{ end }}
     </div>
 
     {{ if .Params.tags }}
-      <span class="post-tags">
+      <span class="text-neutral-500">
         {{ range .Params.tags }}
           #<a
             href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"
+            class="no-underline hover:underline text-neutral-500 hover:text-neutral-300"
             data-pagefind-filter="tag"
-            >{{ . }}</a
+          >
+            {{ . }} </a
           >&nbsp;
         {{ end }}
       </span>
@@ -66,117 +81,115 @@
     {{ end }}
 
 
-    <div class="post-content">
+    <div class="post-content prose prose-neutral prose-invert max-w-none">
       {{- with .Content -}}
         <div>
-          {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
+          {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `
+            <div class="hanchor-block">
+            ${1}
+            <a href="#${2}" ariaLabel="Anchor" class="hanchor-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6">
+            <use href="#hi-link" />
+            </svg>
+            </a>
+            </div>
+            ${3}` | safeHTML
+          }}
         </div>
       {{- end -}}
     </div>
-
-    {{ $pt := .Parent.Type | inflect.Singularize | strings.Title }}
-    {{ if or .Params.next .Params.prev .PrevInSection .NextInSection }}
-      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 mb-8">
-        {{ if or .Params.prev .NextInSection }}
-          {{ $prev := .NextInSection }}
-          {{ if .Params.prev }}
-            {{ $prev = $.Site.GetPage .Params.prev }}
-          {{ end }}
-          <a
-            href="{{ $prev.Permalink }}"
-            class="flex flex-row mr-auto hover:underline"
-          >
-            <div class="flex items-center mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-10 h-10"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5 8.25 12l7.5-7.5"
-                />
-              </svg>
-            </div>
-            <div class="flex flex-col">
-              <h2 class="text-neutral-300 !mt-0">Previous {{ $pt }}</h2>
-              <p class="m-0 text-neutral-500">{{ $prev.Title }}</p>
-            </div>
-          </a>
-        {{ end }}
-
-        {{ if or .Params.next .PrevInSection }}
-          {{ $next := .PrevInSection }}
-          {{ if .Params.next }}
-            {{ $next = $.Site.GetPage .Params.next }}
-          {{ end }}
-          <a
-            href="{{ $next.Permalink }}"
-            class="flex flex-row ml-auto text-right hover:underline"
-          >
-            <div class="flex flex-col">
-              <h2 class="text-neutral-300 !mt-0">Next {{ $pt }}</h2>
-              <p class="m-0 text-neutral-500">{{ $next.Title }}</p>
-            </div>
-            <div class="flex items-center ml-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-10 h-10"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </div>
-          </a>
-        {{ end }}
-      </div>
-    {{ end }}
-
-
-    <div class="flex">
-      <a
-        href="{{ .Parent.Permalink }}"
-        class="flex flex-row mx-auto hover:underline lg:order-none mb-4"
-      >
-        <div class="flex items-center mr-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-10 h-10"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-            />
-          </svg>
-        </div>
-        <div class="flex flex-col justify-center">
-          <h2 class="text-neutral-300 !mt-0">Back to {{ .Parent.Title }}</h2>
-        </div>
-      </a>
-    </div>
-
-    {{ if eq .Type $.Site.Params.contentTypeName }}
-      {{ partial "posts_pagination.html" . }}
-    {{ end }}
-
-    {{ if not (.Params.hideComments | default false) }}
-      {{ partial "comments.html" . }}
-    {{ end }}
   </article>
+
+  {{ $pt := .Parent.Type | inflect.Singularize | strings.Title }}
+  {{ if or .Params.next .Params.prev .PrevInSection .NextInSection }}
+    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 mb-6 pt-2">
+      {{ if or .Params.prev .NextInSection }}
+        {{ $prev := .NextInSection }}
+        {{ if .Params.prev }}
+          {{ $prev = $.Site.GetPage .Params.prev }}
+        {{ end }}
+        <a
+          href="{{ $prev.Permalink }}"
+          class="flex flex-row mr-auto text-neutral-300 hover:bg-neutral-900 hover:text-white py-2 pr-3"
+        >
+          <div class="flex items-center mr-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10"
+            >
+              <use href="#hi-chevron-left" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <h2 class="!mt-0">Previous {{ $pt }}</h2>
+            <p class="m-0 text-neutral-500">{{ $prev.Title }}</p>
+          </div>
+        </a>
+      {{ end }}
+
+      {{ if or .Params.next .PrevInSection }}
+        {{ $next := .PrevInSection }}
+        {{ if .Params.next }}
+          {{ $next = $.Site.GetPage .Params.next }}
+        {{ end }}
+        <a
+          href="{{ $next.Permalink }}"
+          class="flex flex-row ml-auto text-right text-neutral-300 hover:bg-neutral-900 hover:text-white py-2 pl-3"
+        >
+          <div class="flex flex-col">
+            <h2 class="!mt-0">Next {{ $pt }}</h2>
+            <p class="m-0 text-neutral-500">{{ $next.Title }}</p>
+          </div>
+          <div class="flex items-center ml-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-10 h-10"
+            >
+              <use href="#hi-chevron-right" />
+            </svg>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+
+
+  <div class="flex">
+    <a
+      href="{{ .Parent.Permalink }}"
+      class="flex flex-row mx-auto lg:order-none mb-2 hover:bg-neutral-900 text-neutral-300 hover:text-white p-2"
+    >
+      <div class="flex items-center mr-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <use href="#hi-arrow-uturn-up" />
+        </svg>
+      </div>
+      <div class="flex flex-col justify-center">
+        <h2 class="!mt-0">Back to {{ .Parent.Title }}</h2>
+      </div>
+    </a>
+  </div>
+
+  {{ if eq .Type $.Site.Params.contentTypeName }}
+    {{ partial "posts_pagination.html" . }}
+  {{ end }}
+
+  {{ if not (.Params.hideComments | default false) }}
+    {{ partial "comments.html" . }}
+  {{ end }}
 {{ end }}

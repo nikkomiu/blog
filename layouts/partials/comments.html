@@ -1,8 +1,24 @@
-<!--
-To add comments section, please create `layouts/partials/comments.html` in your
-Hugo directory and insert:
+{{/* https://gohugo.io/content-management/comments/#readout */}}
 
-{{ template "_internal/disqus.html" . }}
 
-or whatever comment engine you want -> https://gohugo.io/content-management/comments/#readout
--->
+<script
+  src="https://giscus.app/client.js"
+  data-repo="nikkomiu/blog"
+  data-repo-id="R_kgDOJGrgKw"
+  {{ if hugo.IsProduction -}}
+    data-category="Post Comments" data-category-id="DIC_kwDOJGrgK84CdQdl"
+  {{- else -}}
+    data-category="[DEV] Post Comments" data-category-id="DIC_kwDOJGrgK84CdQec"
+  {{- end }}
+  data-mapping="specific"
+  data-term="{{ .RelPermalink }}"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="1"
+  data-input-position="top"
+  data-theme="transparent_dark"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async
+></script>

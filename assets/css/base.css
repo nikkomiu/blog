@@ -4,46 +4,50 @@
 
 @import "katex/dist/katex";
 
+@import "assets/css/prose";
+
 @import "assets/css/author";
 @import "assets/css/post";
 @import "assets/css/pagefind";
+@import "assets/css/footer.css";
+@import "assets/css/highlight.css";
+@import "assets/css/pagination.css";
 
-@font-face {
-  font-display: swap;
-  font-family: "Fira Code";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/FiraCode-Regular.woff") format("woff");
+@import "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap";
+
+::selection {
+  @apply bg-fuchsia-900 text-fuchsia-50;
 }
 
-@font-face {
-  font-display: swap;
-  font-family: "Fira Code";
-  font-style: normal;
-  font-weight: 800;
-  src: url("../fonts/FiraCode-Bold.woff") format("woff");
+html {
+  box-sizing: border-box;
 }
 
-.breadcrumbs {
-  margin: 0.25rem 0;
-  padding: 0.5rem 0;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  letter-spacing: -0.02em;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga", "tnum", "zero", "ss01", "locl";
+  font-variant-ligatures: contextual;
+  -webkit-overflow-scrolling: touch;
 }
 
 .breadcrumbs li::after {
+  @apply ml-2 text-fuchsia-900;
+
   content: ">";
-  margin-left: 0.5rem;
 }
 
 .breadcrumbs li:last-child::after {
-  content: "";
-  margin-left: 0;
-}
+  @apply ml-0;
 
-.collapse-section .title-indicator {
-  height: 1.2rem;
-  width: 1.2rem;
-  margin-right: 0.5rem;
-  transition: transform 0.2s ease-in-out;
+  content: "";
 }
 
 .collapse-section.open .title-indicator {
@@ -51,19 +55,49 @@
 }
 
 .collapse-section.open .section-title {
-  @apply bg-fuchsia-800 border-0;
+  @apply bg-fuchsia-950 text-fuchsia-500 border-0;
 
   border-top-color: rgba(0, 0, 0, 0.25);
 }
 
 .collapse-section.open .section-title:hover {
-  @apply bg-fuchsia-600;
+  @apply bg-fuchsia-800 text-fuchsia-200;
 }
 
 .collapse-section.open .section-content {
-  @apply border-y-4 border-fuchsia-600;
+  @apply block border-y-4 border-fuchsia-700 bg-neutral-900 p-4;
+}
 
-  display: block;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem 1rem;
+.header-logo::after {
+  @apply flex flex-1 w-full;
+
+  content: "";
+  background: repeating-linear-gradient(
+    90deg,
+    #86198f,
+    #86198f 2px,
+    transparent 0,
+    transparent 10px
+  );
+}
+
+.terms h1 {
+  @apply text-4xl font-bold text-fuchsia-700 mb-8;
+}
+
+.terms h3 {
+  @apply text-2xl font-bold text-fuchsia-500 mb-4;
+}
+
+.terms ul li a {
+  @apply text-fuchsia-400 hover:underline hover:text-fuchsia-500;
+}
+
+body .gist .blob-num /* line numbers */,
+body .gist .blob-code-inner {
+  border: none;
+}
+
+.giscus {
+  @apply mt-6 mb-8;
 }

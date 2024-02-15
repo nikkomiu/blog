@@ -6,13 +6,30 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Fira Code", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
-      serif: ["Fira Code", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
+      sans: [
+        "Source Code Pro",
+        "Monaco",
+        "Ubuntu Mono",
+        "Consolas",
+        "monospace",
+      ],
+      serif: [
+        "Source Code Pro",
+        "Monaco",
+        "Ubuntu Mono",
+        "Consolas",
+        "monospace",
+      ],
     },
     extend: {
-      colors: {
-        primary: "#ee72f1",
-      },
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            "--tw-prose-headings": theme("colors.fuchsia[500]"),
+          },
+        },
+      }),
     },
   },
+  plugins: [require("@tailwindcss/typography")],
 };

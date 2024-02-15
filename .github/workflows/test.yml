@@ -1,4 +1,4 @@
-name: Test
+name: Testing
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  test:
+  Lint:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
@@ -33,7 +33,7 @@ jobs:
         run: npm run prettier:check
 
       - name: Stylelint
-        run: npm run stylelint:check
+        run: npm run stylelint:check -- -f github
 
       - name: Markdownlint
         run: npm run markdownlint:check

@@ -1,20 +1,41 @@
-<ul class="menu menu--mobile">
-  <li class="menu__trigger">Menu&nbsp;▾</li>
-  <li>
-    <ul class="menu__dropdown">
-      {{ range $.Site.Menus.main }}
-        {{ if not .HasChildren }}
-          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
-        {{ end }}
+<div class="mobile-menu flex md:hidden relative">
+  <button
+    class="mobile-menu-trigger border-2 border-fuchsia-800 text-fuchsia-600 py-[2px] px-2 cursor-pointer hover:bg-fuchsia-800 hover:text-fuchsia-50 select-none flex items-center"
+  >
+    Menu
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+      class="ml-1"
+    >
+      <use href="#hi-chevron-down-mini" />
+    </svg>
+  </button>
+  <ul
+    class="mobile-menu-dropdown absolute top-8 right-0 z-10 hidden bg-black border-2 border-fuchsia-800"
+  >
+    {{ range $.Site.Menus.main }}
+      {{ if not .HasChildren }}
+        <li>
+          <a
+            href="{{ .URL }}"
+            class="flex px-4 py-1 underline hover:no-underline"
+          >
+            {{ .Name }}
+          </a>
+        </li>
       {{ end }}
-      {{ if and $.Site.Params.showLanguageSelector (len $.Site.Home.AllTranslations) }}
-        <hr />
-        {{ range $.Site.Home.AllTranslations }}
-          <li>
-            <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
-          </li>
-        {{ end }}
+    {{ end }}
+    {{ if and $.Site.Params.showLanguageSelector (len $.Site.Home.AllTranslations) }}
+      <hr />
+      {{ range $.Site.Home.AllTranslations }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+        </li>
       {{ end }}
-    </ul>
-  </li>
-</ul>
+    {{ end }}
+  </ul>
+</div>
