@@ -4,7 +4,7 @@ body {
   --pagefind-ui-background: #000; /* black */
   --pagefind-ui-border: rgb(217 70 239); /* fuchsia-500 */
   --pagefind-ui-tag: rgb(74 4 78); /* fuchsia-900 */
-  --pagefind-ui-font: "Fira Code", monaco, "Ubuntu Mono", consolas, monospace;
+  --pagefind-ui-font: "Source Code Pro", monaco, "Ubuntu Mono", consolas, monospace;
   --pagefind-ui-border-radius: 0;
 }
 

@@ -1,0 +1,46 @@
+/* TODO: Switch to PostCSS */
+
+.highlight {
+  position: relative;
+  background: #000;
+}
+
+.highlight .copy-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  padding: 0.25rem 0.5rem;
+}
+
+.highlight .copy-button:hover {
+  background-color: #dd7cec;
+}
+
+.highlight .lang-tab {
+  position: absolute;
+  top: -1.7rem;
+  right: 0;
+  color: #d946ef;
+  border: 0.1rem solid rgba(217, 70, 239, 0.2);
+  background-color: rgba(217, 70, 239, 0.1);
+  padding: 0 0.5rem;
+  user-select: none;
+  font-size: 0.85rem;
+}
+
+.highlight:hover .copy-button,
+.highlight .copy-button.active {
+  opacity: 0.8;
+}
+
+.highlight pre {
+  overflow-x: auto;
+  white-space: pre;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(217, 70, 239, 0.4);
+}

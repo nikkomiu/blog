@@ -9,22 +9,11 @@
 @import "assets/css/author";
 @import "assets/css/post";
 @import "assets/css/pagefind";
+@import "assets/css/footer.css";
+@import "assets/css/highlight.css";
+@import "assets/css/pagination.css";
 
-@font-face {
-  font-display: swap;
-  font-family: "Fira Code";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/FiraCode-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-display: swap;
-  font-family: "Fira Code";
-  font-style: normal;
-  font-weight: 800;
-  src: url("../fonts/FiraCode-Bold.woff") format("woff");
-}
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
 ::selection {
   @apply bg-fuchsia-900 text-fuchsia-50;
@@ -102,4 +91,9 @@ body {
 
 .terms ul li a {
   @apply text-fuchsia-400 hover:underline hover:text-fuchsia-500;
+}
+
+body .gist .blob-num /* line numbers */,
+body .gist .blob-code-inner {
+  border: none;
 }

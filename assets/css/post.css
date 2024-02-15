@@ -1,5 +1,5 @@
 .table-of-contents {
-  @apply my-4;
+  @apply mt-10 mb-16;
 }
 
 .table-of-contents h2 {
