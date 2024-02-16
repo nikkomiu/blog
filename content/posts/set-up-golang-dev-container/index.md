@@ -25,7 +25,7 @@ You can use the [reference project](https://github.com/nikkomiu/blog-goapp) on G
 
 Before we get started, you'll need to have the following installed:
 
-- [Docker](https://www.docker.com/products/docker-desktop)
+- [Docker](https://www.docker.com/products/docker-desktop/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [VS Code](https://code.visualstudio.com/)
 
@@ -34,7 +34,7 @@ Before we get started, you'll need to have the following installed:
 This Dev Container will also have a couple of _(optional)_ handy tools installed:
 
 - [Trivy](https://trivy.dev/) - used to help us find vulnerabilities in our code.
-- [age](https://github.com/FiloSottile/age) and [sops](https://github.com/mozilla/sops) - for safely storing encrypted
+- [AGE](https://github.com/FiloSottile/age) and [sops](https://github.com/mozilla/sops) - for safely storing encrypted
   secrets in our Git repository.
 - **Docker CLI** - for building and running our app's Docker container(s).
 
@@ -48,7 +48,7 @@ There are a few other assumptions about development workflow that we will make:
 - [VS Code](https://code.visualstudio.com/) will be our editor.
 - VS Code will be the editor for our Git commits
   (as well as any other time the `EDITOR` is used in the integrated terminal).
-- We will be using `zsh` and [Oh My Zsh](https://ohmyz.sh/) as our shell
+- We will be using `zsh` and [Oh My ZSH](https://ohmyz.sh/) as our shell
   with a theme configurable through a Docker build argument (`ZSH_THEME_NAME`).
 - We use a jailed user (`coder`) with `sudo` access for development.
   This is particularly useful to get around some issues that arise by trying to work on a Git repository as `root`.
