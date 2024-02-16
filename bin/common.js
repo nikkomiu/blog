@@ -1,8 +1,6 @@
 const { spawn } = require("child_process");
-const { promises: fs, mkdir } = require("fs");
-const glob = require("fast-glob");
+const { promises: fs } = require("fs");
 const colors = require("colors");
-const package = require("../package.json");
 
 const runningProcesses = {};
 
@@ -27,6 +25,16 @@ async function waitForFile(file, options = {}) {
       }
 
       await sleep(50);
+    }
+  }
+}
+
+async function removeIfExists(file) {
+  try {
+    await fs.rm(file, { recursive: true });
+  } catch (err) {
+    if (err.code !== "ENOENT") {
+      throw err;
     }
   }
 }
@@ -82,21 +90,38 @@ function logTask(task, content, from) {
   }
 }
 
-function runProcess(command, args, options) {
+function runCommand(
+  command,
+  args,
+  { throwOnNonZeroExit, onStdout, onStderr, ...options } = {}
+) {
+  const name = getTaskName(command, args);
+  const proc = spawn(command, args, options);
+
+  proc.stdout.on("data", onStdout || ((data) => logTask(name, data, "stdout")));
+  proc.stderr.on("data", onStderr || ((data) => logTask(name, data, "stderr")));
+
+  return new Promise((resolve, reject) =>
+    proc.on("exit", (code) => {
+      if (throwOnNonZeroExit && proc.exitCode !== 0) {
+        reject(new Error(`Process ${name} exited with code ${code}`));
+      }
+
+      resolve(code);
+    })
+  );
+}
+
+function runProcess(command, args, options = {}) {
   const name = getTaskName(command, args);
   logTask(name, `Starting task...`, "stdout");
 
-  const proc = spawn(command, args, options);
-  proc.stdout.on("data", (data) => logTask(name, data, "stdout"));
-  proc.stderr.on("data", (data) => logTask(name, data, "stderr"));
+  const procData = {};
 
-  const procData = {
-    exitPromise: new Promise((resolve) =>
-      proc.on("exit", (code) => resolve(code))
-    ),
-    kill: () => proc.kill("SIGINT"),
-    process,
+  options.postCreate = (proc) => {
+    procData.kill = () => proc.kill("SIGINT");
   };
+  procData.exitPromise = runCommand(command, args, options);
 
   runningProcesses[name] = procData;
   return [name, procData];
@@ -136,8 +161,10 @@ module.exports = {
   // Utilities
   sleep,
   waitForFile,
+  removeIfExists,
 
   // Generic process runner
+  runCommand,
   runProcess,
   removeProcess,
 

@@ -1,25 +1,22 @@
 #!/usr/bin/env node
 
 const common = require('./common');
+const fs = require('fs').promises;
+
+const isStaging = process.argv.includes('--staging') || (!!process.env.CF_PAGES && process.env.CF_PAGES_BRANCH !== 'main');
 
 async function buildHugo() {
   const extraArgs = '--enableGitInfo --minify --cleanDestinationDir'.split(' ');
-  if (process.env.BUILD_DRAFTS === 'true') {
-    console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
-    extraArgs.push('--buildDrafts');
-    extraArgs.push('--environment', 'staging');
-  }
 
-  if (process.env.BUILD_FUTURES === 'true') {
-    extraArgs.push('--buildFuture');
-  }
+  if (isStaging) {
+    extraArgs.push('--environment', 'staging', '--buildDrafts', '--buildFuture');
 
-  if (!!process.env.CF_PAGES) {
-    if (process.env.CF_PAGES_BRANCH === 'main') {
-      extraArgs.push('--baseURL', 'https://blog.miu.guru/');
-    } else if (process.env.CF_PAGES_URL) {
+    if (!!process.env.CF_PAGES) {
       extraArgs.push('--baseURL', process.env.CF_PAGES_URL);
     }
+  } else {
+    extraArgs.push('--environment', 'production');
+    extraArgs.push('--baseURL', 'https://blog.miu.guru/');
   }
 
   const [procName] = common.runProcess('hugo', extraArgs);
@@ -40,11 +37,13 @@ async function buildSearch() {
 }
 
 async function main() {
+  console.log(`Building for ${isStaging ? 'staging' : 'production'}...`);
+
   await buildHugo();
   await buildSearch();
 }
 
 main().catch((err) => {
-  console.error(colors.red(err));
+  console.error(err);
   process.exit(1);
 });
