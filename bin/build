@@ -41,19 +41,10 @@ async function buildSearch() {
   ]);
 }
 
-async function checkout(branch) {
-  let exitCode = await common.runCommand('git', ['checkout', branch]);
-  if (exitCode !== 0) {
-    await common.runCommand('git', ['stash'], { throwOnNonZeroExit: true });
-    await common.runCommand('git', ['checkout', branch], { throwOnNonZeroExit: true });
-    await common.runCommand('git', ['stash', 'pop'], { throwOnNonZeroExit: true });
-  }
-}
-
 async function main() {
   if (process.argv.includes('--diff')) {
     // checkout master
-    await checkout('main');
+    await common.runCommand('git', ['checkout', 'main'], { throwOnNonZeroExit: true });
 
     // build the upstream branch
     await buildHugo();
@@ -63,7 +54,7 @@ async function main() {
     await fs.rename('public', 'public-upstream');
 
     // checkout -
-    await checkout('-');
+    await common.runCommand('git', ['checkout', '-'], { throwOnNonZeroExit: true });
 
     // build the current branch
     await buildHugo();
