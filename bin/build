@@ -41,13 +41,19 @@ async function buildSearch() {
   ]);
 }
 
+async function checkout(branch) {
+  let exitCode = await common.runCommand('git', ['checkout', branch]);
+  if (exitCode !== 0) {
+    await common.runCommand('git', ['stash'], { throwOnNonZeroExit: true });
+    await common.runCommand('git', ['checkout', branch], { throwOnNonZeroExit: true });
+    await common.runCommand('git', ['stash', 'pop'], { throwOnNonZeroExit: true });
+  }
+}
+
 async function main() {
   if (process.argv.includes('--diff')) {
     // checkout master
-    const gitExitCode = await common.runCommand('git', ['checkout', 'main']);
-    if (gitExitCode !== 0) {
-      throw new Error('Failed to checkout the previous branch');
-    }
+    await checkout('main');
 
     // build the upstream branch
     await buildHugo();
@@ -57,10 +63,7 @@ async function main() {
     await fs.rename('public', 'public-upstream');
 
     // checkout -
-    gitExitCode = await common.runCommand('git', ['checkout', '-']);
-    if (gitExitCode !== 0) {
-      throw new Error('Failed to checkout the previous branch');
-    }
+    await checkout('-');
 
     // build the current branch
     await buildHugo();
