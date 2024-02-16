@@ -59,9 +59,21 @@
   @apply text-fuchsia-300;
 }
 
+.prose ol {
+  @apply pl-10 flex flex-col;
+}
+
+.prose ol li {
+  @apply pl-0 my-1;
+}
+
 .prose ul li::marker {
-  @apply text-fuchsia-500;
-  content: '-';
+  @apply text-fuchsia-500 font-bold;
+  content: "-";
+}
+
+.prose ul li {
+  @apply pl-3;
 }
 
 .prose ul li p {
@@ -104,7 +116,8 @@
   @apply mt-12 relative;
 }
 
-.prose .highlight pre, .prose .highlight code {
+.prose .highlight pre,
+.prose .highlight code {
   @apply text-fuchsia-500;
 }
 
