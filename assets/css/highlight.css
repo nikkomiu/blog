@@ -1,13 +1,9 @@
-.highlight {
-  @apply relative bg-black;
-}
-
 .highlight .copy-button {
   @apply absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-500 duration-300;
 }
 
 .highlight .lang-tab {
-  @apply absolute right-0 select-none text-sm border border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
+  @apply absolute right-0 select-none text-sm border border-solid border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
 }
 
 .highlight:hover .copy-button,

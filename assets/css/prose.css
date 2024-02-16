@@ -28,10 +28,6 @@
   @apply text-neutral-50;
 }
 
-.prose pre {
-  @apply flex rounded-none mt-10 !bg-black;
-}
-
 .prose code,
 .prose kbd {
   @apply text-fuchsia-500 bg-fuchsia-950 py-1 px-2;
@@ -88,4 +84,42 @@
 
 .prose table * {
   @apply border-fuchsia-700 border-dashed;
+}
+
+.prose .highlight {
+  @apply mt-12 relative;
+}
+
+.prose .highlight > div {
+  @apply border border-fuchsia-900 border-solid;
+}
+
+.prose .highlight > pre {
+  @apply flex rounded-none mt-10 !bg-black border border-fuchsia-900;
+}
+
+/* highlight shortcode - line number (non-numbered and numbered parent) */
+.prose .highlight code:not([data-lang]) > span {
+  @apply pt-[3px] pb-[3.5px] !pl-4 pr-2;
+}
+
+/* highlight shortcode - line highlight number */
+.prose .highlight code:not([data-lang]) > span > span {
+  @apply !pl-0;
+}
+
+.prose .highlight table {
+  @apply w-full;
+}
+
+.prose .highlight table code[data-lang] > span {
+  @apply pr-4;
+}
+
+.prose .highlight table pre {
+  @apply m-0 px-0 py-4 border-0;
+}
+
+.prose .highlight table code {
+  @apply p-0;
 }

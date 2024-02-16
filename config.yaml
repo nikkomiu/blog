@@ -53,7 +53,7 @@ menu:
 
 markup:
   highlight:
-    style: fruity
+    style: modus-vivendi
 
 params:
   subtitle: Reduce, Recycle, Recode
