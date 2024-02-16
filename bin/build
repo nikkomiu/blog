@@ -44,16 +44,29 @@ async function buildSearch() {
 async function main() {
   if (process.argv.includes('--diff')) {
     // checkout master
-    common.runProcess('git', ['checkout', 'main']);
+    const gitExitCode = await common.runCommand('git', ['checkout', 'main']);
+    if (gitExitCode !== 0) {
+      throw new Error('Failed to checkout the previous branch');
+    }
 
+    // build the upstream branch
     await buildHugo();
+
+    // remove public-upstream
+    await common.removeIfExists('public-upstream');
     await fs.rename('public', 'public-upstream');
 
     // checkout -
-    common.runProcess('git', ['checkout', '-']);
+    gitExitCode = await common.runCommand('git', ['checkout', '-']);
+    if (gitExitCode !== 0) {
+      throw new Error('Failed to checkout the previous branch');
+    }
+
+    // build the current branch
+    await buildHugo();
 
     // diff public-upstream public
-    common.runProcess('diff', ['--recursive', '--unified', 'public-upstream', 'public']);
+    await common.runCommand('diff', ['--recursive', '--unified', '--new-file', 'public-upstream', 'public']);
   } else {
     await buildHugo();
   }
@@ -62,6 +75,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(colors.red(err));
+  console.error(err);
   process.exit(1);
 });

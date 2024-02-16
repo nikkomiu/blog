@@ -31,6 +31,16 @@ async function waitForFile(file, options = {}) {
   }
 }
 
+async function removeIfExists(file) {
+  try {
+    await fs.rm(file, { recursive: true });
+  } catch (err) {
+    if (err.code !== "ENOENT") {
+      throw err;
+    }
+  }
+}
+
 function getTaskName(command, args) {
   if (command === "npx") {
     return args[0];
@@ -82,21 +92,26 @@ function logTask(task, content, from) {
   }
 }
 
-function runProcess(command, args, options) {
+function runCommand(command, args, options) {
   const name = getTaskName(command, args);
-  logTask(name, `Starting task...`, "stdout");
-
   const proc = spawn(command, args, options);
+
   proc.stdout.on("data", (data) => logTask(name, data, "stdout"));
   proc.stderr.on("data", (data) => logTask(name, data, "stderr"));
 
-  const procData = {
-    exitPromise: new Promise((resolve) =>
-      proc.on("exit", (code) => resolve(code))
-    ),
-    kill: () => proc.kill("SIGINT"),
-    process,
-  };
+  return new Promise((resolve) => proc.on("exit", resolve));
+}
+
+function runProcess(command, args, options = {}) {
+  const name = getTaskName(command, args);
+  logTask(name, `Starting task...`, "stdout");
+
+  const procData = {};
+
+  options.postCreate = (proc) => {
+    procData.kill = () => proc.kill("SIGINT");
+  }
+  procData.exitPromise = runCommand(command, args, options);
 
   runningProcesses[name] = procData;
   return [name, procData];
@@ -136,8 +151,10 @@ module.exports = {
   // Utilities
   sleep,
   waitForFile,
+  removeIfExists,
 
   // Generic process runner
+  runCommand,
   runProcess,
   removeProcess,
 
