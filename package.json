@@ -8,7 +8,7 @@
     "start": "bin/start --draft --future",
     "preview": "bin/start --staging",
     "build": "bin/build",
-    "build:diff": "bin/build --diff",
+    "build:staging": "bin/build --staging",
     "clean": "bin/clean",
     "prelint": "npm run prettier",
     "lint": "npm run stylelint",

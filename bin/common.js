@@ -1,8 +1,6 @@
 const { spawn } = require("child_process");
-const { promises: fs, mkdir } = require("fs");
-const glob = require("fast-glob");
+const { promises: fs } = require("fs");
 const colors = require("colors");
-const package = require("../package.json");
 
 const runningProcesses = {};
 
@@ -92,15 +90,15 @@ function logTask(task, content, from) {
   }
 }
 
-function runCommand(command, args, options = {}) {
+function runCommand(command, args, { throwOnNonZeroExit, onStdout, onStderr, ...options } = {}) {
   const name = getTaskName(command, args);
   const proc = spawn(command, args, options);
 
-  proc.stdout.on("data", (data) => logTask(name, data, "stdout"));
-  proc.stderr.on("data", (data) => logTask(name, data, "stderr"));
+  proc.stdout.on("data", onStdout || ((data) => logTask(name, data, "stdout")));
+  proc.stderr.on("data", onStderr || ((data) => logTask(name, data, "stderr")));
 
   return new Promise((resolve, reject) => proc.on("exit", (code) => {
-    if (options.throwOnNonZeroExit && proc.exitCode !== 0) {
+    if (throwOnNonZeroExit && proc.exitCode !== 0) {
       reject(new Error(`Process ${name} exited with code ${code}`));
     }
 

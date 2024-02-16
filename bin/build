@@ -3,25 +3,21 @@
 const common = require('./common');
 const fs = require('fs').promises;
 
+const isStaging = process.argv.includes('--staging') || (!!process.env.CF_PAGES && process.env.CF_PAGES_BRANCH !== 'main');
+
+console.log(`Building for ${isStaging ? 'staging' : 'production'}...`);
 async function buildHugo() {
   const extraArgs = '--enableGitInfo --minify --cleanDestinationDir'.split(' ');
 
-  if (process.env.BUILD_DRAFTS === 'true') {
-    console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
-    extraArgs.push('--buildDrafts');
-    extraArgs.push('--environment', 'staging');
-  }
+  if (isStaging) {
+    extraArgs.push('--environment', 'staging', '--buildDrafts', '--buildFuture');
 
-  if (process.env.BUILD_FUTURES === 'true') {
-    extraArgs.push('--buildFuture');
-  }
-
-  if (!!process.env.CF_PAGES) {
-    if (process.env.CF_PAGES_BRANCH === 'main') {
-      extraArgs.push('--baseURL', 'https://blog.miu.guru/');
-    } else if (process.env.CF_PAGES_URL) {
+    if (!!process.env.CF_PAGES) {
       extraArgs.push('--baseURL', process.env.CF_PAGES_URL);
     }
+  } else {
+    extraArgs.push('--environment', 'production');
+    extraArgs.push('--baseURL', 'https://blog.miu.guru/');
   }
 
   const [procName] = common.runProcess('hugo', extraArgs);
@@ -42,7 +38,7 @@ async function buildSearch() {
 }
 
 async function main() {
-  if (process.argv.includes('--diff')) {
+  if (isStaging) {
     // checkout master
     await common.runCommand('git', ['checkout', 'main'], { throwOnNonZeroExit: true });
 
@@ -59,8 +55,15 @@ async function main() {
     // build the current branch
     await buildHugo();
 
-    // diff public-upstream public
-    await common.runCommand('diff', ['--recursive', '--unified', '--new-file', 'public-upstream', 'public']);
+    // diff public-upstream public to diff.txt
+    const diffFile = await fs.open('public/diff.txt', 'w');
+    await common.runCommand('diff', ['--recursive', '--unified', '--new-file', 'public-upstream', 'public'], {
+      onStdout: (data) => diffFile.write(data),
+    });
+    await diffFile.close();
+
+    // remove public-upstream
+    await common.removeIfExists('public-upstream');
   } else {
     await buildHugo();
   }
