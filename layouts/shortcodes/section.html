@@ -19,6 +19,6 @@
     {{ .Get "title" }}
   </button>
   <div class="section-content hidden transition-all ease-in-out">
-    {{ .Inner }}
+    {{ .Inner | markdownify }}
   </div>
 </section>

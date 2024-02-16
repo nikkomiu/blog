@@ -17,8 +17,8 @@
     "prettier:check": "prettier --check .",
     "stylelint": "stylelint assets/**/*.{scss,css} --fix",
     "stylelint:check": "stylelint assets/**/*.{scss,css}",
-    "markdownlint": "markdownlint content/**/*.md --fix",
-    "markdownlint:check": "markdownlint content/**/*.md"
+    "markdownlint": "markdownlint content/ --fix",
+    "markdownlint:check": "markdownlint content/"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",

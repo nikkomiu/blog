@@ -15,7 +15,7 @@ const copiedHTML = `
   <use xlink:href="#hi-clipboard-document-check" />
 </svg>
 <span>Copied!</span>
-`
+`;
 
 export function loadCodeActions() {
   document.querySelectorAll(".highlight code[data-lang]").forEach((el) => {

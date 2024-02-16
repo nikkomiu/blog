@@ -12,6 +12,10 @@
   @apply relative text-neutral-200 my-4;
 }
 
+.prose ul li p {
+  @apply my-0;
+}
+
 .prose blockquote p::before {
   content: "";
 }
@@ -59,13 +63,22 @@
   @apply text-fuchsia-300;
 }
 
-.prose ul li::marker {
-  @apply text-fuchsia-500;
-  content: '-';
+.prose ol {
+  @apply pl-10 flex flex-col;
 }
 
-.prose ul li p {
-  @apply my-0;
+.prose ol li {
+  @apply pl-0 my-1;
+}
+
+.prose ul li::marker {
+  @apply text-fuchsia-500 font-bold;
+
+  content: "-";
+}
+
+.prose ul li {
+  @apply pl-3;
 }
 
 .prose ul li p:not(:first-of-type) {
@@ -104,7 +117,8 @@
   @apply mt-12 relative;
 }
 
-.prose .highlight pre, .prose .highlight code {
+.prose .highlight pre,
+.prose .highlight code {
   @apply text-fuchsia-500;
 }
 

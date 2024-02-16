@@ -30,6 +30,33 @@ quam quisque id diam vel. Egestas erat imperdiet sed euismod nisi. Scelerisque
 felis imperdiet proin fermentum leo vel orci porta non. Ut faucibus pulvinar
 elementum integer. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl.
 
+{{< highlight go "linenos=table,hl_lines=3 7-9,linenostart=6" >}}
+package main
+
+import "fmt"
+
+const some = "thing"
+
+func printSome() {
+fmt.Println(some)
+}
+
+func main() {
+fmt.Println("Hello, World!")
+
+printSome()
+}
+{{< / highlight >}}
+
+A set of ordered items:
+
+1. abc
+2. def
+3. ghi
+4. jkl
+
+A set of unordered items:
+
 - some
 - thing
 - else
