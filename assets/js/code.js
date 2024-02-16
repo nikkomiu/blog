@@ -5,7 +5,7 @@ const langMapping = {
 
 export function loadCodeActions() {
   document.querySelectorAll(".highlight code[data-lang]").forEach((el) => {
-    console.log(el)
+    console.log(el);
     const button = document.createElement("button");
     button.innerText = "Copy";
     button.classList.add("copy-button");
