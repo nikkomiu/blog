@@ -28,6 +28,13 @@ working on our Docker container. However, the principles used in this should be 
 language since we're making changes that would optimize the build and runtime of the Linux environment running
 within a Docker container.
 
+If you're going to be following along with my sample repository, the `Dockerfile`s aren't going to be in the root
+of the repository. They're located in the `rel` directory and are named `mariner.Dockerfile` and `alpine.Dockerfile`.
+The `mariner.Dockerfile` is the Dockerfile that we're going to be working on in this article. The `alpine.Dockerfile`
+is a Dockerfile that I've created to show the difference in size between a CBL-Mariner 2.0-based image and an
+Alpine-based image. Using a `rel` directory is a common pattern for me when I'm working on a project that has
+many release specific files (like Dockerfiles, Helm charts, encrypted release secrets, etc.).
+
 > **Note:** When we check the container for Linux distribution later in this article we will be using
 > [Trivy](https://trivy.dev/) to scan the container for vulnerabilities. If you're following along make sure to
 > follow the extra step to add Trivy to your Dev Container.
@@ -74,7 +81,7 @@ As said before, this is a highly unoptimized build. So, with that in mind, let's
 >
 > **Answer:** When we're building Docker containers start up time is a large cost in the
 > (typically) highly elastic infrastructure environments these applications usually run in.
-> Because of this, we want to make sure that we reduce the start up time of our application
+> Because of this, we want to make sure that we reduce the startup time of our application
 > as much as possible. The easiest way to reduce this start up time of our container is to
 > reduce the size of the final image that's being created. It's important because when the Docker
 > daemon starts a new instance of your container it's going to pull down the container image
@@ -112,9 +119,9 @@ This is a much more optimal size for our final image, but we can do better!
 ## Compressing Binary with UPX
 
 After we download OS dependencies from TDNF we can download [UPX](https://upx.github.io/)
-from the [UPX Release](https://github.com/upx/upx/releases/latest) page. To make this a little
-bit more generic and "reusable" I'm going to set a Docker build arg with a default version
-(the latest version at the time of writing this) that can be overriden later though a `--build-arg` to the Docker builder.
+from the [UPX Release](https://github.com/upx/upx/releases/latest) page. To make this a bit more generic and "reusable"
+I'm going to set a Docker build arg with a default version (the latest version at the time of writing this) that can be
+overridden later though a `--build-arg` to the Docker builder.
 
 Add the following after the `RUN tdnf install` step (I typically include it before the `WORKDIR` command) to
 include UPX:
@@ -404,7 +411,7 @@ We don't have any vulnerabilities in our final image, but if we did, we would se
 
 Adding these two things back into our application only result in about a **1.5 MB** increase in the size of our final
 image. This is a small price to pay for the ability to scan our final image for vulnerabilities as well as generating
-SBOMs for our Docker images.
+an SBOM for our Docker images.
 
 ## Final Thoughts
 
