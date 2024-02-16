@@ -39,6 +39,9 @@ async function buildSearch() {
 
 async function main() {
   if (isStaging) {
+    // fetch
+    await common.runCommand('git', ['fetch'], { throwOnNonZeroExit: true });
+
     // checkout master
     await common.runCommand('git', ['checkout', 'main'], { throwOnNonZeroExit: true });
 
