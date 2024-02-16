@@ -154,6 +154,8 @@ B =
 \end{bmatrix}
 $$
 
+<!-- markdownlint-disable -->
+
 $$
 B = B * 4 =
 \begin{bmatrix}
@@ -161,6 +163,8 @@ B = B * 4 =
   m_{2,1} * 4 & m_{2,2} * 4
 \end{bmatrix}
 $$
+
+<!-- markdownlint-enable -->
 
 There are also methods for accessing rows and columns by index (which is a specific type of block operation):
 

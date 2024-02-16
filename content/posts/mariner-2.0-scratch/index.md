@@ -13,7 +13,7 @@ tags:
 Let's build a minimal Docker container using Microsoft's CBL-Mariner 2.0.
 
 If you use the CBL-Mariner 2.0 images that Microsoft provides directly you're bound
-to notice that the container image size is **much** larger than it's Alpine counterpart.
+to notice that the container image size is **much** larger than its Alpine counterpart.
 However, there are a number of things that can be done to optimize the usage of this image
 to meet (or in some cases outperform) Alpine.
 
@@ -23,9 +23,9 @@ to meet (or in some cases outperform) Alpine.
 
 We're going to start out with a basic application that we want to create a Docker image out of.
 
-For the purpouses of this article I'm going to be creating a simple Go application using the
-post for [setting up a Go Devcontainer]({{< relref "set-up-golang-dev-container" >}}) which will allow us
-to develop our application in a Dev Container with all the dev dependencies installed so we
+For the purposes of this article I'm going to be creating a simple Go application using the
+development environment from [Go Dev Container]({{< relref "set-up-golang-dev-container" >}}) which will allow us
+to develop our application in a Dev Container with all the dev dependencies installed, so we
 can jump right into working on our Docker container. However, the principles used in this should
 be transferrable to any other language since we're making changes that would optimize the build
 and runtime of the Linux environment running within a Docker container.
