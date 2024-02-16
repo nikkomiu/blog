@@ -176,12 +176,12 @@ ENTRYPOINT ["/usr/local/bin/app"]
 Ok, so we changed a lot in this pass. Let's go through what we've changed step-by-step:
 
 - Install `ca-certificates` to `/mnt` using `tdnf` (the `--installroot` flag is used to install the package to a
-    different root directory) **before we build** (to ensure the directory where we build our app to will exist
-    when we build).
+  different root directory) **before we build** (to ensure the directory where we build our app to will exist
+  when we build).
 - Build our application to `/mnt/usr/local/bin/app` (the `/mnt` is the root directory of our fakeroot).
 - Compress our application with UPX (in `/mnt/usr/local/bin/app`).
 - We can now base our final image on `scratch` since we install all of our runtime dependencies to `/mnt` in the
-    build image which will become our final image's root (`/`).
+  build image which will become our final image's root (`/`).
 - No longer installing packages in our final image (since we installed them to `/mnt` in the build image).
 - Simply copy the root filesystem from our build (`/mnt`) to our final image's root (`/`).
 
@@ -269,8 +269,8 @@ You can also split your `Dockerfile` into 3 stages instead of 2. There are reall
 1. You can more easily see what's happening in each stage of your build.
 1. Docker Buildx can parallelize each of the stages of the build which can speed up your build time.
 
-    For this reason, try to put the actions that require something from another step **after** the most
-    time-consuming tasks in the stage.
+   For this reason, try to put the actions that require something from another step **after** the most
+   time-consuming tasks in the stage.
 
 There isn't a lot to _explain_ here, so I'm just going to show the `Dockerfile` after changing it to 3 stages:
 
