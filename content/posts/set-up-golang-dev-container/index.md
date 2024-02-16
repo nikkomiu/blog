@@ -78,7 +78,7 @@ RUN apk add --update \
     bash zsh zsh-vcs git sudo \
     age htop inotify-tools \
     nodejs npm \
-    docker-cli postgresql-client curl
+    docker-cli docker-cli-buildx postgresql-client curl
 
 # Install sops
 RUN wget https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64 -O /usr/local/bin/sops && \
