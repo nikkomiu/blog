@@ -20,6 +20,13 @@ module.exports = {
         "Consolas",
         "monospace",
       ],
+      mono: [
+        "Source Code Pro",
+        "Monaco",
+        "Ubuntu Mono",
+        "Consolas",
+        "monospace",
+      ],
     },
     extend: {
       typography: ({ theme }) => ({

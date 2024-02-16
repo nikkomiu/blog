@@ -1,5 +1,13 @@
 .highlight .copy-button {
-  @apply absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-500 duration-300;
+  @apply flex absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300;
+}
+
+.highlight .copy-button svg {
+  @apply w-6 h-6 mr-2;
+}
+
+.highlight .copy-button span {
+  @apply hidden sm:flex;
 }
 
 .highlight .lang-tab {

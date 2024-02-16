@@ -3,21 +3,35 @@ const langMapping = {
   cs: "C#",
 };
 
+const copyHTML = `
+<svg xmlns="http://www.w3.org/2000/svg">
+  <use xlink:href="#hi-clipboard-document-list" />
+</svg>
+<span>Copy</span>
+`;
+
+const copiedHTML = `
+<svg xmlns="http://www.w3.org/2000/svg">
+  <use xlink:href="#hi-clipboard-document-check" />
+</svg>
+<span>Copied!</span>
+`
+
 export function loadCodeActions() {
   document.querySelectorAll(".highlight code[data-lang]").forEach((el) => {
     console.log(el);
     const button = document.createElement("button");
-    button.innerText = "Copy";
+    button.innerHTML = copyHTML;
     button.classList.add("copy-button");
     button.addEventListener("click", () => {
       navigator.clipboard.writeText(el.innerText.replace(/\n\n/g, "\n"));
-      button.innerText = "Copied!";
+      button.innerHTML = copiedHTML;
       button.classList.add("active");
       setTimeout(() => {
         button.classList.remove("active");
       }, 2600);
       setTimeout(() => {
-        button.innerText = "Copy";
+        button.innerHTML = copyHTML;
       }, 3000);
     });
 
