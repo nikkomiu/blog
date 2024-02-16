@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const common = require('./common');
+const fs = require('fs').promises;
 
 async function buildHugo() {
   const extraArgs = '--enableGitInfo --minify --cleanDestinationDir'.split(' ');
+
   if (process.env.BUILD_DRAFTS === 'true') {
     console.log(`Building with drafts: ${process.env.WITH_DRAFTS}\n`.yellow)
     extraArgs.push('--buildDrafts');
@@ -40,7 +42,22 @@ async function buildSearch() {
 }
 
 async function main() {
-  await buildHugo();
+  if (process.argv.includes('--diff')) {
+    // checkout master
+    common.runProcess('git', ['checkout', 'main']);
+
+    await buildHugo();
+    await fs.rename('public', 'public-upstream');
+
+    // checkout -
+    common.runProcess('git', ['checkout', '-']);
+
+    // diff public-upstream public
+    common.runProcess('diff', ['--recursive', '--unified', 'public-upstream', 'public']);
+  } else {
+    await buildHugo();
+  }
+
   await buildSearch();
 }
 

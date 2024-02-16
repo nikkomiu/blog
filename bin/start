@@ -9,9 +9,18 @@ const defaultHugoArgs = 'server --watch --minify --disableFastRender --enableGit
 
 async function startHugo() {
   let hugoArgs = defaultHugoArgs.split(' ');
-  process.argv.indexOf('--draft') !== -1 && hugoArgs.push('--buildDrafts', listenPort.toString());
-  process.argv.indexOf('--future') !== -1 && hugoArgs.push('--buildFuture', listenPort.toString());
-  process.argv.indexOf('--staging') !== -1 && hugoArgs.push('--environment', 'staging');
+
+  if (process.argv.includes('--draft')) {
+    hugoArgs.push('--buildDrafts', listenPort.toString());
+  }
+
+  if (process.argv.includes('--future')) {
+    hugoArgs.push('--buildFuture', listenPort.toString());
+  }
+
+  if (process.argv.includes('--staging')) {
+    hugoArgs.push('--environment', 'staging');
+  }
 
   if (process.env.CODESPACE_NAME) {
     hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-${listenPort}.githubpreview.dev/`)
