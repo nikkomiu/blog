@@ -28,16 +28,16 @@ working on our Docker container. However, the principles used in this should be 
 language since we're making changes that would optimize the build and runtime of the Linux environment running
 within a Docker container.
 
+> **Note:** When we check the container for Linux distribution later in this article we will be using
+> [Trivy](https://trivy.dev/) to scan the container for vulnerabilities. If you're following along make sure to
+> follow the extra step to add Trivy to your Dev Container.
+
 If you're going to be following along with my sample repository, the `Dockerfile`s aren't going to be in the root
 of the repository. They're located in the `rel` directory and are named `mariner.Dockerfile` and `alpine.Dockerfile`.
 The `mariner.Dockerfile` is the Dockerfile that we're going to be working on in this article. The `alpine.Dockerfile`
 is a Dockerfile that I've created to show the difference in size between a CBL-Mariner 2.0-based image and an
 Alpine-based image. Using a `rel` directory is a common pattern for me when I'm working on a project that has
 many release specific files (like Dockerfiles, Helm charts, encrypted release secrets, etc.).
-
-> **Note:** When we check the container for Linux distribution later in this article we will be using
-> [Trivy](https://trivy.dev/) to scan the container for vulnerabilities. If you're following along make sure to
-> follow the extra step to add Trivy to your Dev Container.
 
 ## Naive Docker Build
 
