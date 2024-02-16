@@ -90,20 +90,26 @@ function logTask(task, content, from) {
   }
 }
 
-function runCommand(command, args, { throwOnNonZeroExit, onStdout, onStderr, ...options } = {}) {
+function runCommand(
+  command,
+  args,
+  { throwOnNonZeroExit, onStdout, onStderr, ...options } = {}
+) {
   const name = getTaskName(command, args);
   const proc = spawn(command, args, options);
 
   proc.stdout.on("data", onStdout || ((data) => logTask(name, data, "stdout")));
   proc.stderr.on("data", onStderr || ((data) => logTask(name, data, "stderr")));
 
-  return new Promise((resolve, reject) => proc.on("exit", (code) => {
-    if (throwOnNonZeroExit && proc.exitCode !== 0) {
-      reject(new Error(`Process ${name} exited with code ${code}`));
-    }
+  return new Promise((resolve, reject) =>
+    proc.on("exit", (code) => {
+      if (throwOnNonZeroExit && proc.exitCode !== 0) {
+        reject(new Error(`Process ${name} exited with code ${code}`));
+      }
 
-    resolve(code);
-  }));
+      resolve(code);
+    })
+  );
 }
 
 function runProcess(command, args, options = {}) {
@@ -114,7 +120,7 @@ function runProcess(command, args, options = {}) {
 
   options.postCreate = (proc) => {
     procData.kill = () => proc.kill("SIGINT");
-  }
+  };
   procData.exitPromise = runCommand(command, args, options);
 
   runningProcesses[name] = procData;
