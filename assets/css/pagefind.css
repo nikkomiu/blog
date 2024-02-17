@@ -25,13 +25,10 @@ body {
 
 .fade-in-perception {
   animation-name: fade-in-perception;
-  animation-duration: 2000ms;
+  animation-duration: 1000ms;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-}
-
-.site-search {
-  @apply mt-0 mb-14;
+  height: 100%;
 }
 
 .site-search .fade-in-perception {
@@ -75,7 +72,7 @@ body {
 
 .spin {
   animation-name: spin;
-  animation-duration: 1500ms;
+  animation-duration: 3000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
