@@ -5,11 +5,11 @@
         {{ . | markdownify }}
       </h1>
     {{ end }}
-    <div class="mt-12">
+    <div>
       {{ .Content }}
     </div>
   {{ end }}
-  <div class="posts mt-12">
+  <div class="posts">
     {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
     {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
 

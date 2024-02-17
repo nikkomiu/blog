@@ -28,6 +28,10 @@ function loadSearchFailed(err) {
 }
 
 export async function loadSearch() {
+  document
+    .querySelector(`${searchSelector} .loading`)
+    ?.classList.remove("hidden");
+
   try {
     // Load search
     await loadScript("/pagefind/pagefind-ui.js", pagefindUIID);

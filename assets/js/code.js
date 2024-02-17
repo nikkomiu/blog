@@ -19,7 +19,6 @@ const copiedHTML = `
 
 export function loadCodeActions() {
   document.querySelectorAll(".highlight code[data-lang]").forEach((el) => {
-    console.log(el);
     const button = document.createElement("button");
     button.innerHTML = copyHTML;
     button.classList.add("copy-button");

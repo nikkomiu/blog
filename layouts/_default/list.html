@@ -1,6 +1,6 @@
 {{ define "main" }}
   {{ with .Content }}
-    <div class="mt-12" data-pagefind-body>
+    <div class="mb-12" data-pagefind-body>
       {{ with $.Title }}
         <h1 class="post-title text-lg sm:text-2xl">
           {{ . | markdownify }}
@@ -27,7 +27,7 @@
       {{ . }}
     </div>
   {{ end }}
-  <div class="posts w-full mt-12">
+  <div class="posts w-full">
     {{ $pages := .Paginator.Pages }}
     {{ if .Params.showAllSubPages }}
       {{ $pages = .Pages }}

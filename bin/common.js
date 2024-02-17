@@ -153,7 +153,6 @@ async function waitForAnyProcess() {
 }
 
 function killAllProcesses() {
-  // console.log(Object.values(runningProcesses))
   Object.values(runningProcesses).forEach(({ kill }) => kill("SIGINT"));
 }
 

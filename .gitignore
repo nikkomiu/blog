@@ -1,5 +1,4 @@
 public/
-public-upstream/
 resources/_gen/
 
 .hugo_build.lock
