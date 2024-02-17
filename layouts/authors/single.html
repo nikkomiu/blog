@@ -61,7 +61,9 @@
       {{ $pages := where (where $.Site.Pages "Type" "in" $contentTypeName) "Params.Author" "==" .Title }}
       {{ if $pages }}
         <div class="flex flex-1 flex-col sm:pr-4">
-          <h3 class="mb-0 text-center text-2xl text-bold text-fuchsia-400">Latest Posts</h3>
+          <h3 class="mb-0 text-center text-2xl text-bold text-fuchsia-400">
+            Latest Posts
+          </h3>
 
           {{ $postContext := dict "Pages" $pages "Parent" . }}
           {{ partial "post-list.html" $postContext }}
@@ -71,7 +73,9 @@
       {{ $pages = where (where $.Site.Pages "Type" "in" "notes") "Params.Author" "==" .Title }}
       {{ if $pages }}
         <div class="flex flex-1 flex-col sm:pl-4">
-          <h3 class="mb-0 text-center text-2xl text-bold text-fuchsia-400">Recent Notes</h3>
+          <h3 class="mb-0 text-center text-2xl text-bold text-fuchsia-400">
+            Recent Notes
+          </h3>
 
           {{ $postContext := dict "Pages" $pages "Parent" . }}
           {{ partial "post-list.html" $postContext }}

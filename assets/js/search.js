@@ -28,7 +28,9 @@ function loadSearchFailed(err) {
 }
 
 export async function loadSearch() {
-  document.querySelector(`${searchSelector} .loading`)?.classList.remove("hidden");
+  document
+    .querySelector(`${searchSelector} .loading`)
+    ?.classList.remove("hidden");
 
   try {
     // Load search
