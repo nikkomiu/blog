@@ -94,7 +94,7 @@
 }
 
 .prose table th {
-  @apply bg-fuchsia-950 text-fuchsia-600 font-bold border-r border-fuchsia-700 py-2 px-3;
+  @apply bg-fuchsia-950/[0.5] text-fuchsia-600 font-bold border-r py-2 px-3;
 }
 
 .prose table th:last-of-type {
@@ -102,7 +102,7 @@
 }
 
 .prose table td {
-  @apply text-fuchsia-400 border-r border-fuchsia-700 py-2 px-3;
+  @apply text-fuchsia-400 border-r py-2 px-3;
 }
 
 .prose table td:last-of-type {
@@ -110,7 +110,7 @@
 }
 
 .prose table * {
-  @apply border-fuchsia-700 border-dashed;
+  @apply border-fuchsia-900 border-dashed;
 }
 
 .prose .highlight {
