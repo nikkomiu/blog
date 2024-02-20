@@ -1,6 +1,9 @@
 {{ define "main" }}
   {{ with .Content }}
-    <div class="mb-12" data-pagefind-body>
+    <div
+      class="prose prose-neutral prose-invert max-w-none mb-12"
+      data-pagefind-body
+    >
       {{ with $.Title }}
         <h1 class="post-title text-lg sm:text-2xl">
           {{ . | markdownify }}

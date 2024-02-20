@@ -21,6 +21,13 @@ function onDocumentLoad() {
 }
 
 function onPageLoad() {
+  const searchClearButton = document.querySelector(
+    ".pagefind-ui__search-clear"
+  );
+  if (searchClearButton) {
+    searchClearButton.click();
+  }
+
   loadMenu();
 
   loadCodeActions();
