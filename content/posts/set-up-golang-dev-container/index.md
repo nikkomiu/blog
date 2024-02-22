@@ -117,8 +117,8 @@ services:
       - ../:/workspaces/blog-goapp:cached
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      DATABASE_URL: ecto://postgres:postgres@db/blog_goapp_dev
-      TEST_DATABASE_URL: ecto://postgres:postgres@db/blog_goapp_test
+      DATABASE_URL: postgres://postgres:postgres@db/blog_goapp_dev?sslmode=disable
+      TEST_DATABASE_URL: postgres://postgres:postgres@db/blog_goapp_test?sslmode=disable
     command: sleep infinity
     networks:
       - backend
