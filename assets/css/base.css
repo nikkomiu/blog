@@ -4,6 +4,7 @@
 
 @import "katex/dist/katex";
 
+@import "assets/css/hack";
 @import "assets/css/prose";
 
 @import "assets/css/author";
@@ -13,7 +14,7 @@
 @import "assets/css/highlight.css";
 @import "assets/css/pagination.css";
 
-@import "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap";
+/* @import "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"; */
 
 ::selection {
   @apply bg-fuchsia-900 text-fuchsia-50;

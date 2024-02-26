@@ -137,8 +137,8 @@
 {{ end }}
 
 {{ $baseCSS := resources.Get "css/base.css" }}
-{{ $baseOpts := (dict "noMap" (not hugo.IsDevelopment)) }}
-{{ $baseOut := $baseCSS | postCSS $baseOpts }}
+{{ $baseCSSOpts := (dict "noMap" (not hugo.IsDevelopment)) }}
+{{ $baseOut := $baseCSS | postCSS $baseCSSOpts }}
 {{ if not hugo.IsDevelopment }}
   {{ $baseOut = $baseOut | minify | fingerprint }}
 {{ end }}
@@ -150,7 +150,8 @@
 {{ if hugo.IsDevelopment }}
   {{ $baseSourceMap = "external" }}
 {{ end }}
-{{ $base := resources.Get "js/base.js" | js.Build (dict "sourceMap" $baseSourceMap) }}
+{{ $baseJSOpts := (dict "sourceMap" $baseSourceMap) }}
+{{ $base := resources.Get "js/base.js" | js.Build $baseJSOpts }}
 {{ if not hugo.IsDevelopment }}
   {{ $base = $base | minify | fingerprint }}
 {{ end }}
