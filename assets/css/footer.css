@@ -30,7 +30,7 @@
   justify-content: space-around;
   margin-bottom: 1rem;
 }
-@media (width <= 684px) {
+@media (width <= 570px) {
   .footer__menu {
     flex-direction: column;
     justify-content: center;
@@ -46,7 +46,7 @@
   content: "::";
   margin: 0 0.25rem;
 }
-@media (width <= 684px) {
+@media (width <= 570px) {
   .footer__menu span {
     margin: 0.25rem 0;
   }
@@ -69,7 +69,7 @@
   align-items: center;
   margin-bottom: 0.75rem;
 }
-@media (width <= 684px) {
+@media (width <= 570px) {
   .footer .git-info {
     flex-direction: column;
     text-align: center;
@@ -89,7 +89,7 @@
   content: "::";
   margin: 0 0.5rem;
 }
-@media (width <= 684px) {
+@media (width <= 570px) {
   .footer .git-info > * {
     margin: 0.25rem 0;
   }

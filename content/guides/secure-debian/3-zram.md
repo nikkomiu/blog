@@ -1,11 +1,19 @@
 ---
 title: Debian Setup zRAM
 date: 2024-02-05T02:00:00Z
-draft: false
 tags:
   - debian
   - zram
 ---
+
+For adding a swap space on the system, I prefer using zRAM for having a compressed memory space. This, in theory, should
+be faster than using a traditional swap space since zRAM compresses the memory that it's using which would result in
+lower disk space usage, and faster swapping from disk to memory.
+
+<!--more-->
+
+The steps for installing zRAM are pretty straightforward and there are plenty of options. This is just how I set up
+zRAM for my machines.
 
 ## Install zRAM Setup
 

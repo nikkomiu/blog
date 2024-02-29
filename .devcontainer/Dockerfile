@@ -34,4 +34,5 @@ USER coder
 # Setup Oh My Zsh
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/g' ~/.zshrc && \
-    sed -i 's/plugins=(git)/plugins=(git npm)/g' ~/.zshrc
+    sed -i 's/plugins=(git)/plugins=(git npm)/g' ~/.zshrc && \
+    echo "DISABLE_UPDATE_PROMPT=true" >> ~/.zshrc

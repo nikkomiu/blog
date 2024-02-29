@@ -1,13 +1,18 @@
 ---
 title: Debian Plymouth Setup
 date: 2024-02-05T00:00:00Z
-draft: false
 tags:
   - debian
   - plymouth
   - boot
   - splash screen
 ---
+
+As an (optional) nicety I like having Plymouth installed for showing a boot splash screen on the loader. What's
+especially nice is that after this is enabled you can still press `Esc` to show the output (for debugging startup
+issues).
+
+<!--more-->
 
 ## Install Plymouth
 

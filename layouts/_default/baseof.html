@@ -14,11 +14,11 @@
     {{ partial "head.html" . }}
   </head>
   <body class="flex bg-neutral-950 text-white">
-    <div class="flex flex-col w-full max-w-3xl mx-auto py-6">
+    <div class="flex flex-col w-full">
       {{ partial "header.html" . }}
 
 
-      <div class="content">
+      <div class="content w-full max-w-3xl mx-auto py-6 px-4">
         {{ block "main" . }}
         {{ end }}
       </div>

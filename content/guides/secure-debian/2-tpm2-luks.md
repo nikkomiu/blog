@@ -1,13 +1,18 @@
 ---
 title: Debian Unlock LUKS with TPM2
 date: 2024-02-05T03:00:00Z
-draft: false
 tags:
   - debian
   - luks
   - tpm2
   - auto unlock
 ---
+
+Setting up LUKS to load encryption keys from the TPM2 device on the system is a pretty simple effort overall. We're just
+going to be creating a new key for the disk, adding the key to the LUKS partition, adding the key to the TPM, and
+finally setting up `crypttab` to load the key from the TPM when the system starts up.
+
+<!--more-->
 
 ## Install OS Dependencies
 
