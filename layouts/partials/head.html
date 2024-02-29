@@ -40,9 +40,10 @@
 {{ end }}
 <link rel="icon" href="{{ $iconSVG.RelPermalink }}" />
 <link rel="mask-icon" href="{{ $iconSVG.RelPermalink }}" color="#fff" />
+{{ $appleIcon := resources.Get "img/apple-touch-icon.png" }}
 <link
   rel="apple-touch-icon"
-  href="{{ resources.Get "img/apple-touch-icon.png" }}"
+  href="{{ $appleIcon.RelPermalink }}"
 />
 
 <meta name="theme-color" content="#000" />
