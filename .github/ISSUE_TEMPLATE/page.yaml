@@ -14,6 +14,14 @@ body:
       placeholder: https://example.com/page
     validations:
       required: true
+  - type: input
+    id: commit_sha
+    attributes:
+      label: Commit SHA of Pages
+      description: The Git Commit SHA of the site at the time of the issue
+      placeholder: a2ccd68631106073761255d1c9c444fc088b45e7
+    validations:
+      required: false
   - type: textarea
     id: issue_description
     attributes:

@@ -64,6 +64,25 @@
               {{ .Type | inflect.Singularize | strings.Title }}
             </a>
           </span>
+
+          <span>
+            <a
+              href="https://github.com/nikkomiu/blog/issues/new?template=page.yaml&page_url={{ .Page.RelPermalink }}&commit_sha={{ .GitInfo.Hash }}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                height="20"
+                width="20"
+              >
+                <use href="#hi-exclamation-circle" />
+              </svg>
+              Page Issue
+            </a>
+          </span>
         {{ end }}
 
 
