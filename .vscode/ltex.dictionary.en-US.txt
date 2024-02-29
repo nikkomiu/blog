@@ -5,3 +5,13 @@ filesystem
 fakeroot
 Buildx
 SBOM
+efistub
+initramfs
+ukify
+Ukify
+dirname
+MOK
+UKI
+Chroot
+Modeset
+NOUVEAU

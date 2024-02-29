@@ -9,9 +9,13 @@ by no means exhaustive, but I'll do my best to keep it up-to-date as I go throug
 
 <!--more-->
 
+## Fix EFI Partition Mapping
+
+> TODO
+
 ## Reinstall Linux Image
 
-If you've accidently deleted the `initrd.img` and/or `vmlinuz` files from the boot partition (or forgot to move them)
+If you've accidentally deleted the `initrd.img` and/or `vmlinuz` files from the boot partition (or forgot to move them
 from the boot partition while removing it) you just need to find the kernel versions that are currently installed and
 reinstall them.
 
@@ -76,7 +80,7 @@ chroot /mnt
 ```
 
 Now you can do what you need to do within your Debian OS. When you're done make sure to `exit` as you can't restart the
-machine from inside of a `chroot` session.
+machine from inside a `chroot` session.
 
 > **Note:** You can also provide a second argument for what command to run using `chroot`. For example, if the shell
-> in your current Linux distro doesn't exist inside of your Debian one you may need to add `bash` as an argument.
+> in your current Linux distro doesn't exist inside your Debian one you may need to add `bash` as an argument.

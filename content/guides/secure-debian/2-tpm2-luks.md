@@ -1,5 +1,5 @@
 ---
-title: Debian Unlock LUKS with TPM2
+title: Unlock LUKS with TPM2
 date: 2024-02-05T03:00:00Z
 tags:
   - debian

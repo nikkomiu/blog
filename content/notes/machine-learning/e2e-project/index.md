@@ -7,10 +7,10 @@ tags:
   - machine-learning
 ---
 
-This basic ML project will follow the [Project Checklist]({{< relref "notes/machine-learning/project-checklist" >}})
+This basic ML project will follow the [Project Checklist](../project-checklist/)
 to create a simple ML application.
 The project is to create a model that will predict the median housing price in a given district in California.
-It is the first (most basic) project that will be completed from start to finish going through all of the steps of the checklist.
+It is the first (most basic) project that will be completed from start to finish going through all the steps of the checklist.
 
 <!--more-->
 
@@ -82,7 +82,7 @@ But when outliers are exponentially rare (like in a bell-shaped curve), the RMSE
 
 ## Check the Assumptions
 
-It's good practice to list and verify the assumptions that were made so far.
+It is good practice to list and verify the assumptions that were made so far.
 This can help to catch serious issues early on.
 For example, if the downstream system that uses the output of our system assumes that the output is going to convert the
 prices into categories (e.g., "cheap," "medium," or "expensive") and then use those categories instead of the actual prices,
@@ -156,7 +156,7 @@ dtypes: float64(9), object(1)
 memory usage: 1.6+ MB
 ```
 
-We can see that all of the attributes of the data are numerical, except for the `ocean_proximity` field.
+We can see that all the attributes of the data are numerical, except for the `ocean_proximity` field.
 Its type is `object`, so it could hold any kind of Python object, but since we loaded this data from a CSV file,
 it must be a text attribute.
 When we looked at the top five rows, we probably noticed that the values in that column were repetitive,
@@ -233,11 +233,11 @@ After looking at the histograms, we can see a few things:
 
 ## Create a Test Set
 
-It's good practice to create a test set and set it aside before inspecting the data closely.
+It is good practice to create a test set and set it aside before inspecting the data closely.
 We should do this now because our brains are amazing pattern detection systems, which means that we are prone to overfitting.
 This is because we may stumble upon some seemingly interesting pattern in the test set if we look at it.
 If we estimate the generalization error using the test set,
-our estimate will be too optimistic and we will launch a system that will not perform as well as expected.
+our estimate will be too optimistic, and we will launch a system that will not perform as well as expected.
 This is called _data snooping bias_.
 
 Creating a test set is theoretically quite simple: just pick some instances randomly, typically 20% of the dataset,
@@ -269,7 +269,7 @@ This works, but it is not perfect: if we run the program again, it will generate
 One solution is to save the test set on the first run and then load it in subsequent runs.
 Another option is to set the random number generator's seed (e.g., `np.random.seed(42)`)
 But both of these solutions will break next time we fetch an updated dataset.
-A common solution is to use each instance's identifier to decide whether or not it should go in the test set.
+A common solution is to use each instance's identifier to decide whether it should go in the test set.
 For example, we could compute a hash of each instance's identifier, keep only the last byte of the hash,
 and put the instance in the test set if this value is lower or equal to 51 (~20% of 256).
 This ensures that the test set will remain consistent across multiple runs,

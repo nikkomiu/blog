@@ -1,5 +1,5 @@
 ---
-title: Debian Plymouth Setup
+title: Plymouth Installation
 date: 2024-02-05T00:00:00Z
 tags:
   - debian

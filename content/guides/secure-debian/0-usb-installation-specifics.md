@@ -1,6 +1,9 @@
 ---
 title: USB Installation Specifics
 date: 2024-02-05T05:00:00Z
+tags:
+  - debian
+  - usb linux
 ---
 
 These are general guidelines before you start to install the OS onto a portable drive. The nice thing about the approach

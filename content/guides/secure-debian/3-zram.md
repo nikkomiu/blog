@@ -1,5 +1,5 @@
 ---
-title: Debian Setup zRAM
+title: Install and Configure zRAM
 date: 2024-02-05T02:00:00Z
 tags:
   - debian

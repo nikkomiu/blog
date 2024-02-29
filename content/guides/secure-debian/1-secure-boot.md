@@ -1,5 +1,5 @@
 ---
-title: Debian Secure Boot
+title: Set Up Secure Boot
 date: 2024-02-05T04:00:00Z
 toc: true
 tags:
@@ -61,7 +61,7 @@ You can check to see if `systemd-ukify` is available with `apt-cache`:
 apt-cache search systemd-ukify
 ```
 
-If it's avaliable, then install it from `apt`:
+If it's available, then install it from `apt`:
 
 ```bash
 apt-get install systemd-ukify
@@ -203,7 +203,7 @@ Unified Kernel Image.
 
 If there is an issue booting after these steps, you'll need to check the output from the shell to see what is going
 wrong. You can then look at the
-[Chroot for Debugging]({{< relref "guides/secure-debian/troubleshooting#chroot-into-os" >}}) guide for how to get
+[Chroot for Debugging](./troubleshooting.md#chroot-into-os) guide for how to get
 into your Debian instance from either a live Linux distro or another Linux distro installed on your system.
 
 ## DKMS Setup
@@ -225,7 +225,7 @@ mok_certificate="/var/lib/shim-signed/mok/MOK.der"
 
 ## (Recommended) Add "Old" Linux Image to EFI
 
-Debian will maintin the last kernel version that was installed on the system. This is useful when there are issues
+Debian will maintain the last kernel version that was installed on the system. This is useful when there are issues
 loading the current kernel version (usually after an update to the system). It's also pretty straightforward to add this
 backup kernel, so we may as well.
 
@@ -335,7 +335,7 @@ bootctl remove
 ```
 
 Running this command will cause the `postinst.d` script that is added during the installation of `systemd-boot` to be
-removed so it doesn't get run when the initramfs is updated.
+removed, so it doesn't get run when the initramfs is updated.
 
 > **Note:** We installed `systemd-boot` for some of the utilities that are included with it. However, I'm not going to
 > be using `systemd-boot` as the bootloader for my OS. If you want to use it, you just need to sign the bootloader
@@ -363,8 +363,8 @@ mount /dev/nvme0n1p3 /mnt
 
 > **Note:** You may need to find your old boot partition if you don't know what the name of it is. You can do this by
 > checking `fdisk -l` to see what partition it is. Alternatively, you can find it by UUID by taking the UUID from the
-> commented out line in the `/etc/fstab` and running `ls -l /dev/disk/by-uuid/` to find which disk name the symlink
-> of the disk points to.
+> commented out line in the `/etc/fstab` and running `ls -l /dev/disk/by-uuid/` to determine which disk the symlink
+> points to.
 
 Now that it's mounted at `/mnt` we can just copy the `config`, `initrd.img`, and `vmlinuz` files from the old boot
 partition to the (now root disk) `/boot` directory:
@@ -407,7 +407,7 @@ to use the new `/efi` path. Anywhere in the script that currently says `/boot/ef
 
 I typically use `lz4` compression due to its fast read time compared some other compression algorithms.
 
-To sart make sure you have the `lz4` package installed:
+To start, make sure you have the `lz4` package installed:
 
 ```bash
 apt-get install lz4
@@ -434,7 +434,7 @@ Doing so will save space on the EFI partition and (hopefully) speed up your boot
 ## (Optional) Add Splash Image to Boot
 
 Ukify can show a splash image during startup. However, I generally don't add this to my kernel image and instead opt for
-using [Plymouth]({{< relref "guides/secure-debian/plymouth" >}}) for displaying the boot splash screen.
+[installing Plymouth](./plymouth.md) to display the boot splash screen.
 
 Add an image to `/etc/kernel/splash.bmp` for the ukify splash. Then, add the splash argument to `ukify` in
 `/etc/kernel/postinst.d/zz-update-efistub`:
@@ -451,10 +451,10 @@ ukify
 If you've managed to get all the way here, **CONGRATULATIONS!!!** You've successfully managed to change Debian from
 using (shim-signed) GRUB to using a **signed** Unified Kernel Image. This process is fairly complicated and involved to
 switch Debian over. However, I hope it wasn't too painful to follow along. If you run into any issues along the way,
-feel free to leave a comment on this page and I'll try my best to help!
+feel free to leave a comment on this page, and I'll try my best to help!
 
-Also, now that all of this is done you should make sure to lock your UEFI using at least a supervisor password so a
+Also, now that all of this is done you should make sure to lock your UEFI using at least a supervisor password, so a
 malicious user can't go into your settings and add a new key to the DB and use a malicious kernel image to boot into
-your system anyways. You should also be **highly** suspicious if your kernel image signature is no longer valid, as this
+your system anyway. You should also be **highly** suspicious if your kernel image signature is no longer valid, as this
 is likely an indicator that someone is trying to replace your kernel with an untrusted one. Remember, our EFI partition
-is the only one that's not encrypted, and therefore the only one that can be easily comprimised by an attacker.
+is the only one that's not encrypted, and therefore the only one that can be easily compromised by an attacker.
