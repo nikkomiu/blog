@@ -12,18 +12,8 @@ function sectionExpandToggle() {
   });
 }
 
-// Load elements that are carried over between page loads
-function onDocumentLoad() {
-  loadSearch();
-}
-
 function onPageLoad() {
-  const searchClearButton = document.querySelector(
-    ".pagefind-ui__search-clear"
-  );
-  if (searchClearButton) {
-    searchClearButton.click();
-  }
+  loadSearch();
 
   loadMenu();
 
@@ -33,5 +23,4 @@ function onPageLoad() {
   sectionExpandToggle();
 }
 
-window.addEventListener("load", onDocumentLoad);
-window.addEventListener("turbo:load", onPageLoad);
+window.addEventListener("load", onPageLoad);
