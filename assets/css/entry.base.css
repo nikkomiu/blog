@@ -2,19 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import "katex/dist/katex";
-
 @import "assets/css/hack";
 @import "assets/css/prose";
 
 @import "assets/css/author";
 @import "assets/css/post";
 @import "assets/css/pagefind";
-@import "assets/css/footer.css";
-@import "assets/css/highlight.css";
-@import "assets/css/pagination.css";
-
-/* @import "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"; */
+@import "assets/css/footer";
+@import "assets/css/highlight";
+@import "assets/css/pagination";
 
 ::selection {
   @apply bg-fuchsia-900 text-fuchsia-50;

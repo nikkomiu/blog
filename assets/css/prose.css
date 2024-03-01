@@ -117,6 +117,10 @@
   @apply mt-12 relative;
 }
 
+.prose samp pre {
+  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-2 pt-5;
+}
+
 .prose .highlight pre,
 .prose .highlight code {
   @apply text-fuchsia-500;
@@ -154,4 +158,12 @@
 
 .prose .highlight table code {
   @apply p-0;
+}
+
+.prose .highlight td:first-of-type pre {
+  @apply mr-4;
+}
+
+.prose .mermaid {
+  @apply bg-neutral-300 mx-auto;
 }

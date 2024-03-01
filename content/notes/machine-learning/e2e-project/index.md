@@ -49,18 +49,18 @@ With this information in mind, we can determine the following:
 
 A typical performance measure for regression problems is the Root Mean Square Error (RMSE).
 
-$$
+```latex
 \text{RMSE}(\mathbf{X}, h) = \sqrt{\frac{1}{m} \sum_{i=1}^{m} \left(h(\mathbf{x}^{(i)}) - y^{(i)}\right)^2}
-$$
+```
 
 It measures the standard deviation of the errors the system makes in its predictions.
 
 Both the RMSE and the Mean Absolute Error (MAE) are ways to measure the distance between two vectors:
 the vector of predictions and the vector of target values.
 
-$$
+```latex
 \text{MAE}(\mathbf{X}, h) = \frac{1}{m} \sum_{i=1}^{m} \left| h(\mathbf{x}^{(i)}) - y^{(i)} \right|
-$$
+```
 
 Various distance measures are possible, but the RMSE is more sensitive to outliers than the MAE.
 Other distance measures, or _norms_, are possible:

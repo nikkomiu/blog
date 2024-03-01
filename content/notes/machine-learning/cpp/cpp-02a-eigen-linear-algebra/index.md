@@ -64,14 +64,14 @@ m1 << 1, 2, 3,
 
 Which will fill the matrix as:
 
-$$
+```latex
 m1 =
 \begin{bmatrix}
-  1 & 2 & 3 \\\\
-  4 & 5 & 6 \\\\
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
   7 & 8 & 9
 \end{bmatrix}
-$$
+```
 
 Elements can be directly accessed using the `()` operator:
 
@@ -136,35 +136,31 @@ m.block(1, 1, 2, 2) *= 4; // changes the values in the original matrix
 
 This is equivalent to:
 
-$$
+```latex
 M =
 \begin{bmatrix}
-  m_{0,0} & m_{0,1} & m_{0,2} & m_{0,3} \\\\
-  m_{1,0} & m_{1,1} & m_{1,2} & m_{1,3} \\\\
-  m_{2,0} & m_{2,1} & m_{2,2} & m_{2,3} \\\\
+  m_{0,0} & m_{0,1} & m_{0,2} & m_{0,3} \\
+  m_{1,0} & m_{1,1} & m_{1,2} & m_{1,3} \\
+  m_{2,0} & m_{2,1} & m_{2,2} & m_{2,3} \\
   m_{3,0} & m_{3,1} & m_{3,2} & m_{3,3}
 \end{bmatrix}
-$$
+```
 
-$$
+```latex
 B =
 \begin{bmatrix}
-  m_{1,1} & m_{1,2} \\\\
+  m_{1,1} & m_{1,2} \\
   m_{2,1} & m_{2,2}
 \end{bmatrix}
-$$
+```
 
-<!-- markdownlint-disable -->
-
-$$
+```latex
 B = B * 4 =
 \begin{bmatrix}
-  m_{1,1} * 4 & m_{1,2} * 4 \\\\
+  m_{1,1} * 4 & m_{1,2} * 4 \\
   m_{2,1} * 4 & m_{2,2} * 4
 \end{bmatrix}
-$$
-
-<!-- markdownlint-enable -->
+```
 
 There are also methods for accessing rows and columns by index (which is a specific type of block operation):
 
@@ -183,17 +179,17 @@ mat.colwise() += v; // adds v to each column of mat
 
 This operation is equivalent to:
 
-$$
+```latex
 \begin{bmatrix}
-  1 & 2 & 3 \\\\
+  1 & 2 & 3 \\
   4 & 5 & 6
 \end{bmatrix} .colwise() +
 \begin{bmatrix}
-  0 \\\\
+  0 \\
   1
 \end{bmatrix} =
 \begin{bmatrix}
-  1 & 2 & 3 \\\\
+  1 & 2 & 3 \\
   \textbf{5} & \textbf{6} & \textbf{7}
 \end{bmatrix}
-$$
+```

@@ -1,5 +1,4 @@
 import "@hotwired/turbo";
-import katexAutoRender from "katex/contrib/auto-render";
 
 import { displayLanguageTabs, loadCodeActions } from "./code";
 import { loadMenu } from "./menu";
@@ -31,13 +30,6 @@ function onPageLoad() {
   loadMenu();
 
   loadCodeActions();
-
-  katexAutoRender(document.body, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "$", right: "$", display: false },
-    ],
-  });
 
   displayLanguageTabs();
   sectionExpandToggle();

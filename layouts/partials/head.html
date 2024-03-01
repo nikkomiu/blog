@@ -134,9 +134,9 @@
   />
 {{ end }}
 
-{{ $baseCSS := resources.Get "css/base.css" }}
+{{ $baseCSS := resources.Get "css/entry.base.css" }}
 {{ $baseCSSOpts := (dict "noMap" (not hugo.IsDevelopment)) }}
-{{ $baseOut := $baseCSS | postCSS $baseCSSOpts }}
+{{ $baseOut := $baseCSS | postCSS $baseCSSOpts | resources.PostProcess }}
 {{ if not hugo.IsDevelopment }}
   {{ $baseOut = $baseOut | minify | fingerprint }}
 {{ end }}
@@ -144,12 +144,13 @@
 
 {{ partial "defer-css" ("pagefind/pagefind-ui.css" | relURL) }}
 
-{{ $baseSourceMap := "" }}
+{{ $jsSourceMap := "" }}
 {{ if hugo.IsDevelopment }}
-  {{ $baseSourceMap = "external" }}
+  {{ $jsSourceMap = "external" }}
 {{ end }}
-{{ $baseJSOpts := (dict "sourceMap" $baseSourceMap) }}
-{{ $base := resources.Get "js/base.js" | js.Build $baseJSOpts }}
+{{ $jsOpts := (dict "sourceMap" $jsSourceMap) }}
+{{ $base := resources.Get "js/entry.base.js" | js.Build $jsOpts }}
+
 {{ if not hugo.IsDevelopment }}
   {{ $base = $base | minify | fingerprint }}
 {{ end }}
@@ -160,3 +161,38 @@
   defer
   async
 ></script>
+
+{{ if .Store.Get "hasMermaid" }}
+  {{ $mermaidJS := resources.Get "js/entry.mermaid.js" | js.Build $jsOpts }}
+  {{ if not hugo.IsDevelopment }}
+    {{ $mermaidJS = $mermaidJS | minify | fingerprint }}
+  {{ end }}
+  <script
+    type="text/javascript"
+    src="{{ $mermaidJS.RelPermalink }}"
+    integrity="{{ $mermaidJS.Data.Integrity }}"
+    defer
+    async
+  ></script>
+{{ end }}
+
+{{ if .Store.Get "hasLatex" }}
+  {{ $latexCSS := resources.Get "css/entry.latex.css" }}
+  {{ $latexOut := $latexCSS | postCSS $baseCSSOpts | resources.PostProcess }}
+  {{ if not hugo.IsDevelopment }}
+    {{ $latexOut = $latexOut | minify | fingerprint }}
+  {{ end }}
+  {{ partial "defer-css" $latexOut.RelPermalink }}
+
+  {{ $latexJS := resources.Get "js/entry.latex.js" | js.Build $jsOpts }}
+  {{ if not hugo.IsDevelopment }}
+    {{ $latexJS = $latexJS | minify | fingerprint }}
+  {{ end }}
+  <script
+    type="text/javascript"
+    src="{{ $latexJS.RelPermalink }}"
+    integrity="{{ $latexJS.Data.Integrity }}"
+    defer
+    async
+  ></script>
+{{ end }}
