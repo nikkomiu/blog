@@ -2,5 +2,5 @@ import mermaid from "mermaid";
 
 mermaid.initialize({
   startOnLoad: true,
-  theme: 'dark',
+  theme: "dark",
 });
