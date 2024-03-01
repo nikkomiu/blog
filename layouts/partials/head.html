@@ -140,7 +140,6 @@
 {{ if not hugo.IsDevelopment }}
   {{ $baseOut = $baseOut | minify | fingerprint }}
 {{ end }}
-{{ $baseOut = $baseOut | resources.PostProcess }}
 <link rel="stylesheet" href="{{ $baseOut.RelPermalink }}" />
 
 {{ partial "defer-css" ("pagefind/pagefind-ui.css" | relURL) }}
@@ -183,7 +182,6 @@
   {{ if not hugo.IsDevelopment }}
     {{ $latexOut = $latexOut | minify | fingerprint }}
   {{ end }}
-  {{ $latexOut = $latexOut | resources.PostProcess }}
   {{ partial "defer-css" $latexOut.RelPermalink }}
 
   {{ $latexJS := resources.Get "js/entry.latex.js" | js.Build $jsOpts }}

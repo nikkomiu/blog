@@ -56,7 +56,7 @@
         {{ range .Params.tags }}
           #<a
             href="{{ (urlize (printf "tags/%s/" . )) | absLangURL }}"
-            class="no-underline hover:underline text-neutral-500 hover:text-neutral-300"
+            class="no-underline hover:underline text-neutral-400 hover:text-neutral-100"
           >
             {{- . -}} </a
           >&nbsp;
