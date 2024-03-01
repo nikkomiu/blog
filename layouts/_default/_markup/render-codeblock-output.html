@@ -2,8 +2,8 @@
   <span
     class="absolute right-0 text-sm border border-green-800 bg-green-950 text-green-500 mt-6 px-1 select-none"
   >
-    {{ with .Attributes.label }}
-      {{ . }}
+    {{ if .Attributes.label }}
+      {{ .Attributes.label }}
     {{ else }}
       output
     {{ end }}
