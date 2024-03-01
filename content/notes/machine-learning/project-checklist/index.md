@@ -45,7 +45,9 @@ For this stage you should focus on answering the following questions:
 
 ## Get the Data
 
-> Note: automate as much as possible so you can easily get fresh data.
+{{< callout type=note >}}
+Automate as much as possible so you can easily get fresh data.
+{{</ callout >}}
 
 1. List the data you need and how much you need.
 1. Find and document where you can get that data.
@@ -63,7 +65,9 @@ For this stage you should focus on answering the following questions:
 
 Explore the data to gain insights and to get a better understanding of the problem.
 
-> Note: try to get insights from a field expert for these steps.
+{{< callout type=note >}}
+Try to get insights from a field expert for these steps.
+{{</ callout >}}
 
 1. Create a copy of the data for exploration (sampling it down to a manageable size if necessary).
 1. Create a Jupyter notebook to keep a record of your data exploration.
@@ -86,15 +90,18 @@ Explore the data to gain insights and to get a better understanding of the probl
 
 Prepare the data to better expose the underlying data patterns to Machine Learning algorithms.
 
-> **Notes:**
->
-> - Work on copies of the data (keep the original dataset intact).
-> - Write functions for all data transformations you apply, for five reasons:
->   1. So you can easily prepare the data the next time you get a fresh dataset.
->   1. So you can apply these transformations in future projects.
->   1. To clean and prepare the test set.
->   1. To clean and prepare new data instances once your solution is live.
->   1. To make it easy to treat your preparation choices as hyperparameters.
+{{< callout type=note >}}
+When preparing the data:
+
+- Work on copies of the data (keep the original dataset intact).
+- Write functions for all data transformations you apply, for five reasons:
+  1. So you can easily prepare the data the next time you get a fresh dataset.
+  1. So you can apply these transformations in future projects.
+  1. To clean and prepare the test set.
+  1. To clean and prepare new data instances once your solution is live.
+  1. To make it easy to treat your preparation choices as hyperparameters.
+
+{{</ callout >}}
 
 1. Data cleaning:
    - Fix or remove outliers (optional).
@@ -112,12 +119,15 @@ Prepare the data to better expose the underlying data patterns to Machine Learni
 
 Explore many different models and short-list the best ones.
 
-> **Notes:**
->
-> - If the data is very large, you may want to sample smaller training sets in order to train
->   many different models in a reasonable time (be aware that this penalizes complex models such as
->   large neural nets or Random Forests).
-> - Once again, try to automate these steps as much as possible.
+{{< callout type=note >}}
+As general guidelines for this step:
+
+- If the data is very large, you may want to sample smaller training sets in order to train
+  many different models in a reasonable time (be aware that this penalizes complex models such as
+  large neural nets or Random Forests).
+- Once again, try to automate these steps as much as possible.
+
+{{</ callout >}}
 
 1. Train many quick-and-dirty models from different categories (e.g., linear, naive Bayes,
    SVM, Random Forests, neural net, etc.) using standard parameters.
@@ -136,11 +146,14 @@ Explore many different models and short-list the best ones.
 
 Fine-tune your models and combine them into a great solution.
 
-> **Notes:**
->
-> - You will want to use as much data as possible for this step, especially as you move toward the
->   end of fine-tuning.
-> - As always automate what you can.
+{{< callout type=note >}}
+Remember that at this point:
+
+- You will want to use as much data as possible for this step, especially as you move toward the
+  end of fine-tuning.
+- As always automate what you can.
+
+{{</ callout >}}
 
 1. Fine-tune the hyperparameters using cross-validation:
    - Treat your data transformation choices as hyperparameters, especially when you are not sure
@@ -154,8 +167,9 @@ Fine-tune your models and combine them into a great solution.
 1. Once you are confident about your final model, measure its performance on the test set to
    estimate the generalization error.
 
-> **Warning:** Don't tweak your model after measuring the generalization error: you would just start
-> overfitting the test set.
+{{< callout type=warning >}}
+Don't tweak your model after measuring the generalization error: you would just start overfitting the test set.
+{{</ callout >}}
 
 ## Present your Solution
 

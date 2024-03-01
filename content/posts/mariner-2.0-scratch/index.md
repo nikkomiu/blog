@@ -28,9 +28,11 @@ working on our Docker container. However, the principles used in this should be 
 language since we're making changes that would optimize the build and runtime of the Linux environment running
 within a Docker container.
 
-> **Note:** When we check the container for Linux distribution later in this article we will be using
-> [Trivy](https://trivy.dev/) to scan the container for vulnerabilities. If you're following along make sure to
-> follow the extra step to add Trivy to your Dev Container.
+{{< callout type=note >}}
+When we check the container for Linux distribution later in this article we will be using [Trivy](https://trivy.dev/) to
+scan the container for vulnerabilities. If you're following along make sure to follow the extra step to add Trivy to
+your Dev Container.
+{{</ callout >}}
 
 If you're going to be following along with my sample repository, the `Dockerfile`s aren't going to be in the root
 of the repository. They're located in the `rel` directory and are named `mariner.Dockerfile` and `alpine.Dockerfile`.
@@ -62,8 +64,10 @@ RUN go mod download
 RUN go build -ldflags="-s -w" -o app main.go
 ```
 
-> **Note:** We're adding `-ldflags="-s -w"` to remove some debugging parts from the final Go
-> binary that aren't needed for anything in a staging/production build and cause the binary to bloat.
+{{< callout type=note >}}
+We're adding `-ldflags="-s -w"` to remove some debugging parts from the final Go binary that aren't needed for anything
+in a staging/production build and cause the binary to bloat.
+{{</ callout >}}
 
 Now we can build our Docker image with the following command:
 
@@ -77,16 +81,18 @@ As said before, this is a highly unoptimized build. So, with that in mind, let's
 
 ## Split Build from Final Image
 
-> **Question:** Ok, but why does it matter how big our base image is?
->
-> **Answer:** When we're building Docker containers start up time is a large cost in the
-> (typically) highly elastic infrastructure environments these applications usually run in.
-> Because of this, we want to make sure that we reduce the startup time of our application
-> as much as possible. The easiest way to reduce this start up time of our container is to
-> reduce the size of the final image that's being created. It's important because when the Docker
-> daemon starts a new instance of your container it's going to pull down the container image
-> _(typically if it's not already installed, but in some cases **[always](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy)**)_
-> from the registry which will scale (generally) linear with the size of the image itself.
+{{< callout type=question >}}
+Ok, but why does it matter how big our base image is?
+
+**Answer:** When we're building Docker containers start up time is a large cost in the
+(typically) highly elastic infrastructure environments these applications usually run in.
+Because of this, we want to make sure that we reduce the startup time of our application
+as much as possible. The easiest way to reduce this start up time of our container is to
+reduce the size of the final image that's being created. It's important because when the Docker
+daemon starts a new instance of your container it's going to pull down the container image
+_(typically if it's not already installed, but in some cases **[always](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy)**)_
+from the registry which will scale (generally) linear with the size of the image itself.
+{{</ callout >}}
 
 To reduce the image size we will be employing several optimizations to our build process.
 The first optimization we're going to use is to split the building of our application from the running of our app.
@@ -146,9 +152,11 @@ We don't get a bunch of savings in our very simple example application, but in a
 lot of space. For example, in a real application I've seen UPX reduce the size of a CGO binary to ~20% of its
 original size.
 
-> **Note:** The `TARGETARCH` build arg is used to determine the CPU architecture of the final container.
-> It is set by the Docker Buildx builder. If you are not using Buildx you can set this manually to the
-> planned architecture of your Docker image. For example, `amd64`, `arm64`, etc.
+{{< callout type=note >}}
+The `TARGETARCH` build arg is used to determine the CPU architecture of the final container. It is set by the Docker
+Buildx builder. If you are not using Buildx you can set this manually to the planned architecture of your Docker image.
+For example, `amd64`, `arm64`, etc.
+{{</ callout >}}
 
 ## Install Runtime Dependencies to Fakeroot
 
@@ -263,11 +271,12 @@ the final image size of an Alpine-based image. For reference the sample repo als
 the same application with Alpine (`alpine.Dockerfile`). The final image size of the Alpine-based image is
 **~8.4 MB**.
 
-> **Note:** As we will see in the Trivy section below, you may not want to remove the `/mnt/var/lib/rpm` directory
-> from your final image. This directory contains the RPM database which is used by `tdnf` to manage packages. If you
-> remove this directory from your final image you won't be able to use a code scanner like Trivy to scan packages
-> installed in your final image. If you're not using a code scanner like Trivy you can remove this directory from
-> your final image to save that space.
+{{< callout type=note >}}
+As we will see in the Trivy section below, you may not want to remove the `/mnt/var/lib/rpm` directory from your final
+image. This directory contains the RPM database which is used by `tdnf` to manage packages. If you remove this directory
+from your final image you won't be able to use a code scanner like Trivy to scan packages installed in your final image.
+If you're not using a code scanner like Trivy you can remove this directory from your final image to save that space.
+{{</ callout >}}
 
 ## Split our Dockerfile into 3 Stages
 

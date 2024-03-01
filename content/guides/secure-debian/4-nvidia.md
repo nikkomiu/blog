@@ -28,7 +28,9 @@ Add `software-common-properties` to update the repositories available:
 sudo apt install software-properties-common -y
 ```
 
-> **Note:** You can make these changes manually if you prefer instead of using `software-properties-common`.
+{{< callout type=note >}}
+You can make these changes manually if you prefer instead of using `software-properties-common`.
+{{</ callout >}}
 
 Then add the `contrib`, `non-free` and `non-free-firmware` update channels to `apt`:
 
@@ -36,7 +38,9 @@ Then add the `contrib`, `non-free` and `non-free-firmware` update channels to `a
 sudo apt-add-repository contrib non-free non-free-firmware
 ```
 
-> **Note:** all of these are required for various components of the NVIDIA drivers to be installed.
+{{< callout type=note >}}
+All of these are required for various components of the NVIDIA drivers to be installed.
+{{</ callout >}}
 
 ## Install Linux Headers
 
@@ -47,9 +51,11 @@ architecture (`amd64` in my case):
 apt install linux-headers-amd64
 ```
 
-> **Note:** We should install the `linux-headers` package _before_ installing the NVIDIA driver. However, in practice,
-> it seems that if you install the NVIDIA driver first it just won't be signed or loaded into the kernel until the
-> `linux-headers` package is installed.
+{{< callout type=note >}}
+We should install the `linux-headers` package _before_ installing the NVIDIA driver. However, in practice, it seems that
+if you install the NVIDIA driver first it just won't be signed or loaded into the kernel until the `linux-headers`
+package is installed.
+{{</ callout >}}
 
 ## Install NVIDIA Driver
 
@@ -84,8 +90,10 @@ In my case, I'm installing the `nvidia-driver` package:
 apt install nvidia-driver
 ```
 
-> **Note:** You'll probably get a warning about the NOUVEAU driver being loaded. We will reboot for these changes to
-> take effect after we make a couple of other changes.
+{{< callout type=note >}}
+You'll probably get a warning about the NOUVEAU driver being loaded. We will reboot for these changes to take effect
+after we make a couple of other changes.
+{{</ callout >}}
 
 ## Add Modeset Kernel Flag
 

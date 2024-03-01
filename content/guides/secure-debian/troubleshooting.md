@@ -82,5 +82,7 @@ chroot /mnt
 Now you can do what you need to do within your Debian OS. When you're done make sure to `exit` as you can't restart the
 machine from inside a `chroot` session.
 
-> **Note:** You can also provide a second argument for what command to run using `chroot`. For example, if the shell
-> in your current Linux distro doesn't exist inside your Debian one you may need to add `bash` as an argument.
+{{< callout type=note >}}
+You can also provide a second argument for what command to run using `chroot`. For example, if the shell in your current
+Linux distro doesn't exist inside your Debian one you may need to add `bash` as an argument.
+{{</ callout >}}

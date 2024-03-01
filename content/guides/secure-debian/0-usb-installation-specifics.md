@@ -19,10 +19,12 @@ gets created in our EFI partition. However, in order to make UEFI recognize that
 to use the "default" path that UEFI will use to look for an EFI. So, according to the
 [EFI Spec (page 573)](https://uefi.org/sites/default/files/resources/UEFI%20Spec%202.8B%20May%202020.pdf#page=573):
 
-> For removable media devices there must be only one UEFI-compliant system partition, and that partition
-> must contain an UEFI-defined directory in the root directory. The directory will be named EFI. All OS
-> loaders and applications will be stored in a subdirectory below EFI called BOOT. There must only be one
-> executable EFI image for each supported processor architecture in the BOOT directory.
+{{< callout type=note >}}
+For removable media devices there must be only one UEFI-compliant system partition, and that partition must contain a
+UEFI-defined directory in the root directory. The directory will be named EFI. All OS loaders and applications will be
+stored in a subdirectory below EFI called BOOT. There must only be one executable EFI image for each supported processor
+architecture in the BOOT directory.
+{{</ callout >}}
 
 We need to use the following path for the UKI file on the USB drive instead:
 
@@ -30,7 +32,9 @@ We need to use the following path for the UKI file on the USB drive instead:
 /EFI/BOOT/BOOTX64.EFI
 ```
 
-> **Note:** If you're not using an x86_64 processor you'll need to use the appropriate filename for your architecture.
+{{< callout type=note >}}
+If you're not using an x86_64 processor you'll need to use the appropriate filename for your architecture.
+{{</ callout >}}
 
 You could also do this for a non-portable installation. However, when using an internal drive, it's generally better to
 use the "custom" paths and add the boot entry manually. This is because the UEFI firmware will generally have a boot
@@ -62,5 +66,7 @@ To add the **Intel** microcode run:
 apt install intel-microcode
 ```
 
-> **Note:** Some Linux distros will include both x64 microcode packages by default. So you may not _need_ to run these
-> commands. However, I generally find it to be a good idea to run them just to be sure that they're added to the kernel.
+{{< callout type=note >}}
+Some Linux distros will include both x64 microcode packages by default. So you may not _need_ to run these commands.
+However, I generally find it to be a good idea to run them just to be sure that they're added to the kernel.
+{{</ callout >}}

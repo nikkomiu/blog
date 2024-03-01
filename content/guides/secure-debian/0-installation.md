@@ -12,10 +12,12 @@ tags:
 My machine is configured (during installation) to have Secure Boot disabled. After completing the installation, I will
 re-enable Secure Boot in the [Secure Boot section](./1-secure-boot.md) of this guide.
 
-> **Important:** If you already have an EFI partition on your machine and don't want to use it for the EFI of your
-> Debian installation, you'll either need to detach the disk that contains the EFI partition or fix the EFI partition
-> mapping in `/etc/fstab` after installation completes. For the latter, you can follow
-> [these instructions](./troubleshooting.md#fix-efi-partition-mapping).
+{{< callout type=warning title=Important >}}
+If you already have an EFI partition on your machine and don't want to use it for the EFI of your
+Debian installation, you'll either need to detach the disk that contains the EFI partition or fix the EFI partition
+mapping in `/etc/fstab` after installation completes. For the latter, you can follow
+[these instructions](./troubleshooting.md#fix-efi-partition-mapping).
+{{</ callout >}}
 
 ## Installation
 
@@ -27,5 +29,5 @@ I have _manually_ set my disks up during installation as:
 | Boot               | 512M\* | `/boot`     | `FAT32`             |
 | LUKS-encrypted LVM | 100%   | `/`         | `ext4`              |
 
-> \*: These are recommended sizes. I've gotten away with the EFI and boot partitions set to 300 MB, but you'll have to
-> do a bit of clean up earlier on in the process.
+_**\*:** These are recommended sizes. I've gotten away with the EFI and boot partitions set to 300 MB, but you'll have to
+do a bit of clean up earlier on in the process._

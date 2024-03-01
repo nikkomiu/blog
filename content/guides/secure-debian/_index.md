@@ -21,7 +21,9 @@ locations may be different for your flavor of Linux. I try to keep explanations 
 point is of the things I do, so it may not take someone more experienced in Linux installation and configuration much
 time to adapt this to another distro (with modifications I also follow this guide when installing Arch Linux).
 
-> **Note:** I also follow this guide for installing Kali as it is based on Debian (and the Debian installer).
+{{< callout type=note >}}
+I also follow this guide for installing Kali as it is based on Debian (and the Debian installer).
+{{</ callout >}}
 
 If you're planning to install Debian (or a Debian-based OS) onto a portable storage device (like a flash drive,
 external hard drive, etc.) check the

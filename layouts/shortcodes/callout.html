@@ -17,6 +17,10 @@
   {{ $icon = "hi-exclamation-circle" }}
 {{ end }}
 
+{{ with (eq $type "question") }}
+  {{ $icon = "hi-question-mark-circle" }}
+{{ end }}
+
 {{ $title := $type | strings.Title }}
 {{ with .Get "title" }}
   {{ $title = . }}
@@ -33,7 +37,8 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-8 h-8 mr-2"
+          class="w-6 h-6 mr-2"
+          style="margin-top:2px"
         >
           <use href="#{{ $icon }}" />
         </svg>
@@ -41,7 +46,7 @@
     {{ end }}
     <div>
       <span class="leading">{{ $title }}:</span>
-      {{ .Inner }}
+      {{ .Inner | markdownify }}
     </div>
   </div>
 </div>

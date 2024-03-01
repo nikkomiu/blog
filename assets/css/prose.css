@@ -9,7 +9,7 @@
 }
 
 .prose blockquote p {
-  @apply relative text-neutral-200 my-4;
+  @apply relative text-neutral-300 my-4;
 }
 
 .prose ul li p {
@@ -29,7 +29,7 @@
 }
 
 .prose blockquote p strong {
-  @apply text-neutral-50;
+  @apply text-neutral-100;
 }
 
 .prose pre,
@@ -63,29 +63,37 @@
   @apply text-fuchsia-300;
 }
 
+.prose li p:first-of-type {
+  @apply mt-0;
+}
+
+.prose li p:last-of-type {
+  @apply mb-0;
+}
+
 .prose ol {
   @apply pl-10 flex flex-col;
 }
 
-.prose ol li {
+.prose ol > li {
   @apply pl-0 my-1;
 }
 
-.prose ul li::marker {
+.prose ul > li::marker {
   @apply text-fuchsia-500 font-bold;
 
   content: "-";
 }
 
-.prose ul li {
+.prose ul > li {
   @apply pl-3;
 }
 
-.prose ul li p:not(:first-of-type) {
+.prose ul > li p:not(:first-of-type) {
   @apply mt-2;
 }
 
-.prose ol li::marker {
+.prose ol > li::marker {
   @apply text-fuchsia-500 font-bold;
 }
 
@@ -118,7 +126,9 @@
 }
 
 .prose samp pre {
-  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-2 pt-5;
+  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-2 pt-5 text-base;
+
+  line-height: 1;
 }
 
 .prose .highlight pre,
