@@ -1,5 +1,3 @@
-import "@hotwired/turbo";
-
 import { displayLanguageTabs, loadCodeActions } from "./code";
 import { loadMenu } from "./menu";
 import { loadSearch } from "./search";
