@@ -1,0 +1,59 @@
+.callout {
+  @apply bg-black border-l-4 pl-2 pr-4 py-3 md:pl-3 md:pr-6 md:py-4;
+}
+
+.callout .leading + p:first-of-type {
+  @apply inline ml-1;
+}
+
+.callout .leading {
+  @apply font-bold select-none;
+}
+
+.callout.callout-note {
+  @apply border-fuchsia-500 bg-black text-fuchsia-400;
+}
+
+.callout.callout-note .leading {
+  @apply text-fuchsia-200;
+}
+
+.callout.callout-info {
+  @apply border-neutral-500 bg-black text-neutral-300;
+}
+
+.callout.callout-info .leading {
+  @apply text-neutral-200;
+}
+
+.callout.callout-warning {
+  @apply border-orange-500 bg-orange-950 text-orange-300;
+}
+
+.callout.callout-warning .leading {
+  @apply text-orange-200;
+}
+
+.callout.callout-danger {
+  @apply border-red-500 bg-red-950 text-red-300;
+}
+
+.callout.callout-danger .leading {
+  @apply text-red-200;
+}
+
+.callout.callout-question {
+  @apply border-cyan-600 bg-black text-cyan-500;
+}
+
+.callout.callout-question .leading {
+  @apply text-cyan-300;
+}
+
+.callout.callout-question p:first-of-type {
+  @apply text-cyan-300;
+}
+
+.callout.callout-question p:last-of-type strong {
+  @apply text-cyan-400;
+}

@@ -13,15 +13,18 @@ out of the equation when those steps come up.
 
 <!--more-->
 
-> **Note:** To start, I have Secure Boot disabled in the UEFI settings. You don't need to have Secure Boot disabled on
-> your system if you're using the Debian signed kernel. However, I find it a bit less frustrating to start without it
-> enabled.
+{{< callout type=note >}}
+To start, I have Secure Boot disabled in the UEFI settings. You don't need to have Secure Boot disabled on your system
+if you're using the Debian signed kernel. However, I find it a bit less frustrating to start without it enabled.
+{{</ callout >}}
 
 Throughout this guide, I'll be using `my-debian` as the dirname for the EFI loader. However, you can name this whatever
 you want it to be called.
 
-> **Note:** If you're going to be installing Debian on a removable storage device you will need to use a different
-> ("common") structure for it to properly pick up the removable disk.
+{{< callout type=note >}}
+If you're going to be installing Debian on a removable storage device you will need to use a different ("common")
+structure for it to properly pick up the removable disk.
+{{</ callout >}}
 
 ## Prerequisite Packages
 
@@ -71,9 +74,11 @@ Otherwise, follow the manual installation instructions.
 
 ### Manually Installation
 
-> **Note:** As of the time of writing this the `systemd-ukify` package is not yet available on the stable Debian
-> version, so I am manually pulling down the archive from [Debian Sid](https://packages.debian.org/sid/systemd-ukify).
-> However, when it becomes available directly through `apt` you should install it that way instead of this manual way.
+{{< callout type=note >}}
+As of the time of writing this the `systemd-ukify` package is not yet available on the stable Debian version, so I am
+manually pulling down the archive from [Debian Sid](https://packages.debian.org/sid/systemd-ukify). However, when it
+becomes available directly through `apt` you should install it that way instead of this manual way.
+{{</ callout >}}
 
 This package can't be installed directly as it requires a version of `systemd` that isn't installed.
 Instead, just manually extract it to get the ukify Python script:
@@ -122,8 +127,10 @@ of adding command line options to the GRUB config (or the _loader config_ if you
 root=UUID=<<UUID>> panic=0 ro quiet
 ```
 
-> **Note:** Make sure to add `panic=0` to this as this prevents a bad actor from corrupting the startup and
-> falling back to an emergency shell.
+{{< callout type=note >}}
+Make sure to add `panic=0` to this as this prevents a bad actor from corrupting the startup and falling back to an
+emergency shell.
+{{</ callout >}}
 
 ### Create EFI Stub Generation Script
 
@@ -161,7 +168,9 @@ if [ $? -ne 0 ]; then
 fi
 ```
 
-> **Note:** Make sure to start the file name with `zz` (this will make it the last script to run).
+{{< callout type=note >}}
+Make sure to start the file name with `zz` (this will make it the last script to run).
+{{</ callout >}}
 
 ## Run Script on `initramfs` Update
 
@@ -197,9 +206,11 @@ Reboot and go into the UEFI setup to _append_ the key to the `db` keys under **S
 If everything was set up correctly when you go back into your system you should boot into to your newly signed
 Unified Kernel Image.
 
-> **Note:** Because we used the kernel parameter `panic=0`, we aren't going to be allowed, by the kernel, to drop into
-> an emergency shell if there's a failure during the startup of the OS. Because of this we have to switch to another
-> Linux distro, decrypt and mount our disks, and manually fix the issues from there.
+{{< callout type=note >}}
+Because we used the kernel parameter `panic=0`, we aren't going to be allowed, by the kernel, to drop into an emergency
+shell if there's a failure during the startup of the OS. Because of this we have to switch to another Linux distro,
+decrypt and mount our disks, and manually fix the issues from there.
+{{</ callout >}}
 
 If there is an issue booting after these steps, you'll need to check the output from the shell to see what is going
 wrong. You can then look at the
@@ -263,8 +274,10 @@ if [ $? -ne 0 ]; then
 fi
 ```
 
-> A better name for this may be "fallback" or "previous" since it is really only used to allow you to load the previous
-> Linux kernel image when the current one is failing.
+{{< callout type=note >}}
+A better name for this may be "fallback" or "previous" since it is really only used to allow you to load the previous
+Linux kernel image when the current one is failing.
+{{</ callout >}}
 
 Next we can create the EFI directory for the new image and run the script again to generate the new image:
 
@@ -337,9 +350,11 @@ bootctl remove
 Running this command will cause the `postinst.d` script that is added during the installation of `systemd-boot` to be
 removed, so it doesn't get run when the initramfs is updated.
 
-> **Note:** We installed `systemd-boot` for some of the utilities that are included with it. However, I'm not going to
-> be using `systemd-boot` as the bootloader for my OS. If you want to use it, you just need to sign the bootloader
-> whenever it is updated using a post update script.
+{{< callout type=note >}}
+We installed `systemd-boot` for some of the utilities that are included with it. However, I'm not going to be using
+`systemd-boot` as the bootloader for my OS. If you want to use it, you just need to sign the bootloader whenever it is
+updated using a post update script.
+{{</ callout >}}
 
 ### Remove `/boot` Partition
 
@@ -361,10 +376,11 @@ After you get back into your system, manually mount the old boot partition to `/
 mount /dev/nvme0n1p3 /mnt
 ```
 
-> **Note:** You may need to find your old boot partition if you don't know what the name of it is. You can do this by
-> checking `fdisk -l` to see what partition it is. Alternatively, you can find it by UUID by taking the UUID from the
-> commented out line in the `/etc/fstab` and running `ls -l /dev/disk/by-uuid/` to determine which disk the symlink
-> points to.
+{{< callout type=note >}}
+You may need to find your old boot partition if you don't know what the name of it is. You can do this by checking
+`fdisk -l` to see what partition it is. Alternatively, you can find it by UUID by taking the UUID from the commented out
+line in the `/etc/fstab` and running `ls -l /dev/disk/by-uuid/` to determine which disk the symlink points to.
+{{</ callout >}}
 
 Now that it's mounted at `/mnt` we can just copy the `config`, `initrd.img`, and `vmlinuz` files from the old boot
 partition to the (now root disk) `/boot` directory:

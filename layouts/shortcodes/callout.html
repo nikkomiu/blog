@@ -1,0 +1,52 @@
+{{ $type := .Get "type" }}
+{{ $icon := "" }}
+
+{{ with (eq $type "note") }}
+  {{ $icon = "hi-pencil-square" }}
+{{ end }}
+
+{{ with (eq $type "info") }}
+  {{ $icon = "hi-information-circle" }}
+{{ end }}
+
+{{ with (eq $type "warning") }}
+  {{ $icon = "hi-exclamation-triangle" }}
+{{ end }}
+
+{{ with (eq $type "danger") }}
+  {{ $icon = "hi-exclamation-circle" }}
+{{ end }}
+
+{{ with (eq $type "question") }}
+  {{ $icon = "hi-question-mark-circle" }}
+{{ end }}
+
+{{ $title := $type | strings.Title }}
+{{ with .Get "title" }}
+  {{ $title = . }}
+{{ end }}
+
+
+<div class="callout callout-{{ $type }}">
+  <div class="flex">
+    {{ with $icon }}
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 mr-2"
+          style="margin-top:2px"
+        >
+          <use href="#{{ $icon }}" />
+        </svg>
+      </div>
+    {{ end }}
+    <div>
+      <span class="leading">{{ $title }}:</span>
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
+</div>

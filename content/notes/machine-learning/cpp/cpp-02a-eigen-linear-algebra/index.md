@@ -118,8 +118,9 @@ until it is needed. It does so by returning an _expression object_ that represen
 The whole expression is evaluated when it is assigned to a variable or when it is passed to a function
 (i.e. through `operator=`).
 
-> **Note:** Eigen's use of _expression objects_ can lead to unexpected behavior if the `auto` keyword is
-> used to declare variables.
+{{< callout type=note >}}
+Eigen's use of _expression objects_ can lead to unexpected behavior if the `auto` keyword is used to declare variables.
+{{</ callout >}}
 
 Partial matrix operations can be done in Eigen as well. Eigen provides a `block` method which takes four arguments:
 

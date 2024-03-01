@@ -43,7 +43,9 @@ and add the `quiet` and `splash` arguments to show the Plymouth splash screen:
 root=... quiet splash
 ```
 
-> **Note:** This assumes that you have previously followed the [Secure Boot](./debian-secure-boot.md) guide.
+{{< callout type=note >}}
+This assumes that you have previously followed the [Secure Boot](./debian-secure-boot.md) guide.
+{{</ callout >}}
 
 ## Hide the Cursor on Startup
 

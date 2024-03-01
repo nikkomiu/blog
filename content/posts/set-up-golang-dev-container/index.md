@@ -40,8 +40,10 @@ This Dev Container will also have a couple of _(optional)_ handy tools installed
 
 - **PostgreSQL Client** - for interacting with the development PostgreSQL database.
 
-> **Note:** The Docker CLI does not work properly in all Dev Container hosting environments.
-> This is because the Docker CLI requires access to the host's Docker daemon, which is not always accessible by the Dev Container.
+{{< callout type=note >}}
+The Docker CLI does not work properly in all Dev Container hosting environments. This is because the Docker CLI requires
+access to the host's Docker daemon, which is not always accessible by the Dev Container.
+{{</ callout >}}
 
 There are a few other assumptions about development workflow that we will make:
 
@@ -62,9 +64,11 @@ There are a few other assumptions about development workflow that we will make:
    extension to create and run our Dev Container.
 1. Create the `.devcontainer` directory in the root of your project. This is where we will store our Dev Container configuration.
 
-> **Note:** It isn't very easy to create a Dev Container without starting off on a local project directory.
-> After your Dev Container is working properly against a local folder (and you've pushed it to a Git remote)
-> you can delete the local project directory and clone into a Dev Container volume.
+{{< callout type=note >}}
+It isn't very easy to create a Dev Container without starting off on a local project directory. After your Dev Container
+is working properly against a local folder (and you've pushed it to a Git remote) you can delete the local project
+directory and clone into a Dev Container volume.
+{{</ callout >}}
 
 ## Create our Dockerfile
 
@@ -149,8 +153,10 @@ In this case, I've added a PostgreSQL service to develop an app that uses a Post
 any additional services that you need to develop your application. Any services that you add to the `docker-compose.yml`
 file will be available to the `app` service in the Dev Container via the service name.
 
-> **Note:** The `/var/run/docker.sock` is mounted on the `app` service to allow the `docker` CLI to interact with
-> the host's Docker daemon.
+{{< callout type=note >}}
+The `/var/run/docker.sock` is mounted on the `app` service to allow the `docker` CLI to interact with the host's Docker
+daemon.
+{{</ callout >}}
 
 ## Create our Dev Container Configuration
 
@@ -249,8 +255,10 @@ clone the repository to your local machine's disk.
 1. Enter the Git clone URL of the repository that you want to clone and press `Enter`. Or you can sign in to
    GitHub to clone a repository directly from GitHub.
 
-> **Note:** Check out the official documentation on [Sharing Git credentials with a Dev Container](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials)
-> for cloning into a Dev Container volume with SSH.
+{{< callout type=note >}}
+Check out the official documentation on [Sharing Git credentials with a Dev Container](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials)
+for cloning into a Dev Container volume with SSH.
+{{</ callout >}}
 
 ## Extras
 
@@ -301,7 +309,9 @@ RUN wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSIO
     rm trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz
 ```
 
-> **Note:** This currently does not work with an Apple Silicone macOS machine.
+{{< callout type=note >}}
+This currently does not work with an Apple Silicone macOS machine.
+{{</ callout >}}
 
 ### Add KIND Support
 
@@ -317,7 +327,9 @@ services:
       KIND_EXPERIMENTAL_DOCKER_NETWORK: blog-goapp_devcontainer_backend
 ```
 
-> **Note:** As the environment variable name suggests this is an experimental feature and may change in the future.
+{{< callout type=note >}}
+As the environment variable name suggests this is an experimental feature and may change in the future.
+{{</ callout >}}
 
 Now that we set the environment variable, let's update the `Dockerfile` to install `kubectl`, `kind`, and `helm`.
 Make sure to add the following lines to the `Dockerfile` after the `RUN apk add --update ...` line but before creating

@@ -30,7 +30,7 @@ quam quisque id diam vel. Egestas erat imperdiet sed euismod nisi. Scelerisque
 felis imperdiet proin fermentum leo vel orci porta non. Ut faucibus pulvinar
 elementum integer. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl.
 
-{{< highlight go "linenos=table,hl_lines=3 7-9,linenostart=6" >}}
+```go {linenos=table,hl_lines="3 7-9",linenostart=6}
 package main
 
 import "fmt"
@@ -38,15 +38,15 @@ import "fmt"
 const some = "thing"
 
 func printSome() {
-fmt.Println(some)
+  fmt.Println(some)
 }
 
 func main() {
-fmt.Println("Hello, World!")
+  fmt.Println("Hello, World!")
 
-printSome()
+  printSome()
 }
-{{< / highlight >}}
+```
 
 A set of ordered items:
 
@@ -61,13 +61,65 @@ A set of unordered items:
 - thing
 - else
 
+Just some plain ol' C:
+
 ```c
 void main(int argc, char *argv[]) {
-    printf("Hello, World!\n");
+  printf("Hello, World!\n");
 }
 ```
 
-```bash
-$ echo "Hello, World!"
-Some output
+Bash copy example (with line numbers):
+
+```bash {linenos=table}
+$ echo "Hello, World"
+Hello, World
 ```
+
+Bash mulitline copy example:
+
+```bash
+$ echo "Hello, world"
+Hello, world
+$ echo "Something else"
+Something else
+$ echo "some" && \
+  echo "other"
+some
+other
+```
+
+things
+
+{{< callout type=note >}}
+some really long callout that is of type note so that someone can get some random additional information about what's
+going on or what needs to be done.
+{{</ callout >}}
+
+some
+
+{{< callout type=info >}}
+some really long callout that is of type note so that someone can get some random additional information about what's
+going on or what needs to be done.
+{{</ callout >}}
+
+other
+
+{{< callout type=warning >}}
+some really long callout that is of type note so that someone can get some random additional information about what's
+going on or what needs to be done.
+{{</ callout >}}
+
+some thing
+
+{{< callout type=warning title=Bug >}}
+some really long callout that is of type note so that someone can get some random additional information about what's
+going on or what needs to be done.
+{{</ callout >}}
+
+awesome
+
+{{< callout type=danger >}}
+some really long callout that is of type note so that someone can get some random additional information about what's
+going on or what needs to be done.
+{{</ callout >}}

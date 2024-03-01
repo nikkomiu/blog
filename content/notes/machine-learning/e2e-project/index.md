@@ -193,7 +193,9 @@ housing.describe()
 | 75%   | -118.0    | 37.7     | 37.0               | 3148.0      | 647.0          | 1725.0     | 605.0      | 4.7           | 264725.0           |
 | max   | -114.3    | 42.0     | 52.0               | 39320.0     | 6445.0         | 35682.0    | 6082.0     | 15.0          | 500001.0           |
 
-> **Note:** Null values are ignored (so, for example, count of total_bedrooms is 20433, not 20640).
+{{< callout type=note >}}
+Null values are ignored (so, for example, count of total_bedrooms is 20433, not 20640).
+{{</ callout >}}
 
 The `count`, `mean`, `min`, and `max` rows are self-explanatory.
 The `std` row shows the standard deviation (which measures how dispersed the values are).
