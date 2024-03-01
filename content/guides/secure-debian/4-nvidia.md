@@ -65,7 +65,7 @@ Run the `nvidia-detect` command to get the driver recommendation for your system
 nvidia-detect
 ```
 
-```bash
+```output
 Detected NVIDIA GPUs:
 01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU104BM [GeForce RTX 2080 SUPER Mobile / Max-Q] [10de:1ed3] (rev a1)
 
@@ -114,7 +114,7 @@ nvidia-smi
 
 If you get output similar to the following, you're all set:
 
-```text
+```output
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 525.147.05   Driver Version: 525.147.05   CUDA Version: 12.0     |
 |-------------------------------+----------------------+----------------------+
