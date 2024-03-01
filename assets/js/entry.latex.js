@@ -9,4 +9,4 @@ function onPageLoad() {
   });
 }
 
-window.addEventListener("turbo:load", onPageLoad);
+window.addEventListener("load", onPageLoad);
