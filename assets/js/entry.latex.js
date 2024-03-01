@@ -1,12 +1,8 @@
 import katexAutoRender from "katex/contrib/auto-render";
 
-function onPageLoad() {
-  katexAutoRender(document.body, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "$", right: "$", display: false },
-    ],
-  });
-}
-
-window.addEventListener("load", onPageLoad);
+window.addEventListener("load", () => katexAutoRender(document.body, {
+  delimiters: [
+    { left: "$$", right: "$$", display: true },
+    { left: "$", right: "$", display: false },
+  ],
+}));
