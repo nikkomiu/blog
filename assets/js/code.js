@@ -1,7 +1,10 @@
 const langMapping = {
-  cpp: "C++",
-  cs: "C#",
+  cpp: "c++",
+  cs: "c#",
 };
+
+const shellLangs = ["sh", "bash", "zsh"];
+const shellCommandPrefix = ["$", "#"];
 
 const copyHTML = `
 <svg xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +26,35 @@ export function loadCodeActions() {
     button.innerHTML = copyHTML;
     button.classList.add("copy-button");
     button.addEventListener("click", () => {
-      navigator.clipboard.writeText(el.innerText.replace(/\n\n/g, "\n"));
+      let clipText = el.innerText.replace(/\n\n/g, "\n");
+      if (shellLangs.indexOf(el.dataset.lang) >= 0) {
+        let appendToPrev = false;
+        clipText = clipText.split("\n").reduce((prev, cur) => {
+          let curTrim = cur.trim();
+          const cmdPrefix = shellCommandPrefix.indexOf(curTrim[0]);
+          if (!appendToPrev && (curTrim.length === 0 || cmdPrefix === -1)) {
+            return prev;
+          }
+          appendToPrev = false;
+
+          // if the last char of the line is a \ the command continues to the next line
+          if (curTrim[curTrim.length - 1] === "\\") {
+            appendToPrev = true;
+          }
+
+          if (cmdPrefix >= 0) {
+            curTrim = curTrim.replace(shellCommandPrefix[cmdPrefix], "").trim();
+          }
+
+          if (!prev) {
+            return curTrim;
+          }
+
+          return [prev, curTrim].join("\n");
+        }, "");
+      }
+
+      navigator.clipboard.writeText(clipText);
       button.innerHTML = copiedHTML;
       button.classList.add("active");
       setTimeout(() => {
