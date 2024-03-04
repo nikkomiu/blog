@@ -1,6 +1,7 @@
 ---
 title: Set Up Secure Boot
 date: 2024-02-05T04:00:00Z
+author: Nikko Miu
 toc: true
 tags:
   - debian

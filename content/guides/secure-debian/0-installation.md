@@ -1,6 +1,7 @@
 ---
 title: OS Installation
 date: 2024-02-05T06:00:00Z
+author: Nikko Miu
 tags:
   - debian
   - secure boot

@@ -1,6 +1,7 @@
 ---
 title: USB Installation Specifics
 date: 2024-02-05T05:00:00Z
+author: Nikko Miu
 tags:
   - debian
   - usb linux

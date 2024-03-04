@@ -1,6 +1,7 @@
 ---
 date: 2024-02-04T00:00:00Z
 title: Troubleshooting
+author: Nikko Miu
 toc: true
 ---
 
@@ -86,3 +87,9 @@ machine from inside a `chroot` session.
 You can also provide a second argument for what command to run using `chroot`. For example, if the shell in your current
 Linux distro doesn't exist inside your Debian one you may need to add `bash` as an argument.
 {{</ callout >}}
+
+## Kernel Module Signing Issues
+
+When I have issues with signing a new Linux kernel module, I've found it helpful to understand how
+kernel modules are created. For that check out the
+[Build a Simple Linux Kernel Module](/posts/build-a-simple-kernel-module/) post.

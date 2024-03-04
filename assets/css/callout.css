@@ -2,6 +2,10 @@
   @apply bg-black border-l-4 pl-2 pr-4 py-3 md:pl-3 md:pr-6 md:py-4;
 }
 
+.callout + .callout {
+  @apply mt-4;
+}
+
 .callout .leading + p:first-of-type {
   @apply inline ml-1;
 }
@@ -56,4 +60,8 @@
 
 .callout.callout-question p:last-of-type strong {
   @apply text-cyan-400;
+}
+
+.callout samp {
+  @apply mr-4;
 }

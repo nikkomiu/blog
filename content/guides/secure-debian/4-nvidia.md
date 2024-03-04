@@ -1,6 +1,7 @@
 ---
 title: NVIDIA Driver Installation
 date: 2024-02-05T01:00:00Z
+author: Nikko Miu
 toc: true
 tags:
   - debian

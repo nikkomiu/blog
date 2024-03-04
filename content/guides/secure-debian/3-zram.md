@@ -1,6 +1,7 @@
 ---
 title: Install and Configure zRAM
 date: 2024-02-05T02:00:00Z
+author: Nikko Miu
 tags:
   - debian
   - zram
