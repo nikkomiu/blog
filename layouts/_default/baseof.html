@@ -1,3 +1,13 @@
+{{ $contentClass := "max-w-3xl" }}
+{{ if eq .Params.Width "lg" }}
+  {{ $contentClass = "max-w-4xl" }}
+{{ else if eq .Params.Width "xl" }}
+  {{ $contentClass = "max-w-6xl" }}
+{{ else if eq .Params.Width "full" }}
+  {{ $contentClass = "max-w-full" }}
+{{ end }}
+
+
 <!DOCTYPE html>
 <html lang="{{ $.Site.Language }}">
   <head>
@@ -15,12 +25,14 @@
   </head>
   <body class="flex bg-neutral-950 text-white">
     <div class="flex flex-col w-full">
-      {{ partial "header.html" . }}
+      <div class="content w-full mx-auto px-4 {{ $contentClass }}">
+        {{ partial "header.html" . }}
 
 
-      <div class="content w-full max-w-3xl mx-auto py-6 px-4">
-        {{ block "main" . }}
-        {{ end }}
+        <div class="py-6">
+          {{ block "main" . }}
+          {{ end }}
+        </div>
       </div>
 
       {{ block "footer" . }}
