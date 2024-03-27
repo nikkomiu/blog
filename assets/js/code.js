@@ -3,7 +3,7 @@ const langMapping = {
   cs: "c#",
 };
 
-const shellLangs = ["sh", "bash", "zsh"];
+const shellLangs = [];
 const shellCommandPrefix = ["$", "#"];
 
 const copyHTML = `
