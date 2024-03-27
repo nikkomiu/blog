@@ -23,7 +23,7 @@ async function startHugo() {
   }
 
   if (process.env.CODESPACE_NAME) {
-    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-${listenPort}.githubpreview.dev/`)
+    hugoArgs.push('--baseURL', `https://${process.env.CODESPACE_NAME}-${listenPort}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/`)
   } else {
     hugoArgs.push('--baseURL', `http://localhost:${listenPort}/`)
   }
