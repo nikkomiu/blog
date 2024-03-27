@@ -11,13 +11,13 @@ tags:
 ## Pre-Installation
 
 My machine is configured (during installation) to have Secure Boot disabled. After completing the installation, I will
-re-enable Secure Boot in the [Secure Boot section](./1-secure-boot.md) of this guide.
+re-enable Secure Boot in the [Secure Boot section](../1-secure-boot.md) of this guide.
 
 {{< callout type=warning title=Important >}}
 If you already have an EFI partition on your machine and don't want to use it for the EFI of your
 Debian installation, you'll either need to detach the disk that contains the EFI partition or fix the EFI partition
 mapping in `/etc/fstab` after installation completes. For the latter, you can follow
-[these instructions](./troubleshooting.md#fix-efi-partition-mapping).
+[these instructions](../troubleshooting.md#fix-efi-partition-mapping).
 {{</ callout >}}
 
 ## Installation
