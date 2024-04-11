@@ -1,4 +1,4 @@
-import { displayLanguageTabs, loadCodeActions } from "./code";
+import { displayLanguageTabs, loadCodeActions } from "./action/code";
 import { loadMenu } from "./menu";
 import { loadSearch } from "./search";
 

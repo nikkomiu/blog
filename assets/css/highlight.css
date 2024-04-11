@@ -1,12 +1,16 @@
-.highlight .copy-button {
+.copy-button {
   @apply flex absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300;
 }
 
-.highlight .copy-button svg {
+.copy-button.active {
+  @apply opacity-80;
+}
+
+.copy-button svg {
   @apply w-6 h-6 mr-2;
 }
 
-.highlight .copy-button span {
+.copy-button span {
   @apply hidden sm:flex;
 }
 
@@ -14,8 +18,11 @@
   @apply absolute right-0 select-none text-sm border border-solid border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
 }
 
-.highlight:hover .copy-button,
-.highlight .copy-button.active {
+.highlight:hover .copy-button {
+  @apply opacity-80;
+}
+
+table:hover .copy-button {
   @apply opacity-80;
 }
 
