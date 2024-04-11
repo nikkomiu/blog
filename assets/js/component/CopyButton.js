@@ -12,12 +12,13 @@ const copiedHTML = `
 <span>Copied!</span>
 `;
 
-const btnClass = 'copy-button flex absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300';
+const btnClass =
+  "copy-button flex absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300";
 
 export default function CopyButton({ add, onClick }) {
   const button = document.createElement("button");
   button.innerHTML = copyHTML;
-  button.classList.add(...btnClass.split(' '));
+  button.classList.add(...btnClass.split(" "));
 
   if (onClick) {
     button.addEventListener("click", () => {

@@ -6,13 +6,15 @@ const langMapping = {
 };
 
 export function loadCodeActions() {
-  document.querySelectorAll(".highlight code[data-lang]").forEach((el) => CopyButton({
-    add: (btn) => el.parentNode.insertBefore(btn, el),
-    onClick: () => {
-      let clipText = el.innerText.replace(/\n\n/g, "\n");
-      navigator.clipboard.writeText(clipText);
-    }
-  }));
+  document.querySelectorAll(".highlight code[data-lang]").forEach((el) =>
+    CopyButton({
+      add: (btn) => el.parentNode.insertBefore(btn, el),
+      onClick: () => {
+        let clipText = el.innerText.replace(/\n\n/g, "\n");
+        navigator.clipboard.writeText(clipText);
+      },
+    })
+  );
 }
 
 export function displayLanguageTabs() {
