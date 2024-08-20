@@ -4,7 +4,7 @@
 {{ end }}
 
 
-<div class="flex space-x-2 ml-auto justify-end">
+<div class="flex space-x-2 ml-auto justify-end text-sm">
   <a href="https://{{ $site }}/{{ .Get "repo" }}/commit/{{ .Get "sha" }}">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
       stroke="currentColor"
       class="inline w-5 h-5 mr-2"
     >
-      <use href="#octicon-git-branch" /></svg
+      <use href="#octicon-code" /></svg
     >tree
   </a>
   {{ .Inner }}
