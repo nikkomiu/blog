@@ -1,0 +1,11 @@
+{{ $site := .Get "site" }}
+{{ if not $site }}
+  {{ $site = "github.com" }}
+{{ end }}
+
+<div class="flex space-x-2 ml-auto justify-end">
+  <a href="https://{{ $site }}/{{ .Get "repo" }}/commit/{{ .Get "sha" }}">commit</a>
+  <span>|</span>
+  <a href="https://{{ $site }}/{{ .Get "repo" }}/tree/{{ .Get "sha" }}">tree</a>
+  {{ .Inner }}
+</div>
