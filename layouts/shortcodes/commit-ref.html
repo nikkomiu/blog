@@ -5,10 +5,30 @@
 
 
 <div class="flex space-x-2 ml-auto justify-end">
-  <a href="https://{{ $site }}/{{ .Get "repo" }}/commit/{{ .Get "sha" }}"
-    >commit</a
-  >
-  <span>|</span>
-  <a href="https://{{ $site }}/{{ .Get "repo" }}/tree/{{ .Get "sha" }}">tree</a>
+  <a href="https://{{ $site }}/{{ .Get "repo" }}/commit/{{ .Get "sha" }}">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="inline w-5 h-5 mr-2"
+    >
+      <use href="#octicon-git-commit" /></svg
+    >commit
+  </a>
+  <span class="text-neutral-500">|</span>
+  <a href="https://{{ $site }}/{{ .Get "repo" }}/tree/{{ .Get "sha" }}">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="inline w-5 h-5 mr-2"
+    >
+      <use href="#octicon-git-branch" /></svg
+    >tree
+  </a>
   {{ .Inner }}
 </div>

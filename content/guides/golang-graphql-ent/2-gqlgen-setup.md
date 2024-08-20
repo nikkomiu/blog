@@ -165,7 +165,7 @@ by default.
 Before we commit our changes, we're going to add the generated code that we don't change (more on that later) to a
 `.gitignore` file:
 
-```gitignore
+```text
 gql/model/*_gen.go
 gql/generated.go
 ```

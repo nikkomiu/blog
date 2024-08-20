@@ -54,7 +54,7 @@ Update the `files.exclude` in `.vscode/settings.json` to exclude the Ent generat
 
 Update the `.gitignore` to include ent files except for the ones needed for code generation:
 
-```gitignore
+```text
 ent/*
 !ent/generate.go
 !ent/schema/
