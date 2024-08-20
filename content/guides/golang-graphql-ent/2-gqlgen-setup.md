@@ -73,7 +73,7 @@ I'm fairly particular about the structure of my projects so I am going to modify
 
 ```yaml
 schema:
-- gql/schema/*.graphql
+  - gql/schema/*.graphql
 
 exec:
   filename: gql/generated.go
@@ -108,7 +108,7 @@ I'm making a handful of changes that make it a little bit cleaner. This is all p
 you need to follow this:
 
 - I prefer all of my top-level packages to be three letters (`gql` in our case). It's not a requirement by any
-means, it's just a convention that the community has tended to adopt.
+  means, it's just a convention that the community has tended to adopt.
 - Keeping my schema files in their own directory
 - Split up my schema files by their top level resource (project, task, note, etc.) with one common file.
 
@@ -143,15 +143,15 @@ that file and show you what you're looking for). Create the `.vscode/settings.js
 
 ```json
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "gql/{generated,model/*_gen}.go": true
-    }
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "gql/{generated,model/*_gen}.go": true
+  }
 }
 ```
 
@@ -271,9 +271,7 @@ If we execute this we should get back something like:
   "errors": [
     {
       "message": "internal system error",
-      "path": [
-        "hello"
-      ]
+      "path": ["hello"]
     }
   ],
   "data": null
