@@ -2,7 +2,6 @@
 date: 2024-08-15T00:00:00Z
 title: Setting Up gqlgen
 author: Nikko Miu
-draft: true
 tags:
   - golang
   - graphql
@@ -339,3 +338,11 @@ import (
 {{</ callout >}}
 
 {{< commit-ref repo="nikkomiu/spectral" sha="03d3010b0aebd2cdd0590e81e37e448ac4d47c21" />}}
+
+## Conclusion
+
+You should now have your GraphQL API endpoints created and wired into your app CLI. We also explored how Go methods
+get generated for us with the request and response properties automatically mapped to function arguments and return
+parameters.
+
+Next up, we're going to add `ent` to manage our database layer for us using code-generation as well.

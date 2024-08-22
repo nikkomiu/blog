@@ -18,6 +18,10 @@ table:hover .copy-button {
   @apply opacity-80;
 }
 
+.highlight .file-tab {
+  @apply absolute left-0 select-none text-sm border border-solid border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
+}
+
 .highlight .lang-tab {
   @apply absolute right-0 select-none text-sm border border-solid border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
 }

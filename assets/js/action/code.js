@@ -18,6 +18,15 @@ export function loadCodeActions() {
 }
 
 export function displayLanguageTabs() {
+  document.querySelectorAll(".highlight[file]").forEach((highlight) => {
+    const fileName = highlight.getAttribute("file");
+    const elem = document.createElement("span");
+    elem.classList.add("file-tab");
+    elem.innerText = fileName;
+
+    highlight.appendChild(elem);
+  });
+
   document.querySelectorAll("code[data-lang]").forEach((code) => {
     const lang = code.dataset.lang;
     if (!lang || lang === "text") {
@@ -30,6 +39,10 @@ export function displayLanguageTabs() {
 
     const parentPre = code.closest("pre");
     if (!parentPre) {
+      return;
+    }
+
+    if (parentPre.parentElement.getAttribute("file")) {
       return;
     }
 

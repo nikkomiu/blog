@@ -2,7 +2,6 @@
 date: 2024-08-16T00:00:00Z
 title: Go GraphQL API
 author: Nikko Miu
-draft: true
 tags:
   - golang
   - graphql

@@ -2,7 +2,6 @@
 date: 2024-08-16T00:00:00Z
 title: Project Setup
 author: Nikko Miu
-draft: true
 tags:
   - golang
   - graphql
@@ -47,7 +46,7 @@ Lets, start by creating `cmd/cmd.go` where we will define the root level command
 This app will have multiple subcommands, so to make our lives a bit easier I'm going to use the
 [cobra](https://github.com/spf13/cobra) package to manage commands, flags, autocomplete, help, etc.
 
-```go
+```go {file="cmd/cmd.go"}
 package cmd
 
 import (
@@ -80,7 +79,7 @@ go mod tidy
 With our root command in place, we can add the API command that we're going to use to start the API server.
 Create the `cmd/api.go` file with the following:
 
-```go
+```go {file="cmd/api.go"}
 package cmd
 
 import (
@@ -113,7 +112,7 @@ Finally, we define the `runAPI()` method where, for now, we will just print `hel
 Create the `main.go` at the root of the project. For now, this will just create a context, run the
 `cmd.Execute(context.Context) error` method we just created, and exit with an error code if an `error` is returned.
 
-```go
+```go {file=main.go}
 package main
 
 import (
@@ -133,6 +132,10 @@ func main() {
   }
 }
 ```
+
+We will end up coming back to this file to expand on why we create and pass the context from the `main.go`.
+Until that time, basically we just create a new `context.Context` passing it into our `cmd.Execute(context.Context) error`
+method and handle any error that comes back by printing it out to the console and returning with a status of 1.
 
 ## Test our CLI
 
@@ -208,3 +211,10 @@ Use "spectral [command] --help" for more information about a command.
 ```
 
 {{< commit-ref repo="nikkomiu/spectral" sha="3b0a3ac3892ef638a83fa2bc61898b7a3d736e78" />}}
+
+## Conclusion
+
+We now have our project set up using Cobra for managing the CLI parts of the app for us and are ready to start adding
+the GraphQL API.
+
+In the next section we will use `gqlgen` to scaffold and generate the Go code for us based on GraphQL schema files.

@@ -1,4 +1,4 @@
-<footer class="footer bg-bg-neutral-900">
+<footer class="footer bg-neutral-900 text-neutral-400 py-6">
   <div class="footer__inner">
     {{ if gt (len .Site.Menus.footer) 0 }}
       <nav class="footer__menu">
@@ -9,7 +9,7 @@
     {{ end }}
 
     {{ if .GitInfo }}
-      <div class="git-info">
+      <div class="git-info text-sm">
         {{ if .Site.Params.GitRepoURL }}
           <span>
             <a
@@ -87,7 +87,7 @@
 
 
         <span>
-          Last Updated on
+          Last Update
           {{ .GitInfo.AuthorDate | time.Format ":date_short" }}
         </span>
       </div>
@@ -95,7 +95,7 @@
 
 
     <div class="copyright">
-      <span>
+      <span class="text-sm">
         {{ if $.Site.Copyright }}
           @ {{ $.Site.Copyright | safeHTML }} ::
           {{ now.Year }}
