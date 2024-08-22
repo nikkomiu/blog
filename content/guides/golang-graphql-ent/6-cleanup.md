@@ -27,7 +27,7 @@ func runE(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string
   return func(cmd *cobra.Command, args []string) {
     err := fn(cmd, args)
     if err != nil {
-      fmt.Fprintf(os.Stderr, "failed running %s: %s", cmd.Name(), err)
+      fmt.Fprintf(os.Stderr, "failed running %s: %s\n", cmd.Name(), err)
       os.Exit(2)
     }
   }
@@ -176,7 +176,7 @@ func runE(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string
   return func(cmd *cobra.Command, args []string) {
     err := fn(cmd, args)
     if err != nil {
-      fmt.Fprintf(os.Stderr, "failed running %s: %s", cmd.Name(), err)
+      fmt.Fprintf(os.Stderr, "failed running %s: %s\n", cmd.Name(), err)
 
       statusCode := 2
       switch typedErr := err.(type) {
@@ -197,7 +197,7 @@ statement. If we didn't do this, we would need to manually cast it and check tha
 
 Now that this is all in place, we can use it anywhere in our code (where errors are bubbled up to the `run` commands).
 
-```go {file=""}
+```go {file="cmd/api.go"}
 entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
 if err != nil {
   return errors.NewExitCode(err, 3)
@@ -385,12 +385,12 @@ var currentApp *App
 func loadApp() {
   currentApp = &App{
     Server: HTTPServer{
-      Host: "",
-      Port: 8080,
+      Host: env.Str("ADDRESS", ""),
+      Port: env.Int("PORT", 8080),
     },
     Database: Database{
-      Driver: "postgres",
-      URL:    os.Getenv("DATABASE_URL"),
+      Driver: env.Str("DATABASE_DRIVER", "postgres"),
+      URL:    env.Str("DATABASE_URL", "postgres://localhost/spectral_dev?sslmode=disable"),
     },
   }
 }
@@ -406,3 +406,105 @@ func GetApp() App {
 The `GetApp() App` func has been refactored to check the package-level variable `currentApp`. If this variable is
 `nil`, we load the app config using the `loadApp()` func. Either way we will return a **copy** of the app config at the
 end.
+
+## OS Signal Handling
+
+Now I want to respond to OS signals where if a signal is passed to the running application (like `SIGHUP`) it will be
+shut down gracefully.
+
+The HTTP Server in Go doesn't support running with a `context.Context`. This means that the server can't be stopped by
+the `Done() chan` being closed for a `context.Context`. First I want to create a wrapper around the `ListenAndServe()`
+func to take a context that will shutdown the HTTP server when the context is canceled.
+
+```go {file="pkg/sig/sig.go"}
+package sig
+
+import (
+  "context"
+  "net/http"
+  "time"
+)
+
+func ListenAndServe(ctx context.Context, server *http.Server, shutdownTimeout time.Duration) error {
+  errChan := make(chan error)
+  go func() {
+    if err := server.ListenAndServe(); err != nil {
+      errChan <- err
+    }
+  }()
+
+  select {
+  case err := <-errChan:
+    return err
+
+  case <-ctx.Done():
+    // do nothing
+  }
+
+  ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
+  defer cancel()
+
+  return server.Shutdown(ctx)
+}
+```
+
+Then we can simply use it by updating our API subcommand:
+
+```go {file="cmd/api.go"}
+return sig.ListenAndServe(ctx, &http.Server{Addr: cfg.Server.Addr(), Handler: router}, 3*time.Second)
+```
+
+### (Optional) Load Shutdown Timeout from Config
+
+Also, take a minute to move the final parameter (the shutdown timeout) into a property on the `HTTPServer` app config
+and read the value from a new `env.Duration(key string, defaultValue time.Duration) time.Duration` that parses the
+duration from a string.
+
+{{< section title="Step By Step" >}}
+
+Add the `env.Duration(string, time.Duration) time.Duration` to the `pkg/env/env.go` file:
+
+```go {file="pkg/env/env.go"}
+func Duration(key string, defaultValue time.Duration) time.Duration {
+  if val, err := time.ParseDuration(os.Getenv(key)); err == nil {
+    return val
+  }
+
+  return defaultValue
+}
+```
+
+Update the `pkg/config/app.go` to add the property to the struct and set the value:
+
+```go {file="pkg/config/app.go"}
+type HTTPServer struct {
+  Host string
+  Port int
+
+  ShutdownTimeout time.Duration
+}
+
+// ...
+
+func loadApp() {
+  currentApp = &App{
+    Server: HTTPServer{
+      Host: env.Str("ADDRESS", ""),
+      Port: env.Int("PORT", 8080),
+
+      ShutdownTimeout: env.Duration("SERVER_SHUTDOWN_TIMEOUT", 10*time.Second),
+    },
+    Database: Database{
+      Driver: env.Str("DATABASE_DRIVER", "postgres"),
+      URL:    env.Str("DATABASE_URL", "postgres://localhost/spectral_dev?sslmode=disable"),
+    },
+    // ...
+```
+
+Finally, update the `cmd/api.go` to use the property:
+
+```go {file="cmd/api.go"}
+return sig.ListenAndServe(ctx, &http.Server{Addr: cfg.Server.Addr(), Handler: router}, cfg.Server.ShutdownTimeout)
+```
+
+{{</ section >}}
