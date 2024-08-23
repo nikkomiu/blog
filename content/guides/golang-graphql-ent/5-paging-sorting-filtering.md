@@ -45,12 +45,7 @@ input NoteInput {
 }
 
 extend type Query {
-  notes(
-    after: Cursor
-    first: Int
-    before: Cursor
-    last: Int
-  ): NoteConnection!
+  notes(after: Cursor, first: Int, before: Cursor, last: Int): NoteConnection!
 }
 ```
 
@@ -98,14 +93,14 @@ We can now test getting records back in the list using the GraphiQL interface:
 
 ```graphql
 query {
-  notes(first:10){
-    edges{
-      node{
+  notes(first: 10) {
+    edges {
+      node {
         id
         title
       }
     }
-    pageInfo{
+    pageInfo {
       hasPreviousPage
       startCursor
       hasNextPage
