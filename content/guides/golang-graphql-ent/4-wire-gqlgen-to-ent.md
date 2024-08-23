@@ -2,6 +2,7 @@
 date: 2024-08-13T00:00:00Z
 title: Wire gqlgen to ent
 author: Nikko Miu
+toc: true
 tags:
   - golang
   - ent

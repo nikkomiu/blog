@@ -2,6 +2,7 @@
 date: 2024-08-14T00:00:00Z
 title: Setting Up Ent
 author: Nikko Miu
+toc: true
 tags:
   - golang
   - ent

@@ -2,6 +2,7 @@
 date: 2024-08-15T00:00:00Z
 title: Setting Up gqlgen
 author: Nikko Miu
+toc: true
 tags:
   - golang
   - graphql

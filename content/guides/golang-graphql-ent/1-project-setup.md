@@ -2,6 +2,7 @@
 date: 2024-08-16T00:00:00Z
 title: Project Setup
 author: Nikko Miu
+toc: true
 tags:
   - golang
   - graphql
@@ -139,7 +140,19 @@ method and handle any error that comes back by printing it out to the console an
 
 ## Test our CLI
 
-Since we are using Cobra, we get some useful things out of the box. We can run the app now to see:
+Since we are using Cobra, we get some useful things out of the box. We can run the app with our `api` subcommand now to
+see the `fmt.Println()` that we put above since we registered this subcommand with the `rootCMD`:
+
+```bash
+go run . api
+```
+
+```output
+hello api
+```
+
+We can also run an unknown command, in this case the root command (since we didn't define `Run` for the root command)
+and Cobra will print the auto generated help text:
 
 ```bash
 go run .

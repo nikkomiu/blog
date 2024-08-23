@@ -2,7 +2,7 @@
 date: 2024-08-11T00:00:00Z
 title: Clean Up Code
 author: Nikko Miu
-draft: true
+toc: true
 tags:
   - golang
   - graphql
@@ -13,6 +13,72 @@ At this point, we have created our first entity and used it with `gqlgen` to bui
 quick to fix up some issues that have been left around up to this point.
 
 <!--more-->
+
+## Replace Hello Resolver with Ping
+
+We no longer have a need for our `hello(String!): String!` resolver. To show what happens when we remove a resolver from
+our GraphQL API, let's replace this with another, similar, resolver. First, remove the resolver from the `common.graphql`
+schema so the `Query` should now look like:
+
+```graphql {file="gql/schema/common.graphql"}
+type Query {
+  node(nodeId: ID!): Node
+}
+```
+
+Once removed, we can regenerate our code:
+
+```bash
+go generate ./...
+```
+
+Now if you open the `common.resolvers.go` file, you should see that our resolver wasn't exactly removed. Instead when we
+regenerated our code the resolver was moved to the bottom of the file with a very large daunting comment about how it
+was going to be deleted but it was saved here just in case you still needed it:
+
+```go {file="gql/common.resolvers.go"}
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *queryResolver) Hello(ctx context.Context, name string) (string, error) {
+  return fmt.Sprintf("Hello, %s!", name), nil
+}
+```
+
+We need to get rid of this code since we no longer need it and keeping it here isn't going to work. With this removed,
+we can add our new `ping` endpoint. This will be a resolver that just responds with the static string "pong" when it's
+called.
+
+```graphql {file="gql/schema/common.graphql"}
+type Query {
+  ping: String!
+}
+```
+
+I tend to keep this method around so I can test if there is an error reaching our service. Think of it like a GraphQL
+liveness probe we can use in our apps to make sure the API is working.
+
+Once this is added to the `Query` we can regenerate our code again:
+
+```bash
+go generate ./...
+```
+
+Then all we need to do is implement our resolver. As I said before, all we really want here is to return the static
+string "pong":
+
+```go {file="gql/common.resolvers.go"}
+// Ping is the resolver for the ping field.
+func (r *queryResolver) Ping(ctx context.Context) (string, error) {
+  return "pong", nil
+}
+```
+
+That's all there is to it! We now have a ping endpoint that we can use. We also got to see what happens to our code when
+we remove a resolver when `gqlgen`.
 
 ## Add Error Handling
 
