@@ -166,6 +166,18 @@
   @apply w-full;
 }
 
+.prose .highlight table td:first-child {
+  @apply bg-neutral-900/80;
+}
+
+.prose .highlight table td:first-child pre {
+  background-color: transparent !important;
+}
+
+.prose .highlight table td:last-child code > span {
+  @apply pl-3;
+}
+
 .prose .highlight table code[data-lang] > span {
   @apply pr-4;
 }

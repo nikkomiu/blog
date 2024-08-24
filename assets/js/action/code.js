@@ -60,6 +60,8 @@ function reparentCodeTableNumber(elem) {
   const newParent = document.createElement("span");
   const newChild = elem.cloneNode(true);
   newChild.style.color = null;
+  newChild.style.padding = null;
+  newChild.style.marginRight = "2px";
   newParent.appendChild(newChild);
 
   elem.parentNode.replaceChild(newParent, elem);
@@ -75,7 +77,7 @@ function highlightLines(parent, addLines, remLines, isTableNum = false) {
       elem = reparentCodeTableNumber(lineElems[l - 1]);
     }
 
-    elem.classList.add("bg-green-950/80");
+    elem.classList.add("bg-green-950/80", "text-green-500");
   });
 
   remLines.forEach((l) => {
@@ -83,9 +85,10 @@ function highlightLines(parent, addLines, remLines, isTableNum = false) {
     if (isTableNum) {
       // Table num elements need to be reparented
       elem = reparentCodeTableNumber(lineElems[l - 1]);
+      elem.classList.add("text-red-500");
     }
 
-    elem.classList.add("bg-red-950/80");
+    elem.classList.add("bg-red-950/80", "text-red-500");
   });
 }
 
