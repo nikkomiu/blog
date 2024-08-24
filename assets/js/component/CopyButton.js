@@ -39,6 +39,7 @@ export default function CopyButton({
 
   const copyRendered = copyHTML({ copyText, svgClass, textClass });
   const button = document.createElement("button");
+  button.ariaLabel = copyText;
   button.innerHTML = copyRendered;
   button.classList.add(...classes, ...className.split(" "));
 
@@ -47,6 +48,7 @@ export default function CopyButton({
       onClick();
 
       button.innerHTML = copiedHTML({ svgClass, textClass });
+      button.ariaLabel = copyText;
       button.classList.add("active");
       setTimeout(() => {
         button.classList.remove("active");
