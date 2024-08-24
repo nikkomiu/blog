@@ -62,7 +62,7 @@
     </div>
 
     {{ if .Params.tags }}
-      <span class="text-neutral-500">
+      <span class="text-neutral-400">
         {{ range .Params.tags }}
           #<a
             href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"

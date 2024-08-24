@@ -10,11 +10,11 @@
         </h1>
 
         {{ if .Params.tags }}
-          <span class="text-neutral-500">
+          <span class="text-neutral-400">
             {{ range .Params.tags }}
               #<a
                 href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"
-                class="no-underline hover:underline text-neutral-500 hover:text-neutral-300"
+                class="no-underline hover:underline text-neutral-400 hover:text-neutral-300"
                 data-pagefind-filter="tag"
               >
                 {{- . -}}
