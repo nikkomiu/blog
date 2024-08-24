@@ -298,7 +298,13 @@ Notice that within the `WhereInput` we have `not`, `and`, as well as `or` condit
 Doing this allows us to create nested where conditions for notes. Later, we can expand this to also traverse where
 conditions based on other ent models as well.
 
-Update our resolver once again to add a where filtering clause to the `Paginate()`:
+With our schema updated, regenerate our code again:
+
+```bash
+go generate ./...
+```
+
+Finally, we can update our resolver once again to add a where filtering clause to the `Paginate()`:
 
 ```go {file="gql/note.resolvers.go"}
 // Notes is the resolver for the notes field.
@@ -317,4 +323,4 @@ func (r *queryResolver) Notes(ctx context.Context, after *entgql.Cursor[int], fi
 ```
 
 With that you should now be able to filter data by conditions that are listed within the `NoteWhereInput` struct in our
-GraphQL schema.
+GraphQL schema. Go ahead and test that you can properly filter data.
