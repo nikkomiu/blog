@@ -28,24 +28,23 @@
 
 
 <div class="callout callout-{{ $type }}">
-  <div class="flex">
-    {{ with $icon }}
-      <div>
+  <div class="flex flex-col">
+    <div class="flex">
+      {{ with $icon }}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6 mr-2"
-          style="margin-top:2px"
+          class="w-6 h-6 mr-3"
         >
           <use href="#{{ $icon }}" />
         </svg>
-      </div>
-    {{ end }}
-    <div class="max-w-full">
-      <span class="leading">{{ $title }}:</span>
+      {{ end }}
+      <span class="leading font-bold select-none text-xl">{{ $title }}</span>
+    </div>
+    <div class="callout-body">
       {{ .Inner | markdownify }}
     </div>
   </div>

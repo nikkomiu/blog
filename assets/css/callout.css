@@ -1,5 +1,5 @@
 .callout {
-  @apply bg-black border-l-4 pl-2 pr-4 py-3 md:pl-3 md:pr-6 md:py-4 mb-6;
+  @apply bg-black border-l-4 pl-2 pr-2 py-3 md:pl-3 md:pr-6 md:py-4 mb-6;
 }
 
 .callout + .callout {
@@ -10,16 +10,12 @@
   @apply inline ml-1;
 }
 
-.callout .leading {
-  @apply font-bold select-none;
-}
-
 .callout.callout-note {
-  @apply border-fuchsia-500 text-fuchsia-400 bg-fuchsia-950/30;
+  @apply border-purple-500 text-purple-400 bg-purple-950/25;
 }
 
 .callout.callout-note .leading {
-  @apply text-fuchsia-200;
+  @apply text-purple-300;
 }
 
 .callout.callout-info {
@@ -27,7 +23,7 @@
 }
 
 .callout.callout-info .leading {
-  @apply text-neutral-200;
+  @apply text-neutral-300;
 }
 
 .callout.callout-warning {
@@ -35,7 +31,7 @@
 }
 
 .callout.callout-warning .leading {
-  @apply text-orange-200;
+  @apply text-orange-300;
 }
 
 .callout.callout-danger {
@@ -43,7 +39,7 @@
 }
 
 .callout.callout-danger .leading {
-  @apply text-red-200;
+  @apply text-red-300;
 }
 
 .callout.callout-question {
@@ -62,10 +58,14 @@
   @apply text-cyan-400;
 }
 
+.callout-body {
+  @apply px-2;
+}
+
 .callout samp {
   @apply mr-4;
 }
 
-.callout .highlight {
-  width: 94%;
+.callout .highlight pre {
+  @apply mt-0;
 }
