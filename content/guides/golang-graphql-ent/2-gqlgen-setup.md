@@ -50,7 +50,7 @@ that we have that file created we can add them to the `go.mod` by running:
 go mod tidy
 ```
 
-{{< commit-ref repo="nikkomiu/spectral" sha="a19a97599f243b6af71c0e8d34514b8156f86e95" />}}
+{{< commit-ref repo="nikkomiu/gentql" sha="a19a97599f243b6af71c0e8d34514b8156f86e95" />}}
 
 ## Initialize gqlgen
 
@@ -170,7 +170,7 @@ gql/model/*_gen.go
 gql/generated.go
 ```
 
-{{< commit-ref repo="nikkomiu/spectral" sha="cb0d64bbeef6959e89939293e82a8208330405e9" />}}
+{{< commit-ref repo="nikkomiu/gentql" sha="cb0d64bbeef6959e89939293e82a8208330405e9" />}}
 
 ## Create the Resolver
 
@@ -214,12 +214,12 @@ import (
   "github.com/go-chi/chi/v5"
   "github.com/spf13/cobra"
 
-  "github.com/nikkomiu/spectral/gql"
+  "github.com/nikkomiu/gentql/gql"
 )
 
 var apiCMD = &cobra.Command{
   Use:   "api",
-  Short: "Start the API services for spectral",
+  Short: "Start the API services for gentql",
   Run:   runAPI,
 }
 
@@ -232,7 +232,7 @@ func runAPI(cmd *cobra.Command, args []string) {
 
   srv := gql.NewServer()
   router.Handle("/graphql", srv)
-  router.Handle("/graphiql", playground.Handler("Spectral", "/graphql"))
+  router.Handle("/graphiql", playground.Handler("GentQL", "/graphql"))
 
   err := http.ListenAndServe(":8080", router)
   if err != nil {
@@ -302,8 +302,6 @@ and re-run the query in your browser to get back the response we were hoping for
 }
 ```
 
-{{< commit-ref repo="nikkomiu/spectral" sha="21c81c2e24dd0cb63082abcfc5b0e61fb71148d3" />}}
-
 ## Adding Chi Middleware
 
 Chi includes middleware with it. Some of them are useful to have enabled by default. Let's add them to our API now:
@@ -337,8 +335,6 @@ import (
 ```
 
 {{</ callout >}}
-
-{{< commit-ref repo="nikkomiu/spectral" sha="03d3010b0aebd2cdd0590e81e37e448ac4d47c21" />}}
 
 ## Conclusion
 

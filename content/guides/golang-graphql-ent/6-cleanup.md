@@ -149,7 +149,7 @@ is named.
 ```go {file="cmd/api.go"}
 var apiCMD = &cobra.Command{
   Use:   "api",
-  Short: "Start the API services for spectral",
+  Short: "Start the API services for gentql",
   Run:   runE(runAPI),
 }
 
@@ -171,7 +171,7 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
 
   srv := gql.NewServer(ctx)
   router.Handle("/graphql", srv)
-  router.Handle("/graphiql", playground.Handler("Spectral", "/graphql"))
+  router.Handle("/graphiql", playground.Handler("GentQL", "/graphql"))
 
   return http.ListenAndServe(":8080", router)
 }
@@ -380,7 +380,7 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
 
   srv := gql.NewServer(ctx)
   router.Handle("/graphql", srv)
-  router.Handle("/graphiql", playground.Handler("Spectral", "/graphql"))
+  router.Handle("/graphiql", playground.Handler("GentQL", "/graphql"))
 
   fmt.Printf("starting server at %s\n", cfg.Server.DisplayAddr())
   return http.ListenAndServe(cfg.Server.Addr(), router)
@@ -431,7 +431,7 @@ func GetApp() App {
     },
     Database: Database{
       Driver: env.Str("DATABASE_DRIVER", "postgres"),
-      URL:    env.Str("DATABASE_URL", "postgres://localhost/spectral_dev?sslmode=disable"),
+      URL:    env.Str("DATABASE_URL", "postgres://localhost/gentql_dev?sslmode=disable"),
     },
   }
 }
@@ -456,7 +456,7 @@ func loadApp() {
     },
     Database: Database{
       Driver: env.Str("DATABASE_DRIVER", "postgres"),
-      URL:    env.Str("DATABASE_URL", "postgres://localhost/spectral_dev?sslmode=disable"),
+      URL:    env.Str("DATABASE_URL", "postgres://localhost/gentql_dev?sslmode=disable"),
     },
   }
 }
@@ -562,7 +562,7 @@ func loadApp() {
     },
     Database: Database{
       Driver: env.Str("DATABASE_DRIVER", "postgres"),
-      URL:    env.Str("DATABASE_URL", "postgres://localhost/spectral_dev?sslmode=disable"),
+      URL:    env.Str("DATABASE_URL", "postgres://localhost/gentql_dev?sslmode=disable"),
     },
     // ...
 ```

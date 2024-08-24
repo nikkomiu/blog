@@ -31,7 +31,7 @@ First thing we need to do once we're in the Dev Container (or if you set up your
 all the necessary dependencies) is to create our project directory and initialize our Go module (project):
 
 ```bash
-go mod init github.com/nikkomiu/spectral
+go mod init github.com/nikkomiu/gentql
 ```
 
 I tend to take this time to initialize my Git repository, set up the remote repository (like on GitHub),
@@ -57,7 +57,7 @@ import (
 )
 
 var rootCMD = &cobra.Command{
-  Use: "spectral",
+  Use: "gentql",
 }
 
 func Execute(ctx context.Context) error {
@@ -121,14 +121,14 @@ import (
   "fmt"
   "os"
 
-  "github.com/nikkomiu/spectral/cmd"
+  "github.com/nikkomiu/gentql/cmd"
 )
 
 func main() {
   ctx := context.Background()
 
   if err := cmd.Execute(ctx); err != nil {
-    fmt.Fprintf(os.Stderr, "failed to execute spectral: %s\n", err)
+    fmt.Fprintf(os.Stderr, "failed to execute gentql: %s\n", err)
     os.Exit(1)
   }
 }
@@ -160,7 +160,7 @@ go run .
 
 ```output
 Usage:
-  spectral [command]
+  gentql [command]
 
 Available Commands:
   api
@@ -168,15 +168,13 @@ Available Commands:
   help        Help about any command
 
 Flags:
-  -h, --help   help for spectral
+  -h, --help   help for gentql
 
-Use "spectral [command] --help" for more information about a command.
+Use "gentql [command] --help" for more information about a command.
 ```
 
 As you can see, we get a nice interface for our console app just by using Cobra. It also has the nice benefit
 of making it easier to have clean code by splitting up commands into their respective dedicated functions.
-
-{{< commit-ref repo="nikkomiu/spectral" sha="3e23d2906834e88b21a951bead957558054cafb7" />}}
 
 ## (Optional) Add Description to API and Root Commands
 
@@ -185,8 +183,8 @@ app to the root command (`cmd/cmd.go`):
 
 ```go {file="cmd/cmd.go",add_lines="3",linenostart=9}
 var rootCMD = &cobra.Command{
-  Use:   "spectral",
-  Short: "Spectral backend application services.",
+  Use:   "gentql",
+  Short: "GentQL backend application services.",
 }
 ```
 
@@ -195,7 +193,7 @@ Let's also update the API sub-command to include a short description:
 ```go {file="cmd/api.go",add_lines="3"}
 var apiCMD = &cobra.Command{
   Use:   "api",
-  Short: "Start the API services for spectral",
+  Short: "Start the API services for gentql",
   Run:   runAPI,
 }
 ```
@@ -207,23 +205,21 @@ go run . --help
 ```
 
 ```output
-Spectral backend application services.
+GentQL backend application services.
 
 Usage:
-  spectral [command]
+  gentql [command]
 
 Available Commands:
-  api         Start the API services for spectral
+  api         Start the API services for gentql
   completion  Generate the autocompletion script for the specified shell
   help        Help about any command
 
 Flags:
-  -h, --help   help for spectral
+  -h, --help   help for gentql
 
-Use "spectral [command] --help" for more information about a command.
+Use "gentql [command] --help" for more information about a command.
 ```
-
-{{< commit-ref repo="nikkomiu/spectral" sha="3b0a3ac3892ef638a83fa2bc61898b7a3d736e78" />}}
 
 ## Conclusion
 

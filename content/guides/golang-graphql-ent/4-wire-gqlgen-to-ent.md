@@ -31,7 +31,7 @@ import (
   "context"
 
   "github.com/99designs/gqlgen/graphql/handler"
-  "github.com/nikkomiu/spectral/ent"
+  "github.com/nikkomiu/gentql/ent"
 )
 
 //go:generate go run github.com/99designs/gqlgen generate
@@ -154,7 +154,7 @@ project:
 
 ```yaml {file="gqlgen.yml"}
 autobind:
-  - github.com/nikkomiu/spectral/ent
+  - github.com/nikkomiu/gentql/ent
 ```
 
 This change will tell `gqlgen` to to use all models within `ent` instead of generating a new model where possible.
@@ -376,7 +376,7 @@ models:
 
   Node:
     model:
-      - github.com/nikkomiu/spectral/ent.Noder
+      - github.com/nikkomiu/gentql/ent.Noder
 ```
 
 We now need to tell `Note` in GraphQL that it implements the `Node` interface. Update the `gql/schema/note.graphql` to

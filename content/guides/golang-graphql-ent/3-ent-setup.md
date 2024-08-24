@@ -92,8 +92,6 @@ ent/*
 !ent/schema/
 ```
 
-{{< commit-ref repo="nikkomiu/spectral" sha="9888cc0521ff321806c4acccd8a0752ee9916d1a" />}}
-
 ## Initialize Client
 
 There are a bunch of ways that we can initialize the ent client and manage its lifecycle. For our app, we are going to
@@ -106,7 +104,7 @@ So, update the `cmd/api.cmd` to initialize our database:
 
 ```go {file="cmd/api.go"}
 func runAPI(cmd *cobra.Command, args []string) {
-  entClient, err := ent.Open("postgres", "postgres://localhost/spectral_dev?sslmode=disable")
+  entClient, err := ent.Open("postgres", "postgres://localhost/gentql_dev?sslmode=disable")
   if err != nil {
     panic(err)
   }
@@ -175,7 +173,7 @@ import (
 
   "github.com/spf13/cobra"
 
-  "github.com/nikkomiu/spectral/ent"
+  "github.com/nikkomiu/gentql/ent"
 )
 
 var migrateCMD = &cobra.Command{
@@ -213,7 +211,7 @@ To set a simple PostgreSQL database connection string in your environment variab
 can use something like (or use the connection string part as the static string instead of `os.Getenv()`):
 
 ```bash
-export DATABASE_URL=postgres://localhost/spectral_dev?sslmode=disable
+export DATABASE_URL=postgres://localhost/gentql_dev?sslmode=disable
 ```
 
 {{</ callout >}}
@@ -230,7 +228,7 @@ import (
 
   "github.com/spf13/cobra"
 
-  "github.com/nikkomiu/spectral/ent"
+  "github.com/nikkomiu/gentql/ent"
 )
 
 var migrateDryRun = false
@@ -280,7 +278,7 @@ go run . migrate
 Migrate the database between versions
 
 Usage:
-  spectral migrate [flags]
+  gentql migrate [flags]
 
 Flags:
   -d, --dry    Write the schema output to stdout instead of updating the database
