@@ -98,7 +98,7 @@
 }
 
 .prose table {
-  @apply block bg-black border-2 border-fuchsia-700 border-collapse w-fit max-w-full mx-auto overflow-x-auto;
+  @apply block bg-black border-2 border-fuchsia-700 border-collapse w-fit max-w-full mx-auto overflow-x-auto mb-10;
 }
 
 .prose table th {

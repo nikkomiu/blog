@@ -10,6 +10,22 @@ on:
       - main
 
 jobs:
+  Audit:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node.js 18.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+
+      - name: NPM Audit
+        run: npm audit
+
   Lint:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
@@ -25,9 +41,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: NPM Audit
-        run: npm audit
 
       - name: Prettier
         run: npm run prettier:check

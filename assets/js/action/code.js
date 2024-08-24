@@ -9,6 +9,7 @@ export function loadCodeActions() {
   document.querySelectorAll(".highlight code[data-lang]").forEach((el) =>
     // TODO: add dropdown copy w/ copy diff, copy previous when add_lines or rem_lines
     CopyButton({
+      className: "top-0 right-0 mt-2 mr-2",
       add: (btn) => el.parentNode.insertBefore(btn, el),
       onClick: () => {
         let clipText = el.innerText.replace(/\n\n/g, "\n");

@@ -75,7 +75,7 @@ directory and clone into a Dev Container volume.
 Here is the `.devcontainer/Dockerfile` that we will use to create our Dev Container:
 
 ```dockerfile
-FROM "golang:1.22-alpine"
+FROM golang:1.22-alpine
 
 # Install dev dependencies
 RUN apk add --update \

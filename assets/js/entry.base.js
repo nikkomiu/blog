@@ -1,4 +1,5 @@
 import { displayLanguageTabs, loadCodeActions } from "./action/code";
+import { loadTableActions } from "./action/table";
 import { loadMenu } from "./menu";
 import { loadSearch } from "./search";
 
@@ -18,6 +19,7 @@ function onPageLoad() {
   loadMenu();
 
   loadCodeActions();
+  loadTableActions();
 
   displayLanguageTabs();
   sectionExpandToggle();
