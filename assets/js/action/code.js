@@ -6,6 +6,10 @@ const langMapping = {
 };
 
 function linesToArr(linesStr) {
+  if (!linesStr) {
+    return [];
+  }
+
   return linesStr.split(" ").flatMap(v => {
     // TODO: check for 1-2
 
@@ -30,16 +34,19 @@ export function loadCodeActions() {
       className: "top-0 right-0 mt-2 mr-2",
       add: (btn) => el.parentNode.insertBefore(btn, el),
       onClick: () => {
-        const remLines = linesToArr(highlight.getAttribute("rem_lines"))
+        let clipText = el.innerText.replace(/\n\n/g, "\n").split("\n")
 
-        // remove double new lines and remove lines in "rem_lines" (they're not needed)
-        let clipText = el.innerText.replace(/\n\n/g, "\n").split("\n").reduce((prev, cur, idx) => {
-          if (remLines.includes(idx+1)) {
-            return prev
-          }
+        // remove lines in "rem_lines" if the block has a diff (they're not needed)
+        if (hasDiff) {
+          const remLines = linesToArr(highlight.getAttribute("rem_lines"))
+          clipText.reduce((prev, cur, idx) => {
+            if (remLines.includes(idx+1)) {
+              return prev
+            }
 
-          return [...prev, cur]
-        }, [])
+            return [...prev, cur]
+          }, [])
+        }
 
         navigator.clipboard.writeText(clipText.join("\n"));
       },
@@ -66,7 +73,7 @@ function highlightLines(parent, addLines, remLines, isTableNum = false) {
       elem = reparentCodeTableNumber(lineElems[l-1])
     }
 
-    elem.classList.add("bg-green-950", "text-green-500")
+    elem.classList.add("bg-green-950/80")
   })
 
   remLines.forEach(l => {
@@ -76,7 +83,7 @@ function highlightLines(parent, addLines, remLines, isTableNum = false) {
       elem = reparentCodeTableNumber(lineElems[l-1])
     }
 
-    elem.classList.add("bg-red-950", "text-red-500")
+    elem.classList.add("bg-red-950/80")
   })
 }
 
