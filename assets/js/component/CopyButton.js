@@ -15,7 +15,13 @@ const copiedHTML = ({ svgClass, textClass }) => `
 const btnClass =
   "copy-button flex absolute opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300";
 
-export default function CopyButton({ buttonText, add, size, onClick, className }) {
+export default function CopyButton({
+  buttonText,
+  add,
+  size,
+  onClick,
+  className,
+}) {
   const copyText = buttonText || "Copy";
 
   let svgClass;
