@@ -5,21 +5,6 @@ const langMapping = {
   cs: "c#",
 };
 
-export function loadCodeActions() {
-  document.querySelectorAll(".highlight code[data-lang]").forEach((el) =>
-    // TODO: add dropdown copy w/ copy diff, copy previous when add_lines or rem_lines
-    CopyButton({
-      className: "top-0 right-0 mt-2 mr-2",
-      add: (btn) => el.parentNode.insertBefore(btn, el),
-      onClick: () => {
-        let clipText = el.innerText.replace(/\n\n/g, "\n");
-        // TODO: remove lines from "rem_lines" on .highlight
-        navigator.clipboard.writeText(clipText);
-      },
-    })
-  );
-}
-
 function linesToArr(linesStr) {
   return linesStr.split(" ").flatMap(v => {
     // TODO: check for 1-2
@@ -32,6 +17,34 @@ function linesToArr(linesStr) {
     // return the value as a number
     return +v
   })
+}
+
+export function loadCodeActions() {
+  document.querySelectorAll(".highlight code[data-lang]").forEach((el) => {
+    // TODO: add dropdown copy w/ copy diff, copy previous when add_lines or rem_lines
+    const highlight = el.closest(".highlight")
+    const hasDiff = highlight.hasAttribute("add_lines") || highlight.hasAttribute("rem_lines")
+
+    CopyButton({
+      buttonText: hasDiff ? "Copy (+)" : "Copy",
+      className: "top-0 right-0 mt-2 mr-2",
+      add: (btn) => el.parentNode.insertBefore(btn, el),
+      onClick: () => {
+        const remLines = linesToArr(highlight.getAttribute("rem_lines"))
+
+        // remove double new lines and remove lines in "rem_lines" (they're not needed)
+        let clipText = el.innerText.replace(/\n\n/g, "\n").split("\n").reduce((prev, cur, idx) => {
+          if (remLines.includes(idx+1)) {
+            return prev
+          }
+
+          return [...prev, cur]
+        }, [])
+
+        navigator.clipboard.writeText(clipText.join("\n"));
+      },
+    })
+  });
 }
 
 function reparentCodeTableNumber(elem) {
