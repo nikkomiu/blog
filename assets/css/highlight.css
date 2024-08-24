@@ -1,20 +1,12 @@
-.copy-button {
-  @apply flex absolute top-0 right-0 mt-2 mr-2 opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300;
-}
-
 .copy-button.active {
   @apply opacity-80;
 }
 
-.copy-button svg {
-  @apply w-6 h-6 mr-2;
-}
-
-.copy-button span {
-  @apply hidden sm:flex;
-}
-
 table:hover .copy-button {
+  @apply opacity-80;
+}
+
+.table-wrapper:hover > .copy-button {
   @apply opacity-80;
 }
 

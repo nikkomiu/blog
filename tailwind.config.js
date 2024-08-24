@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./{content,layouts}/**/*.{md,html,js}",
-    "./{assets,static}/js/*.js",
+    "./{assets,static}/js/**/*.js",
   ],
   theme: {
     fontFamily: {
