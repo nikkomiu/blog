@@ -65,3 +65,7 @@
 .callout samp {
   @apply mr-4;
 }
+
+.callout .highlight {
+  width: 94%;
+}
