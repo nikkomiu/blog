@@ -183,7 +183,7 @@ of making it easier to have clean code by splitting up commands into their respe
 With Cobra we can also add short and long descriptions to our commands. Let's start by adding a short description of our
 app to the root command (`cmd/cmd.go`):
 
-```go {file="cmd/cmd.go",linenos=table,add_lines="3",linenostart=9}
+```go {file="cmd/cmd.go",add_lines="3",linenostart=9}
 var rootCMD = &cobra.Command{
   Use:   "spectral",
   Short: "Spectral backend application services.",
@@ -192,7 +192,7 @@ var rootCMD = &cobra.Command{
 
 Let's also update the API sub-command to include a short description:
 
-```go {file="cmd/api.go",linenos=table,add_lines="3"}
+```go {file="cmd/api.go",add_lines="3"}
 var apiCMD = &cobra.Command{
   Use:   "api",
   Short: "Start the API services for spectral",
