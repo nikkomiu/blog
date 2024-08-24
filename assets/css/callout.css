@@ -23,7 +23,7 @@
 }
 
 .callout.callout-info {
-  @apply border-neutral-500 bg-black text-neutral-300;
+  @apply border-neutral-400 bg-neutral-900 text-neutral-300;
 }
 
 .callout.callout-info .leading {
