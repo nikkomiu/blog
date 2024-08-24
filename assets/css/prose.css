@@ -126,7 +126,7 @@
 }
 
 .prose samp pre {
-  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-2 pt-5 text-base;
+  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-4 pt-5 text-base;
 
   line-height: 1;
 }
