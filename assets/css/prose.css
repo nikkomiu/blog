@@ -141,7 +141,15 @@
 }
 
 .prose .highlight > pre {
-  @apply flex rounded-none mt-10 !bg-black border border-fuchsia-900;
+  @apply flex rounded-none mt-10 !bg-black border border-fuchsia-900 px-0;
+}
+
+.prose .highlight > pre > code {
+  @apply flex flex-col flex-1;
+}
+
+.prose .highlight > pre > code > span {
+  @apply px-4;
 }
 
 /* highlight shortcode - line number (non-numbered and numbered parent) */
