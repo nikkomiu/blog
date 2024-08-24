@@ -19,21 +19,21 @@ semper risus in hendrerit gravida rutrum.
 <!--more-->
 
 ```js {add_lines="4",rem_lines="5"}
-const x = 1
-const y = 2
+const x = 1;
+const y = 2;
 
-console.log(x * y)
-console.log(`Sum: ${x * y}`)
+console.log(x * y);
+console.log(`Sum: ${x * y}`);
 
 // another really long line that will pass the limit of the need to h scroll
 ```
 
 ```js {linenos=table,add_lines="4",rem_lines="5"}
-const x = 1
-const y = 2
+const x = 1;
+const y = 2;
 
-console.log(x * y)
-console.log(`Sum: ${x * y}`)
+console.log(x * y);
+console.log(`Sum: ${x * y}`);
 
 // another really long line that will pass the limit of the need to h scroll
 ```

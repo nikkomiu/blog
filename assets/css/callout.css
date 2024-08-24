@@ -1,5 +1,5 @@
 .callout {
-  @apply bg-black border-l-4 pl-2 pr-4 py-3 md:pl-3 md:pr-6 md:py-4;
+  @apply bg-black border-l-4 pl-2 pr-4 py-3 md:pl-3 md:pr-6 md:py-4 mb-6;
 }
 
 .callout + .callout {
@@ -15,7 +15,7 @@
 }
 
 .callout.callout-note {
-  @apply border-fuchsia-500 bg-black text-fuchsia-400;
+  @apply border-fuchsia-500 text-fuchsia-400 bg-fuchsia-950/30;
 }
 
 .callout.callout-note .leading {

@@ -30,7 +30,7 @@ export default function CopyButton({
   switch (size) {
     case "sm":
       svgClass = "w-4 h-4 mr-1";
-      classes.push("text-sm")
+      classes.push("text-sm");
       break;
     default:
       svgClass = "w-6 h-6 mr-2";

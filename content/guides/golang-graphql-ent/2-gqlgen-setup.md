@@ -326,7 +326,7 @@ Chi includes middleware with it. Some of them are useful to have enabled by defa
 If you get an error on importing `chi`, make sure the `middleware` import has `v5` in it. If it doesn't fix the import
 manually:
 
-```go {file="cmd/api.go"}
+```go {file="cmd/api.go",add_lines="6"}
 import (
   "net/http"
 
