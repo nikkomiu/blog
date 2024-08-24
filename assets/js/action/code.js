@@ -18,6 +18,7 @@ export function loadCodeActions() {
 }
 
 export function displayLanguageTabs() {
+  // Set file header if the "file" property is on the code block
   document.querySelectorAll(".highlight[file]").forEach((highlight) => {
     const fileName = highlight.getAttribute("file");
     const elem = document.createElement("span");
@@ -27,6 +28,7 @@ export function displayLanguageTabs() {
     highlight.appendChild(elem);
   });
 
+  // Set the language if the code has the "data-lang" property
   document.querySelectorAll("code[data-lang]").forEach((code) => {
     const lang = code.dataset.lang;
     if (!lang || lang === "text") {

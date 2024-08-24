@@ -240,7 +240,8 @@ func main() {
 }
 ```
 
-With that, we can now add the `WhereInput` to our schema file:
+With that, we can now add the `WhereInput` to our schema file. The `WhereInput` defines where conditions that can be
+used to filter the content using complex queries:
 
 ```graphql {file="gql/schema/note.graphql"}
 input NoteWhereInput {
@@ -292,6 +293,10 @@ extend type Query {
   ): NoteConnection!
 }
 ```
+
+Notice that within the `WhereInput` we have `not`, `and`, as well as `or` conditions also of the `NoteWhereInput` type.
+Doing this allows us to create nested where conditions for notes. Later, we can expand this to also traverse where
+conditions based on other ent models as well.
 
 Update our resolver once again to add a where filtering clause to the `Paginate()`:
 

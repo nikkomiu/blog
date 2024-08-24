@@ -26,7 +26,7 @@ go run -mod=mod entgo.io/ent/cmd/ent new Note
 
 With our newly created schema file, we can update the fields for the `Note` schema in the `ent/schema/note.go` file:
 
-```go
+```go {file="ent/schema/note.go"}
 // Fields of the Note.
 func (Note) Fields() []ent.Field {
   return []ent.Field{
@@ -70,7 +70,7 @@ going to hide them from my VS Code explorer.
 
 Update the `files.exclude` in `.vscode/settings.json` to exclude the Ent generated files:
 
-```json
+```json {file=".vscode/settings.json"}
   // ...
   "gql/{generated,model/*_gen}.go": true,
   "ent/{enttest/,hook/,migrate/,predicate/,runtime/,client.go,ent.go,mutation.go,runtime.go,tx.go,*_create.go,*_delete.go,*_query.go,*_update.go}": true,
@@ -86,7 +86,7 @@ generated files in Git but none that we have to worry about for this project.
 
 With that in mind, we can update the `.gitignore` to include ent files except for the ones needed for code generation:
 
-```text
+```text {file=".gitignore"}
 ent/*
 !ent/generate.go
 !ent/schema/
@@ -104,7 +104,7 @@ is a side-effect I don't want to have in the app.
 
 So, update the `cmd/api.cmd` to initialize our database:
 
-```go
+```go {file="cmd/api.go"}
 func runAPI(cmd *cobra.Command, args []string) {
   entClient, err := ent.Open("postgres", "postgres://localhost/spectral_dev?sslmode=disable")
   if err != nil {
@@ -127,14 +127,14 @@ we update this later to use a config package we will add more robust config load
 With our newly added `ctx` that contains the ent Client, we can also inject the `ctx` into our `NewServer()` method for
 the GraphQL server.
 
-```go
+```go {file="cmd/api.go"}
 srv := gql.NewServer(ctx)
 ```
 
 Then update the `NewServer()` method to take the `context.Context` as a parameter. Later we'll add other dependencies
 to the `context.Context` but for now we're just setting up ent. Modify the `NewServer()` method in `gql/resolver.go`:
 
-```go
+```go {file="gql/resolver.go"}
 func NewServer(ctx context.Context) *handler.Server {
   return handler.NewDefaultServer(NewExecutableSchema(NewResolver()))
 }
@@ -145,7 +145,7 @@ For now, we won't use the context but when we go to wire `gqlgen` to `ent` we wi
 Also, since we're about to add another CLI command that will also need to initialize the database, I'm going to put the
 `_` imports for the individual database drivers that I plan to support within `cmd/cmd.go`:
 
-```go
+```go {file="cmd/cmd.go"}
 import (
   "context"
 
@@ -167,7 +167,7 @@ go mod tidy
 Since `ent` works against T-SQL databases, we will want to have support for migrating our database schema when we modify
 the schema. To support this from the CLI of our app, we're going to create a new Cobra subcommand in `cmd/migrate.go`:
 
-```go
+```go {file="cmd/migrate.go"}
 package cmd
 
 import (
@@ -222,7 +222,7 @@ For the migration we can also use the `WriteTo()` method to write it to an `io.W
 can implement is to add a dry run flag which will print the schema changes to `stdout` by updating the `cmd/migrate.go`
 to look like:
 
-```go
+```go {file="cmd/migrate.go"}
 package cmd
 
 import (
@@ -310,7 +310,7 @@ migrations at that time.
 The last thing we need to do in this section is to add the `entgql` extension to `ent`. To do this we need to update a
 few things. Let's start by creating `ent/entc.go`:
 
-```go
+```go {file="ent/entc.go"}
 //go:build ignore
 // +build ignore
 
@@ -338,14 +338,14 @@ func main() {
 
 With this file added, we need to add it to source control. Update the `.gitignore` to include this file in Git:
 
-```text
+```text {file=".gitignore"}
 ent/*
 !ent/entc.go
 ```
 
 Next update `ent/generate.go` to use the `entc.go` instead of the default generate command:
 
-```go
+```go {file="ent/generate.go"}
 package ent
 
 //go:generate go run -mod=mod entc.go
@@ -360,7 +360,7 @@ go generate ./...
 Also, this will cause more files to be generated in the `ent` directory of the project. If you want, include these
 generated files in the `.vscode/settings.json` to exclude them from the explorer view as well as the others:
 
-```json
+```json {file=".vscode/settings.json"}
   "ent/{gql_*.go}": true,
   "ent/{note/,note.go}": true
 ```

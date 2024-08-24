@@ -26,7 +26,7 @@ The first thing we need to do is add the tools that are used to our project via 
 development dependencies through a `tools.go` file at the root of the project. Create the `tools.go` file and put the
 following in it:
 
-```go
+```go {file="tools.go"}
 //go:build tools
 
 package tools
@@ -71,7 +71,7 @@ the default one.
 I'm fairly particular about the structure of my projects so I am going to modify the generation settings by editing the
 `gqlgen.yml`:
 
-```yaml
+```yaml {file="gqlgen.yml"}
 schema:
   - gql/schema/*.graphql
 
@@ -120,7 +120,7 @@ With the config file updated, we can delete the old `graph` directory. We don't 
 Let's create our first schema file. We'll create the common schema (`gql/schema/common.graphql`) with a "hello world"
 example:
 
-```graphql
+```graphql {file="gql/schema/common.graphql"}
 type Query {
   hello(name: String!): String!
 }
@@ -141,7 +141,7 @@ go run github.com/99designs/gqlgen generate
 I prefer that VS Code not show me generated code in the file explorer (when you go to a definition it will still open
 that file and show you what you're looking for). Create the `.vscode/settings.json` file with the following:
 
-```json
+```json {file=".vscode/settings.json"}
 {
   "files.exclude": {
     "**/.git": true,
@@ -165,7 +165,7 @@ by default.
 Before we commit our changes, we're going to add the generated code that we don't change (more on that later) to a
 `.gitignore` file:
 
-```text
+```text {file=".gitignore"}
 gql/model/*_gen.go
 gql/generated.go
 ```
@@ -176,7 +176,7 @@ gql/generated.go
 
 To get our GraphQL server to a usable state, we need to modify the `gql/resolver.go` file:
 
-```go
+```go {file="gql/resolver.go"}
 package gql
 
 import "github.com/99designs/gqlgen/graphql/handler"
@@ -204,7 +204,7 @@ where we can inject dependencies into the resolver methods that we add to the Gr
 Next up we need to set up the GraphQL server to run within our API command. Modify the `cmd/api.go` to create our
 GraphQL server:
 
-```go
+```go {file="cmd/api.go"}
 package cmd
 
 import (
@@ -284,7 +284,7 @@ catch the panic within our resolver to keep it contained to just the single requ
 
 Open the `gql/common.resolvers.go` file and update the `Hello(context.Context, string)` method:
 
-```go
+```go {file="gql/common.resolvers.go"}
 // Hello is the resolver for the hello field.
 func (r *queryResolver) Hello(ctx context.Context, name string) (string, error) {
   return fmt.Sprintf("Hello, %s!", name), nil
@@ -306,9 +306,9 @@ and re-run the query in your browser to get back the response we were hoping for
 
 ## Adding Chi Middleware
 
-Chi includes middleware with it. Some of them are useful to have enabled by default. Let's add them now:
+Chi includes middleware with it. Some of them are useful to have enabled by default. Let's add them to our API now:
 
-```go
+```go {file="cmd/api.go"}
   router := chi.NewRouter()
 
   router.Use(
@@ -326,7 +326,7 @@ Chi includes middleware with it. Some of them are useful to have enabled by defa
 If you get an error on importing `chi`, make sure the `middleware` import has `v5` in it. If it doesn't fix the import
 manually:
 
-```go
+```go {file="cmd/api.go"}
 import (
   "net/http"
 

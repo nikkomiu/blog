@@ -19,7 +19,7 @@ table:hover .copy-button {
 }
 
 .highlight .file-tab {
-  @apply absolute left-0 select-none text-sm border border-solid border-fuchsia-900 bg-fuchsia-950 text-fuchsia-500 px-1 top-[-1.5rem];
+  @apply absolute left-0 select-none text-sm border border-solid border-fuchsia-800 bg-fuchsia-950 text-fuchsia-400 px-2 top-[-1.5rem];
 }
 
 .highlight .lang-tab {
