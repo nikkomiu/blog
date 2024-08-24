@@ -1,10 +1,12 @@
 {{ define "main" }}
   <article class="post" data-pagefind-body>
-    <h1 class="post-title flex items-center text-fuchsia-300">
-      {{ .Title | markdownify }}
+    <div class="flex relative">
+      <h1 class="post-title flex items-center text-fuchsia-300 w-full">
+        {{ .Title | markdownify }}
+      </h1>
       {{ if .Draft }}
         <span
-          class="flex center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
+          class="flex absolute right-0 center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -16,10 +18,13 @@
           >
             <use href="#hi-beaker" />
           </svg>
-          <span class="hidden sm:inline">Draft</span>
+          <span class="hidden sm:inline" data-pagefind-filter="draft">
+            Draft
+          </span>
         </span>
       {{ end }}
-    </h1>
+    </div>
+
     <div class="post-meta">
       {{ if .Date }}
         <time class="post-date">

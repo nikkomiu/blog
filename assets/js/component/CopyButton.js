@@ -23,12 +23,14 @@ export default function CopyButton({
   className,
 }) {
   const copyText = buttonText || "Copy";
+  const classes = btnClass.split(" ");
 
   let svgClass;
   const textClass = "hidden sm:flex";
   switch (size) {
     case "sm":
       svgClass = "w-4 h-4 mr-1";
+      classes.push("text-sm");
       break;
     default:
       svgClass = "w-6 h-6 mr-2";
@@ -37,14 +39,16 @@ export default function CopyButton({
 
   const copyRendered = copyHTML({ copyText, svgClass, textClass });
   const button = document.createElement("button");
+  button.ariaLabel = copyText;
   button.innerHTML = copyRendered;
-  button.classList.add(...btnClass.split(" "), ...className.split(" "));
+  button.classList.add(...classes, ...className.split(" "));
 
   if (onClick) {
     button.addEventListener("click", () => {
       onClick();
 
       button.innerHTML = copiedHTML({ svgClass, textClass });
+      button.ariaLabel = copyText;
       button.classList.add("active");
       setTimeout(() => {
         button.classList.remove("active");

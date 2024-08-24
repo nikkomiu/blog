@@ -125,7 +125,7 @@ Create a file to contain the command line arguments for the kernel `/etc/kernel/
 of adding command line options to the GRUB config (or the _loader config_ if you're coming from `systemd-boot`):
 
 ```bash
-root=UUID=<<UUID>> panic=0 ro quiet
+root=UUID=<<UUID>> panic=0 ro quiet splash
 ```
 
 {{< callout type=note >}}

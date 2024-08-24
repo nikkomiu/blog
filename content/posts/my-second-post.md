@@ -18,6 +18,26 @@ semper risus in hendrerit gravida rutrum.
 
 <!--more-->
 
+```js {add_lines="4",rem_lines="5"}
+const x = 1;
+const y = 2;
+
+console.log(x * y);
+console.log(`Sum: ${x * y}`);
+
+// another really long line that will pass the limit of the need to h scroll
+```
+
+```js {linenos=table,add_lines="4",rem_lines="5"}
+const x = 1;
+const y = 2;
+
+console.log(x * y);
+console.log(`Sum: ${x * y}`);
+
+// another really long line that will pass the limit of the need to h scroll
+```
+
 Ac ut consequat semper viverra nam. Hac habitasse platea dictumst vestibulum
 rhoncus. Amet porttitor eget dolor morbi non. Justo eget magna fermentum
 iaculis eu non. Id eu nisl nunc mi ipsum faucibus vitae aliquet nec. Aliquam

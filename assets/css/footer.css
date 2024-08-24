@@ -1,12 +1,6 @@
 /* TODO: Switch to PostCSS */
 /* stylelint-disable */
 
-.footer {
-  padding: 20px 0;
-  flex-grow: 0;
-  color: #a0a0a0;
-}
-
 .footer__inner {
   display: flex;
   flex-direction: column;
@@ -18,10 +12,6 @@
   .footer__inner {
     flex-direction: column;
   }
-}
-
-.footer a {
-  color: inherit;
 }
 
 .footer__menu {

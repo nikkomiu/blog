@@ -126,7 +126,7 @@
 }
 
 .prose samp pre {
-  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-2 pt-5 text-base;
+  @apply flex rounded-none bg-black text-green-600 border border-green-800 px-4 pb-4 pt-5 text-base;
 
   line-height: 1;
 }
@@ -141,7 +141,15 @@
 }
 
 .prose .highlight > pre {
-  @apply flex rounded-none mt-10 !bg-black border border-fuchsia-900;
+  @apply flex rounded-none mt-10 !bg-black border border-fuchsia-900 px-0;
+}
+
+.prose .highlight > pre > code {
+  @apply flex flex-col flex-1;
+}
+
+.prose .highlight > pre > code > span {
+  @apply px-4;
 }
 
 /* highlight shortcode - line number (non-numbered and numbered parent) */
@@ -164,6 +172,18 @@
 
 .prose .highlight table pre {
   @apply m-0 px-0 py-4 border-0;
+}
+
+.prose .highlight table td:first-child {
+  @apply bg-neutral-900/80;
+}
+
+.prose .highlight table td:first-child pre {
+  background-color: transparent !important;
+}
+
+.prose .highlight table td:last-child code > span {
+  @apply pl-3;
 }
 
 .prose .highlight table code {

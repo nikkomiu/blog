@@ -110,8 +110,6 @@ some really long callout that is of type note so that someone can get some rando
 going on or what needs to be done.
 {{</ callout >}}
 
-some thing
-
 {{< callout type=warning title=Bug >}}
 some really long callout that is of type note so that someone can get some random additional information about what's
 going on or what needs to be done.
