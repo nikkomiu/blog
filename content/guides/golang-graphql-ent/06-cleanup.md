@@ -1,5 +1,4 @@
 ---
-date: 2024-08-16T00:00:00Z
 title: Clean Up Code
 author: Nikko Miu
 toc: true

@@ -1,5 +1,4 @@
 ---
-date: 2024-08-16T00:00:00Z
 title: Paging, Sorting, and Filtering
 author: Nikko Miu
 toc: true

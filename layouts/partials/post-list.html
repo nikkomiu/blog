@@ -35,17 +35,18 @@
           {{ .Date.Format "2006-01-02" }}
         </time>
       {{ end }}
+      {{ if and .Date .Params.Author }}
+      ::
+      {{ end }}
       {{ with .Params.Author }}
         {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
         {{ with $.Parent.Site.GetPage $authorPagePath }}
-          ::
           <span class="post-author">
             <a href="{{ .RelPermalink }}" data-pagefind-filter="author">
               {{ .Title }}
             </a>
           </span>
         {{ else }}
-          ::
           <span class="post-author" data-pagefind-filter="author">{{ . }}</span>
         {{ end }}
       {{ end }}

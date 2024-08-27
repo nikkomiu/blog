@@ -1,0 +1,13 @@
+{{ if .Get "href" }}
+<a href="{{ .Get "href" }}"
+{{ else }}
+<div
+{{ end }}
+  class="flex border-2 border-neutral-800 bg-neutral-900 shadow-lg shadow-neutral-900 transition-all {{ if .Get "href" }}hover:shadow-xl hover:shadow-neutral-900 {{ end }}{{ .Get "class" }}"
+>
+  {{ .Inner | markdownify }}
+{{ if .Get "href" }}
+</a>
+{{ else }}
+</div>
+{{ end }}
