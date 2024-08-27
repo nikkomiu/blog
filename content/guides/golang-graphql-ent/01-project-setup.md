@@ -2,6 +2,7 @@
 title: Project Setup
 author: Nikko Miu
 toc: true
+weight: 1
 tags:
   - golang
   - graphql

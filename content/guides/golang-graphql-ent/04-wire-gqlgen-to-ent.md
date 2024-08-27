@@ -2,6 +2,7 @@
 title: Wire gqlgen to ent
 author: Nikko Miu
 toc: true
+weight: 4
 tags:
   - golang
   - ent

@@ -2,6 +2,7 @@
 title: Clean Up Code
 author: Nikko Miu
 toc: true
+weight: 6
 tags:
   - golang
   - graphql

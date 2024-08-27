@@ -2,6 +2,7 @@
 title: First ent Schema
 author: Nikko Miu
 toc: true
+weight: 3
 tags:
   - golang
   - ent

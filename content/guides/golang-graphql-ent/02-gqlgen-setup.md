@@ -2,6 +2,7 @@
 title: Setting Up gqlgen
 author: Nikko Miu
 toc: true
+weight: 2
 tags:
   - golang
   - graphql

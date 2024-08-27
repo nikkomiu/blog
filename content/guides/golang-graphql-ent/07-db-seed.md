@@ -2,6 +2,7 @@
 title: Database Seeding
 author: Nikko Miu
 toc: true
+weight: 7
 tags:
   - golang
   - ent

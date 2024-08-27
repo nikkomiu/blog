@@ -2,6 +2,7 @@
 title: Paging, Sorting, and Filtering
 author: Nikko Miu
 toc: true
+weight: 5
 tags:
   - golang
   - graphql
