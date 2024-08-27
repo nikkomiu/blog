@@ -34,6 +34,12 @@ all the necessary dependencies) is to create our project directory and initializ
 go mod init github.com/nikkomiu/gentql
 ```
 
+{{< callout type=warning title=Modification >}}
+I am initializing this project on GitHub (`github.com`) under my user account (`nikkomiu`). However, you should modify
+this to refer to your own project/git repository. For example, use `gitlab.com/go-nm/gentql` if you are going to host
+your repository on GitLab in the `go-nm` group.
+{{</ callout >}}
+
 I tend to take this time to initialize my Git repository, set up the remote repository (like on GitHub),
 set up my remote, as well as commit and push my initial code.
 
