@@ -189,7 +189,7 @@ A few things to note about this Dev Container configuration file:
 - The `dockerComposeFile` and `service` properties are used to define the Docker Compose file and service that we want
   to use to create our Dev Container.
 - The `workspaceFolder` property is used to define the path to the workspace folder in the Dev Container (make sure it
-  matches the `volume` mount in the `Dockerfile` otherwise you'll get an error about a missing workspace).
+  matches the `volume` mount in the `docker-compose.yml` otherwise you'll get an error about a missing workspace).
 - The `postCreateCommand` property is used to define a command that will be run after the Dev Container is created.
   In this case, I'm running `go mod tidy` to tidy up the Go modules.
 - The `postAttachCommand` property is used to define a command that will be run after the Dev Container is attached.

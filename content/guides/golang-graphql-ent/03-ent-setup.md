@@ -1,6 +1,6 @@
 ---
 date: 2024-08-16T00:00:00Z
-title: Setting Up Ent
+title: First ent Schema
 author: Nikko Miu
 toc: true
 tags:
@@ -84,6 +84,11 @@ I also tend to not commit these generated files as they're large, don't really a
 for larger and (in some ways) more confusing PRs to the code. Note that there are some downsides to not including these
 generated files in Git but none that we have to worry about for this project.
 
+{{< callout type=info >}}
+Probably the single largest downside to not adding these generated files in Git is that other Go applications won't run
+(as far as I can tell) the `go generate` method when adding the repo as a dependency.
+{{</ callout >}}
+
 With that in mind, we can update the `.gitignore` to include ent files except for the ones needed for code generation:
 
 ```text {file=".gitignore"}
@@ -96,9 +101,9 @@ ent/*
 
 There are a bunch of ways that we can initialize the ent client and manage its lifecycle. For our app, we are going to
 initialize the database client in **each** CLI command where we use it. However, if you don't like code duplication
-you may want to move this to a more common location. The main reason for keeping it in each command is that if the
-database initialization is too high up the CLI won't work properly without being able to connect to the database which
-is a side-effect I don't want to have in the app.
+you may want to move this to a more common location. I prefer to keep the database initialization within the individual
+commands to avoid the side-effect of the CLI not working properly. This can happen when the database is initialized too
+early in our application's call stack.
 
 So, update the `cmd/api.cmd` to initialize our database:
 
@@ -162,8 +167,9 @@ go mod tidy
 
 ## Database Migrations
 
-Since `ent` works against T-SQL databases, we will want to have support for migrating our database schema when we modify
-the schema. To support this from the CLI of our app, we're going to create a new Cobra subcommand in `cmd/migrate.go`:
+Since `ent` works against [T-SQL](https://en.wikipedia.org/wiki/Transact-SQL) databases, we will want to have support
+for migrating our database schema when we modify the schema. To support this from the CLI of our app, we're going to
+create a new Cobra subcommand in `cmd/migrate.go`:
 
 ```go {file="cmd/migrate.go"}
 package cmd
@@ -264,14 +270,15 @@ func runMigrate(cmd *cobra.Command, args []string) {
 ```
 
 {{< callout type=note >}}
-We will also clean up the `panic(err)` calls that are all over in the future to properly handle errors instead of using
-`panic()` since it's generally not recommended to use panic within Go applications.
+Later, we will also remove all references to the `panic(err)` calls that are currently in our code so we can properly
+handle errors. Using `panic()` is generally not recommended in Go applications and instead we should return `error` from
+funcs that can create errors.
 {{</ callout >}}
 
 With this change if you get the help for the `migrate` command you'll see the new flag added:
 
 ```bash
-go run . migrate
+go run . migrate --help
 ```
 
 ```output
@@ -288,7 +295,7 @@ Flags:
 Also, because we set up the flag with a variable reference the variable will automatically be set when it is set by
 someone using the CLI.
 
-## Migrate the Database
+## Perform First Migration
 
 Now that we have the migration subcommand set up we need to migrate our database to the latest version so we can begin
 to use the newly added Note schema:
