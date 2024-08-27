@@ -115,7 +115,7 @@
         {{ end }}
         <a
           href="{{ $prev.Permalink }}"
-          class="flex flex-row mr-auto text-neutral-300 hover:bg-neutral-900 hover:text-white py-2 pr-3"
+          class="flex flex-row w-full sm:w-auto mr-auto text-neutral-300 hover:bg-neutral-900 hover:text-white py-3 pl-2 pr-12 sm:pr-10 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
         >
           <div class="flex items-center mr-2">
             <svg
@@ -143,7 +143,7 @@
         {{ end }}
         <a
           href="{{ $next.Permalink }}"
-          class="flex flex-row ml-auto text-right text-neutral-300 hover:bg-neutral-900 hover:text-white py-2 pl-3"
+          class="flex flex-row w-full sm:w-auto ml-auto text-right text-neutral-300 hover:bg-neutral-900 hover:text-white py-3 pr-2 pl-12 sm:pl-10 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
         >
           <div class="flex flex-col">
             <h2 class="!mt-0 text-lg">Next {{ $pt }}</h2>
@@ -170,7 +170,7 @@
   <div class="flex">
     <a
       href="{{ .Parent.Permalink }}"
-      class="flex flex-row mx-auto lg:order-none mb-2 hover:bg-neutral-900 text-neutral-300 hover:text-white p-2"
+      class="flex flex-row mx-auto w-full sm:w-auto lg:order-none mb-2 hover:bg-neutral-900 text-neutral-300 hover:text-white py-3 px-6 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
     >
       <div class="flex items-center mr-2">
         <svg

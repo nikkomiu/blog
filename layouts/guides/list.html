@@ -1,0 +1,44 @@
+{{ define "main" }}
+  {{ with .Content }}
+    <div
+      class="prose prose-neutral prose-invert max-w-none mb-12"
+      data-pagefind-body
+    >
+      {{ with $.Title }}
+        <h1 class="post-title text-lg sm:text-2xl">
+          {{ . | markdownify }}
+
+          {{ if $.Draft }}
+            <span
+              class="flex center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+                class="sm:mr-1 w-4 h-4"
+              >
+                <use href="#hi-beaker" />
+              </svg>
+              <span class="hidden sm:inline">Draft</span>
+            </span>
+          {{ end }}
+        </h1>
+      {{ end }}
+      {{ . }}
+    </div>
+  {{ end }}
+  <div class="posts w-full">
+    {{ $pages := sort .Paginator.Pages "Path" "asc" }}
+    {{ if .Params.showAllSubPages }}
+      {{ $pages = .Pages }}
+    {{ end }}
+
+    {{ $postContext := dict "Pages" $pages "Parent" . }}
+    {{ partial "post-list.html" $postContext }}
+
+    {{ partial "pagination.html" . }}
+  </div>
+{{ end }}
