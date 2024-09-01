@@ -35,25 +35,26 @@
           {{ end }}
         </time>
       {{ end }}
+      {{ if and .Date .Params.Author }}
+      ::
+      {{ end }}
       {{ with .Params.Author }}
         {{ $authorPagePath := printf "/authors/%s/index.html" (lower (replace . " " "-")) }}
         {{ with $.Site.GetPage $authorPagePath }}
-          ::
           <span>
             <a href="{{ .RelPermalink }}" data-pagefind-filter="author">
               {{ .Title }}
             </a>
           </span>
         {{ else }}
-          ::
           <span class="text-fuchsia-300" data-pagefind-filter="author">
             {{ . }}
           </span>
         {{ end }}
       {{ end }}
       {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
-        <span class="post-reading-time"
-          >::
+        <span class="post-reading-time">
+          ::
           {{ .ReadingTime }}
           {{ $.Site.Params.minuteReadingTime | default "min read" }}
           ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})
@@ -62,11 +63,11 @@
     </div>
 
     {{ if .Params.tags }}
-      <span class="text-neutral-400">
+      <span class="text-neutral-400 print:text-neutral-300">
         {{ range .Params.tags }}
           #<a
             href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}"
-            class="no-underline hover:underline text-neutral-400 hover:text-neutral-100"
+            class="no-underline hover:underline text-neutral-400 hover:text-neutral-100 print:text-neutral-300"
             data-pagefind-filter="tag"
           >
             {{- . -}}
@@ -107,7 +108,7 @@
 
   {{ $pt := .Parent.Type | inflect.Singularize | strings.Title }}
   {{ if or .Params.next .Params.prev .PrevInSection .NextInSection }}
-    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 mb-6 pt-2">
+    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 mb-6 pt-2 print:hidden">
       {{ if or .Params.prev .NextInSection }}
         {{ $prev := .NextInSection }}
         {{ if .Params.prev }}
@@ -167,7 +168,7 @@
   {{ end }}
 
 
-  <div class="flex">
+  <div class="flex print:hidden">
     <a
       href="{{ .Parent.Permalink }}"
       class="flex flex-row mx-auto w-full sm:w-auto lg:order-none mb-2 hover:bg-neutral-900 text-neutral-300 hover:text-white py-3 px-6 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"

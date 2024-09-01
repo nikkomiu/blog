@@ -1,3 +1,3 @@
 ---
-title: Reduce Recycle Reuse
+title: Home
 ---

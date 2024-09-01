@@ -31,14 +31,14 @@ import (
   "github.com/spf13/cobra"
 )
 
-var seedCMD = &cobra.Command{
+var seedCmd = &cobra.Command{
   Use:   "seed",
   Short: "Seed the database with initial values",
-  Run:   runE(runSeed),
+  RunE:  runSeed,
 }
 
 func init() {
-  rootCMD.AddCommand(seedCMD)
+  rootCmd.AddCommand(seedCmd)
 }
 
 func runSeed(cmd *cobra.Command, args []string) error {
@@ -46,8 +46,8 @@ func runSeed(cmd *cobra.Command, args []string) error {
 }
 ```
 
-Here we're just creating a new `seedCMD` with the command name (`Use`) of `seed` and a short description (the `Short`
-field) and using our `runE` wrapper for the run command. Also, don't forget to add this command to the `rootCMD`
+Here we're just creating a new `seedCmd` with the command name (`Use`) of `seed` and a short description (the `Short`
+field) and using our `runE` wrapper for the run command. Also, don't forget to add this command to the `rootCmd`
 otherwise this command won't ba available to us when we try to run the app.
 
 With the boilerplate for it in place we can implement our runSeed func to seed our database:
@@ -60,6 +60,7 @@ func runSeed(cmd *cobra.Command, args []string) (err error) {
   if err != nil {
     return
   }
+  defer entClient.Close()
 
   notes := []*ent.NoteCreate{
     entClient.Note.Create().

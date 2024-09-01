@@ -1,9 +1,9 @@
 .table-of-contents {
-  @apply mt-10 mb-16;
+  @apply mt-10 mb-16 print:my-8;
 }
 
 .table-of-contents h2 {
-  @apply text-xl font-bold my-3 text-fuchsia-600;
+  @apply text-xl font-bold my-3 text-fuchsia-600 print:text-neutral-300;
 }
 
 .table-of-contents ul {
@@ -37,11 +37,7 @@
 }
 
 .post-title {
-  @apply relative flex text-2xl items-center text-fuchsia-500 border-dotted border-fuchsia-500 text-lg sm:text-2xl;
-
-  margin: 0 0 15px;
-  padding-bottom: 15px;
-  border-bottom-width: 3px;
+  @apply relative flex text-2xl items-center text-fuchsia-500 print:text-neutral-700 mb-4 pb-4 border-b-[3px] border-dotted border-fuchsia-500 print:border-neutral-600 text-lg sm:text-2xl;
 }
 
 .post-title a {
@@ -54,7 +50,7 @@
 }
 
 .post-title:not(.small)::after {
-  @apply block absolute left-0 w-full h-1 bg-fuchsia-500 bg-transparent border-dotted border-fuchsia-500;
+  @apply block absolute left-0 w-full h-1 bg-fuchsia-500 bg-transparent border-dotted border-fuchsia-500 print:border-neutral-600;
 
   content: "";
   bottom: 2px;
@@ -62,11 +58,11 @@
 }
 
 .post-meta {
-  @apply text-purple-500 mb-2;
+  @apply text-purple-500 mb-2 print:text-neutral-300;
 }
 
 .post-meta a {
-  @apply text-purple-500 hover:underline hover:text-purple-300;
+  @apply text-purple-500 hover:underline hover:text-purple-300 print:text-neutral-300;
 }
 
 .post-cover {
@@ -78,7 +74,7 @@
 }
 
 .hanchor-block .hanchor-link {
-  @apply lg:absolute lg:left-[-2.5rem] lg:pr-[53rem] lg:pb-2 hidden hover:text-fuchsia-500;
+  @apply lg:absolute lg:left-[-2.5rem] lg:pr-[53rem] lg:pb-2 hidden hover:text-fuchsia-500 print:hidden;
 }
 
 .hanchor-block:hover .hanchor-link {

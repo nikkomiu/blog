@@ -10,15 +10,6 @@ module.exports = {
       serif: ["Hack", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
       mono: ["Hack", "Monaco", "Ubuntu Mono", "Consolas", "monospace"],
     },
-    extend: {
-      typography: ({ theme }) => ({
-        DEFAULT: {
-          css: {
-            "--tw-prose-headings": theme("colors.fuchsia[500]"),
-          },
-        },
-      }),
-    },
   },
   plugins: [require("@tailwindcss/typography")],
 };

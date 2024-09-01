@@ -108,12 +108,13 @@ early in our application's call stack.
 So, update the `cmd/api.cmd` to initialize our database:
 
 ```go {file="cmd/api.go"}
-func runAPI(cmd *cobra.Command, args []string) {
-  entClient, err := ent.Open("postgres", "postgres://localhost/gentql_dev?sslmode=disable")
+func runAPI(cmd *cobra.Command, args []string) error {
+  entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
   if err != nil {
-    panic(err)
+    return err
   }
   ctx := ent.NewContext(cmd.Context(), entClient)
+  defer entClient.Close()
 
   // ...
 ```
@@ -125,6 +126,13 @@ we load configuration later by centralizing the config in a common area of the a
 If you're not using the Dev Container or don't have the `DATABASE_URL` environment variable set within your Dev
 Container, you should modify the second argument of `Open()` to use a static database connection string for now. When
 we update this later to use a config package we will add more robust config loading.
+
+The connection string format that we are using for the database is in the format of
+`postgres://[<username>[:<password>]]@<host>[:<port>]/<db_name>?sslmode=disable`. You'll need to replace (or remove) the
+parts of the connection string in `<...>` some of them will alter the formatting. When one of them alters the formatting
+follow the surrounding `[]` to remove. For more information or more complex database connection settings, check the
+[github.com/lib/pq GoDoc](https://pkg.go.dev/github.com/lib/pq#hdr-Connection_String_Parameters) for connection string
+parameters.
 {{</ callout >}}
 
 With our newly added `ctx` that contains the ent Client, we can also inject the `ctx` into our `NewServer()` method for
@@ -182,25 +190,24 @@ import (
   "github.com/nikkomiu/gentql/ent"
 )
 
-var migrateCMD = &cobra.Command{
+var migrateCmd = &cobra.Command{
   Use:   "migrate",
   Short: "Migrate the database between versions",
-  Run:   runMigrate,
+  RunE:  runMigrate,
 }
 
 func init() {
-  rootCMD.AddCommand(migrateCMD)
+  rootCmd.AddCommand(migrateCmd)
 }
 
-func runMigrate(cmd *cobra.Command, args []string) {
+func runMigrate(cmd *cobra.Command, args []string) error {
   entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
   if err != nil {
-    panic(err)
+    return err
   }
+  defer entClient.Close()
 
-  if err = entClient.Schema.Create(cmd.Context()); err != nil {
-    panic(err)
-  }
+  return entClient.Schema.Create(cmd.Context())
 }
 ```
 
@@ -237,34 +244,34 @@ import (
   "github.com/nikkomiu/gentql/ent"
 )
 
-var migrateDryRun = false
-
-var migrateCMD = &cobra.Command{
+var migrateCmd = &cobra.Command{
   Use:   "migrate",
   Short: "Migrate the database between versions",
-  Run:   runMigrate,
+  RunE:  runMigrate,
 }
 
 func init() {
-  migrateCMD.Flags().BoolVarP(&migrateDryRun, "dry", "d", false, "Write the schema output to stdout instead of updating the database")
+  migrateCmd.Flags().BoolP("dry", "d", false, "Write the schema output to stdout instead of updating the database")
 
-  rootCMD.AddCommand(migrateCMD)
+  rootCmd.AddCommand(migrateCmd)
 }
 
-func runMigrate(cmd *cobra.Command, args []string) {
+func runMigrate(cmd *cobra.Command, args []string) error {
+  dryRun, err := cmd.Flags().GetBool("dry")
+  if err != nil {
+    return
+  }
+
   entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
   if err != nil {
-    panic(err)
+    return err
   }
+  defer entClient.Close()
 
-  if migrateDryRun {
-    err = entClient.Schema.WriteTo(cmd.Context(), os.Stdout)
+  if dryRun {
+    return entClient.Schema.WriteTo(cmd.Context(), os.Stdout)
   } else {
-    err = entClient.Schema.Create(cmd.Context())
-  }
-
-  if err != nil {
-    panic(err)
+    return entClient.Schema.Create(cmd.Context())
   }
 }
 ```

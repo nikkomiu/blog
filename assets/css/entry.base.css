@@ -18,10 +18,10 @@
 }
 
 html {
+  @apply flex flex-col print:text-xs;
+
   min-height: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 }
 
 *,
