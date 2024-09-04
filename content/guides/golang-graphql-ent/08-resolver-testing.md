@@ -2,6 +2,7 @@
 title: Add Resolver Tests
 author: Nikko Miu
 toc: true
+draft: true
 weight: 8
 tags:
   - golang
