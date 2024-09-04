@@ -1,6 +1,6 @@
 baseURL: /
 languageCode: en-us
-title: RRR
+title: ThreeRe
 
 disableHugoGeneratorInject: true
 copyright: Nikko Miu
@@ -53,7 +53,7 @@ menu:
 
 markup:
   highlight:
-    style: modus-vivendi
+    noClasses: false
 
 params:
   subtitle: Reduce, Recycle, Recode
@@ -73,4 +73,4 @@ params:
   readingTime: true
 
   logo:
-    logoText: Reduce Recycle Recode
+    logoText: /Re(duce|cycle|code)/

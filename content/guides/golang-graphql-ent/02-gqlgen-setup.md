@@ -217,17 +217,17 @@ import (
   "github.com/nikkomiu/gentql/gql"
 )
 
-var apiCMD = &cobra.Command{
+var apiCmd = &cobra.Command{
   Use:   "api",
   Short: "Start the API services for gentql",
-  Run:   runAPI,
+  RunE:  runAPI,
 }
 
 func init() {
-  rootCMD.AddCommand(apiCMD)
+  rootCmd.AddCommand(apiCmd)
 }
 
-func runAPI(cmd *cobra.Command, args []string) {
+func runAPI(cmd *cobra.Command, args []string) error {
   router := chi.NewRouter()
 
   srv := gql.NewServer()
@@ -236,8 +236,10 @@ func runAPI(cmd *cobra.Command, args []string) {
 
   err := http.ListenAndServe(":8080", router)
   if err != nil {
-    panic(err)
+    return err
   }
+
+  return nil
 }
 ```
 

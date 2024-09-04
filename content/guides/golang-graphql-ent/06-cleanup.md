@@ -82,6 +82,8 @@ we remove a resolver when `gqlgen`.
 
 ## Add Error Handling
 
+> > > > > > > > > TODO: REMOVE `runE` and replace with `cobra.Command{SilenceUsage: true}`
+
 Currently we don't handle errors very well in our app as any time we have an issue in the `cmd` package we just panic.
 Let's fix this so instead of using `panic()` we return errors, print the error to `stderr` and exit the app with some
 error code.
@@ -93,7 +95,7 @@ func runE(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string
   return func(cmd *cobra.Command, args []string) {
     err := fn(cmd, args)
     if err != nil {
-      fmt.Fprintf(os.Stderr, "failed running %s: %s\n", cmd.Name(), err)
+      fmt.Fprintf(cmd.ErrOrStderr(), "failed running %s: %s\n", cmd.Name(), err)
       os.Exit(2)
     }
   }
@@ -118,21 +120,27 @@ With our `runE()` func in place, let's update our `runAPI()` and `runMigration()
 fail instead of calling `panic()`.
 
 ```go {file="cmd/migrate.go"}
-var migrateCMD = &cobra.Command{
+var migrateCmd = &cobra.Command{
   Use:   "migrate",
   Short: "Migrate the database between versions",
-  Run:   runE(runMigrate),
+  RunE:  runMigrate,
 }
 
 // ...
 
 func runMigrate(cmd *cobra.Command, args []string) (err error) {
-  entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
+  dryRun, err := cmd.Flags().GetBool("dry")
   if err != nil {
     return
   }
 
-  if migrateDryRun {
+  entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
+  if err != nil {
+    return
+  }
+  defer entClient.Close()
+
+  if dryRun {
     err = entClient.Schema.WriteTo(cmd.Context(), os.Stdout)
   } else {
     err = entClient.Schema.Create(cmd.Context())
@@ -147,10 +155,10 @@ variable (`err`). This way we don't need to explicitly call `return err` we can 
 is named.
 
 ```go {file="cmd/api.go"}
-var apiCMD = &cobra.Command{
+var apiCmd = &cobra.Command{
   Use:   "api",
   Short: "Start the API services for gentql",
-  Run:   runE(runAPI),
+  RunE:  runAPI,
 }
 
 func runAPI(cmd *cobra.Command, args []string) (err error) {
@@ -159,6 +167,7 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
     return
   }
   ctx := ent.NewContext(cmd.Context(), entClient)
+  defer entClient.Close()
 
   router := chi.NewRouter()
 
@@ -235,23 +244,22 @@ Then, we're just creating the struct that implements this interface (with a stat
 properly implement this interface). We also include the `Unwrap() error` method so the error can be unwrapped using the
 `errors.Unwrap() error` method that is in the Go `errors` package.
 
-We can now check for this interface in the `runE()` func:
+We can now check for this interface in the `main()` func:
 
-```go {file="cmd/cmd.go"}
-func runE(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string) {
-  return func(cmd *cobra.Command, args []string) {
-    err := fn(cmd, args)
-    if err != nil {
-      fmt.Fprintf(os.Stderr, "failed running %s: %s\n", cmd.Name(), err)
+```go {file="main.go"}
+func main() {
+  ctx := context.Background()
+  ctx, cancel := signal.NotifyContext(ctx, syscall.SIGHUP, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM)
+  defer cancel()
 
-      statusCode := 2
-      switch typedErr := err.(type) {
-      case errors.ExitCodeError:
-        statusCode = typedErr.ExitCode()
-      }
-
-      os.Exit(statusCode)
+  if err := cmd.Execute(ctx); err != nil {
+    exitCode := 1
+    switch typedErr := err.(type) {
+    case errors.ExitCodeError:
+      exitCode = typedErr.ExitCode()
     }
+
+    os.Exit(exitCode)
   }
 }
 ```
@@ -268,6 +276,7 @@ entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
 if err != nil {
   return errors.NewExitCode(err, 3)
 }
+  defer entClient.Close()
 ```
 
 This is by no means required, but sometimes it is nice to be able to customize errors with additional fields, info, and
@@ -355,6 +364,7 @@ the migrate command:
   if err != nil {
     return
   }
+  defer entClient.Close()
 ```
 
 Then we can update our API command to also use the config:
@@ -368,6 +378,7 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
     return
   }
   ctx := ent.NewContext(cmd.Context(), entClient)
+  defer entClient.Close()
 
   router := chi.NewRouter()
 

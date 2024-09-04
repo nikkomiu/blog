@@ -142,6 +142,11 @@
 {{ end }}
 <link rel="stylesheet" href="{{ $baseOut.RelPermalink }}" />
 
+{{ $chromaCSS := resources.Get "css/entry.chroma.css" }}
+{{ $chromaCSSOpts := (dict "noMap" (not hugo.IsDevelopment)) }}
+{{ $chromaOut := $chromaCSS | postCSS $chromaCSSOpts }}
+{{ partial "defer-css" $chromaOut.RelPermalink }}
+
 {{ partial "defer-css" ("pagefind/pagefind-ui.css" | relURL) }}
 
 {{ $jsSourceMap := "" }}

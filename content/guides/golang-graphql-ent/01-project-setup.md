@@ -62,12 +62,14 @@ import (
   "github.com/spf13/cobra"
 )
 
-var rootCMD = &cobra.Command{
+var rootCmd = &cobra.Command{
   Use: "gentql",
+
+  SilenceUsage: true,
 }
 
 func Execute(ctx context.Context) error {
-  return rootCMD.ExecuteContext(ctx)
+  return rootCmd.ExecuteContext(ctx)
 }
 ```
 
@@ -95,24 +97,27 @@ import (
   "github.com/spf13/cobra"
 )
 
-var apiCMD = &cobra.Command{
-  Use: "api",
-  Run: runAPI,
+var apiCmd = &cobra.Command{
+  Use:  "api",
+  RunE: runAPI,
+
+  SilenceUsage: true,
 }
 
 func init() {
-  rootCMD.AddCommand(apiCMD)
+  rootCmd.AddCommand(apiCmd)
 }
 
-func runAPI(cmd *cobra.Command, args []string) {
+func runAPI(cmd *cobra.Command, args []string) error {
   fmt.Println("hello api")
+  return nil
 }
 ```
 
-In this we created an `apiCMD` where the **Use** property is the name of the command you'll run in the CLI
+In this we created an `apiCmd` where the **Use** property is the name of the command you'll run in the CLI
 and **Run** is the method we will use to execute the command if it's called.
-Then in the `init()` method, we register the `apiCMD` with the `rootCMD` as a subcommand.
-Finally, we define the `runAPI()` method where, for now, we will just print `hello api`.
+Then in the `init()` method, we register the `apiCmd` with the `rootCmd` as a subcommand.
+Finally, we define the `runAPI() error` method where, for now, we will just print `hello api`.
 
 ## Initial main.go
 
@@ -147,7 +152,7 @@ method and handle any error that comes back by printing it out to the console an
 ## Test our CLI
 
 Since we are using Cobra, we get some useful things out of the box. We can run the app with our `api` subcommand now to
-see the `fmt.Println()` that we put above since we registered this subcommand with the `rootCMD`:
+see the `fmt.Println()` that we put above since we registered this subcommand with the `rootCmd`:
 
 ```bash
 go run . api
@@ -188,19 +193,21 @@ With Cobra we can also add short and long descriptions to our commands. Let's st
 app to the root command (`cmd/cmd.go`):
 
 ```go {file="cmd/cmd.go",add_lines="3",linenostart=9}
-var rootCMD = &cobra.Command{
+var rootCmd = &cobra.Command{
   Use:   "gentql",
   Short: "GentQL backend application services.",
+
+  SilenceUsage: true,
 }
 ```
 
 Let's also update the API sub-command to include a short description:
 
 ```go {file="cmd/api.go",add_lines="3"}
-var apiCMD = &cobra.Command{
+var apiCmd = &cobra.Command{
   Use:   "api",
   Short: "Start the API services for gentql",
-  Run:   runAPI,
+  RunE:  runAPI,
 }
 ```
 
