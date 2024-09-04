@@ -82,7 +82,7 @@ we remove a resolver when `gqlgen`.
 
 ## Add Error Handling
 
->>>>>>>>> TODO: REMOVE `runE` and replace with `cobra.Command{SilenceUsage: true}`
+> > > > > > > > > TODO: REMOVE `runE` and replace with `cobra.Command{SilenceUsage: true}`
 
 Currently we don't handle errors very well in our app as any time we have an issue in the `cmd` package we just panic.
 Let's fix this so instead of using `panic()` we return errors, print the error to `stderr` and exit the app with some

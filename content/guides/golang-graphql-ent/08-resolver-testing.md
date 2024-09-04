@@ -296,8 +296,8 @@ to add the environment variable in our `.vscode/settings.json`:
 ```json {file=".vscode/settings.json"}
 {
   "go.testEnvVars": {
-      "CGO_ENABLED": "1"
-  },
+    "CGO_ENABLED": "1"
+  }
   // ...
 }
 ```

@@ -12,12 +12,12 @@ function linesToArr(linesStr) {
 
   return linesStr.split(" ").flatMap((v) => {
     if (v.includes("-")) {
-      const [from, to] = v.split("-")
-      const arr = []
+      const [from, to] = v.split("-");
+      const arr = [];
       for (let i = +from; i <= +to; i++) {
-        arr.push(i)
+        arr.push(i);
       }
-      return arr
+      return arr;
     }
 
     // if the value is a comma-separated list convert to number array
