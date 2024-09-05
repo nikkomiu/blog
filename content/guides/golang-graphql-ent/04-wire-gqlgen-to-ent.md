@@ -62,7 +62,8 @@ method within the ent package that was generated.
 
 {{< callout type=note >}}
 You may be wondering why we have a `NewResolver()` and a `NewServer()` method where both are exported. You may also be
-wondering why we pass the `context.Context` into the `NewServer()` but not `NewResolver()`. In both of these cases, we are doing this to prepare for testing.
+wondering why we pass the `context.Context` into the `NewServer()` but not `NewResolver()`. In both of these cases, we
+are doing this to prepare for testing.
 
 When we write tests for the GraphQL Resolvers, we will need to use the `NewResolver()` method so we can call the
 resolver methods. It's also easier for testing if we pass the `*ent.Client` instead of the `context.Context` since it's
