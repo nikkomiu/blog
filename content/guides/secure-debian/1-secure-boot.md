@@ -318,7 +318,7 @@ rm -rf /boot/efi/EFI/debian
 rm -rf /boot/grub
 ```
 
-We can also remove the boot record for the old GRUB-based `debian` bootloader now that we don't use GRUB anymore. To do
+We can also remove the boot record for the old GRUB-based `debian` BootLoader now that we don't use GRUB anymore. To do
 so we will need to get the list of boot records:
 
 ```bash
@@ -342,7 +342,7 @@ efibootmgr -b 2 -B
 
 ### Removing `systemd-boot` Loader
 
-We can also remove the `systemd-boot` bootloader that was added when we installed it:
+We can also remove the `systemd-boot` BootLoader that was added when we installed it:
 
 ```bash
 bootctl remove
@@ -353,7 +353,7 @@ removed, so it doesn't get run when the initramfs is updated.
 
 {{< callout type=note >}}
 We installed `systemd-boot` for some of the utilities that are included with it. However, I'm not going to be using
-`systemd-boot` as the bootloader for my OS. If you want to use it, you just need to sign the bootloader whenever it is
+`systemd-boot` as the BootLoader for my OS. If you want to use it, you just need to sign the BootLoader whenever it is
 updated using a post update script.
 {{</ callout >}}
 
