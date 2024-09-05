@@ -61,8 +61,11 @@ function loadSearchFailed(err) {
 }
 
 export async function loadSearch() {
-  document.querySelectorAll("button.site-search-menu-toggle").forEach((ele) => {
-    ele.addEventListener("click", showModal);
+  document.querySelectorAll(".site-search-menu-toggle").forEach((ele) => {
+    if (ele.nodeName === "BUTTON") {
+      ele.addEventListener("click", showModal);
+    }
+
     ele.classList.remove("hidden");
   });
 
