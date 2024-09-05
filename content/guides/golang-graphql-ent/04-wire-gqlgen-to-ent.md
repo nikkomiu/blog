@@ -62,8 +62,7 @@ method within the ent package that was generated.
 
 {{< callout type=note >}}
 You may be wondering why we have a `NewResolver()` and a `NewServer()` method where both are exported. You may also be
-wondering why we pass the `context.Context` into the `NewServer()` but not `NewResolver()`. In both of these cases, we
-are settingare doing it this way for testing.
+wondering why we pass the `context.Context` into the `NewServer()` but not `NewResolver()`. In both of these cases, we are doing this to prepare for testing.
 
 When we write tests for the GraphQL Resolvers, we will need to use the `NewResolver()` method so we can call the
 resolver methods. It's also easier for testing if we pass the `*ent.Client` instead of the `context.Context` since it's
@@ -440,7 +439,7 @@ query {
 
 ## Add Remaining CRUD Resolvers
 
-We now have the ability to create a note, get a note by Node ID using the `node()` resolver, and listing all Notes.
+We now have the ability to create a note, get a note by Node ID using the `node()` resolver, and list all Notes.
 Let's finish up by adding the update and delete methods to round out our CRUD operations. Open the
 `gql/note.resolvers.go` and implement the `UpdateNote(context.Context, int, model.NoteInput)` and
 `DeleteNote(context.Context, int)` methods like this:

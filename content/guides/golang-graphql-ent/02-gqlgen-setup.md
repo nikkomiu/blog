@@ -38,8 +38,7 @@ import (
 ```
 
 Let's break down what's in this file. First we put a comment to define the Go build environment. In this case we set it
-to tools so that (by default when building the app) this file isn't included in the build. Next we setting the
-package for this file. Since we aren't including it in the build we can call it whatever we want (so don't worry that
+to tools so that (by default when building the app) this file isn't included in the build. Next we will set the package for this file. Since we aren't including it in the build we can call it whatever we want (so don't worry that
 it doesn't match the root-level `package` in `main.go`). Finally, we just need to use the `_` (blank identifier) for
 the packages since we don't actually _use_ them.
 
