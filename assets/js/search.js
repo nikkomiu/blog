@@ -3,17 +3,56 @@ import { loadScript } from "./util";
 const pagefindUIID = "pagefind-ui-script";
 const searchSelector = ".site-search";
 
+const searchModalSelector = '.site-search-modal'
+
 function toggleSearch(e) {
+  if (e.key === "Escape") {
+    e.preventDefault();
+
+    hideModal();
+  }
+
   if ((e.ctrlKey || e.metaKey) && e.keyCode === "K".charCodeAt(0)) {
     e.preventDefault();
 
-    const searchElement = document.querySelector(
-      `${searchSelector} input[type="text"]`
-    );
-    if (searchElement) {
-      searchElement.focus();
-    }
+    showModal();
   }
+}
+
+function modelBackgroundClickHandler(event) {
+  if (document.querySelector(searchModalSelector) !== event.target) {
+    return;
+  }
+
+  hideModal();
+}
+
+function showModal() {
+  const modal = document.querySelector(searchModalSelector)
+  modal.classList.remove('hidden')
+  modal.addEventListener('click', modelBackgroundClickHandler)
+  document.querySelector('.site-search-close').addEventListener('click', hideModal)
+
+  const searchElement = document.querySelector(
+    `${searchSelector} input[type="text"]`
+  );
+  if (searchElement) {
+    searchElement.focus();
+    searchElement.select();
+  }
+}
+
+function hideModal() {
+  document.querySelector('.site-search-close').removeEventListener('click', hideModal)
+  const modal = document.querySelector(searchModalSelector)
+  modal.classList.add('animate__fadeOut')
+  const handler = () => {
+    modal.classList.add('hidden')
+    modal.classList.remove('animate__fadeOut')
+    modal.removeEventListener('animationend', handler)
+  }
+
+  modal.addEventListener('animationend', handler)
 }
 
 function loadSearchFailed(err) {
@@ -27,10 +66,13 @@ function loadSearchFailed(err) {
   `;
 }
 
+let backoff = 1000;
+
 export async function loadSearch() {
-  document
-    .querySelector(`${searchSelector} .loading`)
-    ?.classList.remove("hidden");
+  document.querySelectorAll('button.site-search-menu-toggle').forEach(ele => {
+    ele.addEventListener('click', showModal)
+    ele.classList.remove('hidden')
+  })
 
   try {
     // Load search
@@ -50,5 +92,7 @@ export async function loadSearch() {
     document.addEventListener("keydown", toggleSearch);
   } catch (err) {
     loadSearchFailed(err);
+    backoff *= 3;
+    setTimeout(loadSearch, backoff);
   }
 }

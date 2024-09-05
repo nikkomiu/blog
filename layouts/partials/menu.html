@@ -39,6 +39,18 @@
         </li>
       {{ end }}
     {{ else }}
+      <button class="site-search-menu-toggle hidden text-fuchsia-300 hover:text-fuchsia-50">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+        >
+          <use href="#hi-magnifying-glass" />
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
       {{ range $.Site.Menus.main }}
         {{ if not .HasChildren }}
           <li>
