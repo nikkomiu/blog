@@ -382,7 +382,7 @@ func ContextT(t *testing.T) context.Context {
 All we are doing here is moving the creation of our context with a cancel func into a method we can call from our tests.
 We are passing the `*testing.T` into this func so that when our test is done the `cancel` for our `context.Context` will
 be called for us. This way we don't have to worry about forgetting to cancel the context in our tests and it will
-simplify our test functions.
+simplify our test funcs.
 
 With this in place, we can update our tests to utilize our new `ContextT(*testing.T) context.Context` func. First,
 let's update the common tests:
