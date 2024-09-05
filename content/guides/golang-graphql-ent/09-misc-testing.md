@@ -875,7 +875,7 @@ func executeWithArgs(ctx context.Context, args []string) (stdout string, stderr 
 {{< callout type=note >}}
 Now that we have these options added (and public) to the `cmd` package, we can now change our testing project to use the
 `_test` suffix. If you remember, the main reason we weren't able to do this to start was because we didn't have access
-to the `rootCmd` from outisde the package. However, with these `Option`s in place, we can now access and utilize all of
+to the `rootCmd` from outside the package. However, with these `Option`s in place, we can now access and utilize all of
 this without needing our tests **within** our `cmd` package. I'm going to switch mine over, but you don't have to if you
 don't want.
 {{</ callout >}}
@@ -1008,7 +1008,7 @@ what we did in this to understand the individual parts of the testing. Most of t
 overly-complicated will soon make it easier to see that this is a "framework" that makes writing tests easier and leaves
 less room for hard to follow tests, complicated setup and teardown, etc.
 
-With theset changes we now have a solid foundation for writing testable code as well as writing the tests for it. This
+With the set changes we now have a solid foundation for writing testable code as well as writing the tests for it. This
 is great because we don't have to set up large scale testing frameworks, or create complex testing plans to validate
 that our application is working as expected. Plus, with the `context.Context` and our
 `ContextT(t *testing.T) context.Context` we make sure that our testing doesn't leak "async" code actions (since we
