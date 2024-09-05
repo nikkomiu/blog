@@ -159,7 +159,7 @@ We are only adding the last of the `files.exclude`. The other entries in this ar
 by default.
 {{</ callout >}}
 
-## (Optional) Add to .gitingore
+## (Optional) Add to .gitignore
 
 Before we commit our changes, we're going to add the generated code that we don't change (more on that later) to a
 `.gitignore` file:
