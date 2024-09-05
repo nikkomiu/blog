@@ -388,7 +388,7 @@ Now we should have `ent` set up for our app, the first schema defined, and datab
 
 {{< callout type=note >}}
 I don't get into it much in this guide, however, `ent` is technically a graph database adapter. Having ent designed to
-work with graph databases allows for some very intersting and complex graph traversals over our data to query for data
+work with graph databases allows for some very interesting and complex graph traversals over our data to query for data
 in an easy to use way.
 
 For more information on ent, take a look at [their documentation](https://entgo.io/docs/getting-started).
