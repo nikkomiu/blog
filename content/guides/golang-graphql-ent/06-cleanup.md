@@ -431,7 +431,7 @@ func Int(key string, defaultValue int) int {
 }
 ```
 
-### Using our Envornment Variable Package
+### Using our Environment Variable Package
 
 ```go {file="pkg/config/app.go"}
 func GetApp() App {
