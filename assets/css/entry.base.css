@@ -2,6 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "animate.css";
+
 @import "assets/css/hack";
 @import "assets/css/prose";
 @import "assets/css/callout";
@@ -14,7 +16,7 @@
 @import "assets/css/pagination";
 
 ::selection {
-  @apply bg-fuchsia-900 text-fuchsia-50;
+  @apply bg-fuchsia-900/50 text-fuchsia-200;
 }
 
 html {
@@ -37,6 +39,10 @@ body {
   font-feature-settings: "liga", "tnum", "zero", "ss01", "locl";
   font-variant-ligatures: contextual;
   -webkit-overflow-scrolling: touch;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 .breadcrumbs li::after {
@@ -101,4 +107,44 @@ body .gist .blob-code-inner {
 
 .giscus {
   @apply mt-6 mb-8;
+}
+
+.site-search-modal {
+  background-color: #000;
+  background-image: radial-gradient(
+      at 28% 13%,
+      hsla(296deg, 90%, 16%, 0.3) 0,
+      transparent 50%
+    ),
+    radial-gradient(at 72% 6%, hsla(261deg, 72%, 22%, 0.3) 0, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(263deg, 67%, 34%, 0.3) 0, transparent 50%),
+    radial-gradient(at 90% 88%, hsla(296deg, 63%, 28%, 0.3) 0, transparent 50%),
+    radial-gradient(at 10% 82%, hsla(242deg, 100%, 70%, 0.3) 0, transparent 50%);
+}
+
+@media (width >= 640px) {
+  .site-search-modal {
+    background-color: hsla(336deg, 83%, 17%, 0.1);
+    background-image: radial-gradient(
+        at 28% 13%,
+        hsla(296deg, 90%, 16%, 0.2) 0,
+        transparent 50%
+      ),
+      radial-gradient(at 72% 6%, hsla(261deg, 72%, 22%, 0.2) 0, transparent 50%),
+      radial-gradient(
+        at 80% 50%,
+        hsla(263deg, 67%, 34%, 0.2) 0,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 90% 88%,
+        hsla(296deg, 63%, 28%, 0.2) 0,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 10% 82%,
+        hsla(242deg, 100%, 70%, 0.2) 0,
+        transparent 50%
+      );
+  }
 }

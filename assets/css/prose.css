@@ -35,7 +35,7 @@
 .prose pre,
 .prose code,
 .prose kbd {
-  @apply text-fuchsia-400 bg-fuchsia-950 py-[0.15rem] px-[0.3rem] font-mono;
+  @apply text-fuchsia-400 bg-fuchsia-950/75 py-[0.15rem] px-[0.3rem] font-mono;
 }
 
 .prose pre code {

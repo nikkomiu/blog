@@ -1,5 +1,23 @@
+import { animate } from "./util";
+
 const menuSelector = ".mobile-menu";
 const dropdownSelector = ".mobile-menu-dropdown";
+
+async function showMenu(menu) {
+  const dropdown = menu.querySelector(dropdownSelector);
+  dropdown.classList.remove("hidden");
+  await animate(dropdownSelector, ["fadeInDown", "faster"]);
+}
+
+async function hideMenu(menu, animated = true) {
+  const dropdown = menu.querySelector(dropdownSelector);
+
+  if (animated) {
+    await animate(dropdownSelector, ["flipOutX", "faster"]);
+  }
+
+  dropdown.classList.add("hidden");
+}
 
 // Handle desktop menu
 export function loadMenu() {
@@ -7,10 +25,14 @@ export function loadMenu() {
     const trigger = menu.querySelector(".mobile-menu-trigger");
     const dropdown = menu.querySelector(dropdownSelector);
 
-    trigger.addEventListener("click", (e) => {
+    trigger.addEventListener("click", async (e) => {
       e.stopPropagation();
 
-      dropdown.classList.toggle("hidden");
+      if (dropdown.classList.contains("hidden")) {
+        showMenu(menu);
+      } else {
+        hideMenu(menu);
+      }
     });
 
     dropdown.addEventListener("click", (e) => e.stopPropagation());
@@ -21,7 +43,7 @@ export function loadMenu() {
     document.querySelectorAll(menuSelector).forEach((menu) => {
       const dropdown = menu.querySelector(dropdownSelector);
       if (!dropdown.classList.contains("hidden")) {
-        dropdown.classList.add("hidden");
+        hideMenu(menu);
       }
     });
   });
@@ -31,7 +53,7 @@ export function loadMenu() {
     document.querySelectorAll(menuSelector).forEach((menu) => {
       const dropdown = menu.querySelector(dropdownSelector);
       if (!dropdown.classList.contains("hidden")) {
-        dropdown.classList.add("hidden");
+        hideMenu(menu, false);
       }
     });
   });
