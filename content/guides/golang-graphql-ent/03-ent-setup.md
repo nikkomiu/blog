@@ -279,7 +279,7 @@ func runMigrate(cmd *cobra.Command, args []string) error {
 {{< callout type=note >}}
 Later, we will also remove all references to the `panic(err)` calls that are currently in our code so we can properly
 handle errors. Using `panic()` is generally not recommended in Go applications and instead we should return `error` from
-funcs that can create errors.
+functions that can create errors.
 {{</ callout >}}
 
 With this change if you get the help for the `migrate` command you'll see the new flag added:
