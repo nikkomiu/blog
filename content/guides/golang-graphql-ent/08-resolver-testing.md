@@ -55,12 +55,12 @@ func TestPing(t *testing.T) {
 
 Here, we are creating our method with a prefix of `Test` so Go will run this as a test method. When testing, we also
 need to pass a `*testing.T` struct into our func. The `*testing.T` is used to run sub-tests, setup testing environment,
-fail tests, etc. For now, we will just manually do our asssertions but later, we will refactor this to use an assertion
-library to reduce the amount of repetetive code.
+fail tests, etc. For now, we will just manually do our assertions but later, we will refactor this to use an assertion
+library to reduce the amount of repetitive code.
 
 Within our test method, we set our expected value (`pong`), initialize our resolver with a `nil` `*ent.Client`
 since for this test we don't rely on ent to resolve this, then create a context that will be canceled when we're done
-with this test (as a `context.Context` is the first parameter of all of our resoulvers). Then, we call the resolver that
+with this test (as a `context.Context` is the first parameter of all of our resolvers). Then, we call the resolver that
 we're trying to test. Finally, we assert that the values are matching what we're expecting. Since this resolver func is
 so simple, we only have one test case and don't have any error conditions to check.
 
@@ -89,7 +89,7 @@ go test ./gql/...
 The next set of tests that we can easily cover are the Note resolvers. These are the properties that exist on the Note
 struct that don't directly map to a database field (`NodeID`, `BodyMarkdown` and `BodyHTML`). Since these also don't
 rely on ent to resolve, we still won't need to set the `*ent.Client` when we create our resolver and even though there
-is an error condtition in our code for the `BodyHTML` resolver, I don't have an easy way to test it since all text
+is an error condition in our code for the `BodyHTML` resolver, I don't have an easy way to test it since all text
 should be valid Markdown.
 
 ```go {file="gql/note_test.go"}
@@ -332,7 +332,7 @@ now will yield an error like:
 cgo: C compiler "gcc" not found: exec: "gcc": executable file not found in $PATH
 ```
 
-To fix this error, we need to install our C compiler toolchian by modifying the following in the Dockerfile for the Dev
+To fix this error, we need to install our C compiler toolchain by modifying the following in the Dockerfile for the Dev
 Container:
 
 ```dockerfile {file=".devcontainer/Dockerfile",add_lines=6}
@@ -382,7 +382,7 @@ func ContextT(t *testing.T) context.Context {
 All we are doing here is moving the creation of our context with a cancel func into a method we can call from our tests.
 We are passing the `*testing.T` into this func so that when our test is done the `cancel` for our `context.Context` will
 be called for us. This way we don't have to worry about forgetting to cancel the context in our tests and it will
-simplify our test funcs.
+simplify our test functions.
 
 With this in place, we can update our tests to utilize our new `ContextT(*testing.T) context.Context` func. First,
 let's update the common tests:
@@ -511,7 +511,7 @@ Similar to how we implemented the `ContextT(*testing.T) context.Context` we are 
 into its own func that we can call from our tests. Again with this we will register a `Cleanup` func to close our
 database connection (and delete the database since we are using an in-memory SQLite database).
 
-Just update the `TestNode` func to use our new `EntT(*tesitng.T) *ent.Client`:
+Just update the `TestNode` func to use our new `EntT(*testing.T) *ent.Client`:
 
 ```go {file="gql/common_test.go",add_lines=3,rem_lines="4-5"}
 func TestNode(t *testing.T) {
