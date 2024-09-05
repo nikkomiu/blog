@@ -3,7 +3,7 @@ import { loadScript } from "./util";
 const pagefindUIID = "pagefind-ui-script";
 const searchSelector = ".site-search";
 
-const searchModalSelector = '.site-search-modal'
+const searchModalSelector = ".site-search-modal";
 
 function toggleSearch(e) {
   if (e.key === "Escape") {
@@ -28,10 +28,12 @@ function modelBackgroundClickHandler(event) {
 }
 
 function showModal() {
-  const modal = document.querySelector(searchModalSelector)
-  modal.classList.remove('hidden')
-  modal.addEventListener('click', modelBackgroundClickHandler)
-  document.querySelector('.site-search-close').addEventListener('click', hideModal)
+  const modal = document.querySelector(searchModalSelector);
+  modal.classList.remove("hidden");
+  modal.addEventListener("click", modelBackgroundClickHandler);
+  document
+    .querySelector(".site-search-close")
+    .addEventListener("click", hideModal);
 
   const searchElement = document.querySelector(
     `${searchSelector} input[type="text"]`
@@ -43,16 +45,18 @@ function showModal() {
 }
 
 function hideModal() {
-  document.querySelector('.site-search-close').removeEventListener('click', hideModal)
-  const modal = document.querySelector(searchModalSelector)
-  modal.classList.add('animate__fadeOut')
+  document
+    .querySelector(".site-search-close")
+    .removeEventListener("click", hideModal);
+  const modal = document.querySelector(searchModalSelector);
+  modal.classList.add("animate__fadeOut");
   const handler = () => {
-    modal.classList.add('hidden')
-    modal.classList.remove('animate__fadeOut')
-    modal.removeEventListener('animationend', handler)
-  }
+    modal.classList.add("hidden");
+    modal.classList.remove("animate__fadeOut");
+    modal.removeEventListener("animationend", handler);
+  };
 
-  modal.addEventListener('animationend', handler)
+  modal.addEventListener("animationend", handler);
 }
 
 function loadSearchFailed(err) {
@@ -69,10 +73,10 @@ function loadSearchFailed(err) {
 let backoff = 1000;
 
 export async function loadSearch() {
-  document.querySelectorAll('button.site-search-menu-toggle').forEach(ele => {
-    ele.addEventListener('click', showModal)
-    ele.classList.remove('hidden')
-  })
+  document.querySelectorAll("button.site-search-menu-toggle").forEach((ele) => {
+    ele.addEventListener("click", showModal);
+    ele.classList.remove("hidden");
+  });
 
   try {
     // Load search
