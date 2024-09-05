@@ -116,7 +116,7 @@ return the help when an error is returned. It is primarily used for when you val
 and return an error when what a user has requested is invalid (like a file that is missing or improperly formatted).
 {{</ callout >}}
 
-With our `runE()` func in place, let's update our `runAPI()` and `runMigration()` funcs to return an error when they
+With our `runE()` func in place, let's update our `runAPI()` and `runMigration()` functions to return an error when they
 fail instead of calling `panic()`.
 
 ```go {file="cmd/migrate.go"}
