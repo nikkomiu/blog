@@ -1,5 +1,4 @@
-import animate from "./animate";
-import { loadScript } from "./util";
+import { animate, loadScript } from "./util";
 
 const pagefindUIID = "pagefind-ui-script";
 const searchSelector = ".site-search";
@@ -31,6 +30,7 @@ function modelBackgroundClickHandler(event) {
 }
 
 function showModal() {
+  document.querySelector("body").classList.add("modal-open");
   document.querySelector(searchModalSelector).classList.remove("hidden");
   animate(searchModalSelector, "fadeIn");
 
@@ -46,6 +46,7 @@ function showModal() {
 async function hideModal() {
   await animate(searchModalSelector, ["fadeOut", "faster"]);
   document.querySelector(searchModalSelector).classList.add("hidden");
+  document.querySelector("body").classList.remove("modal-open");
 }
 
 function loadSearchFailed(err) {
@@ -77,7 +78,11 @@ export async function loadSearch() {
 
     // Enable search
     searchElement.innerHTML = "";
-    new PagefindUI({ element: searchSelector });
+    new PagefindUI({
+      element: searchSelector,
+      showEmptyFilters: false,
+      showImages: false,
+    });
 
     // Add search triggers
     document.addEventListener("keydown", toggleSearch);

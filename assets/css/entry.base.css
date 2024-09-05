@@ -41,6 +41,10 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 .breadcrumbs li::after {
   @apply ml-2 text-fuchsia-900;
 
