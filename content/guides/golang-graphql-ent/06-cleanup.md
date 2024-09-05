@@ -240,7 +240,7 @@ First, we're creating an interface (remember that interfaces in go should end in
 interface and extend it with an `ExitCode() int` method. So any struct that implements both `error` and `ExitCode() int`
 can now be considered an `ExitCoder`.
 
-Then, we're just creating the struct that implements this interface (with a static compliation check that we do actually
+Then, we're just creating the struct that implements this interface (with a static compilation check that we do actually
 properly implement this interface). We also include the `Unwrap() error` method so the error can be unwrapped using the
 `errors.Unwrap() error` method that is in the Go `errors` package.
 
