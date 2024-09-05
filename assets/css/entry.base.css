@@ -113,13 +113,13 @@ body .gist .blob-code-inner {
   background-color: #000;
   background-image: radial-gradient(
       at 28% 13%,
-      hsla(296deg, 90%, 16%, 0.2) 0,
+      hsla(296deg, 90%, 16%, 0.3) 0,
       transparent 50%
     ),
-    radial-gradient(at 72% 6%, hsla(261deg, 72%, 22%, 0.2) 0, transparent 50%),
-    radial-gradient(at 80% 50%, hsla(263deg, 67%, 34%, 0.2) 0, transparent 50%),
-    radial-gradient(at 90% 88%, hsla(296deg, 63%, 28%, 0.2) 0, transparent 50%),
-    radial-gradient(at 10% 82%, hsla(242deg, 100%, 70%, 0.2) 0, transparent 50%);
+    radial-gradient(at 72% 6%, hsla(261deg, 72%, 22%, 0.3) 0, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(263deg, 67%, 34%, 0.3) 0, transparent 50%),
+    radial-gradient(at 90% 88%, hsla(296deg, 63%, 28%, 0.3) 0, transparent 50%),
+    radial-gradient(at 10% 82%, hsla(242deg, 100%, 70%, 0.3) 0, transparent 50%);
 }
 
 @media (width >= 640px) {
