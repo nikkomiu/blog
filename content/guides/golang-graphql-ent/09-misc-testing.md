@@ -19,7 +19,7 @@ current simplicity of our `main.go` I'm not too worried about testing it using t
 ## pkg
 
 Let's look first at our `pkg` tests. These are going to be pretty simple and after we completed the resolvers there are
-only a copule of new things that we need to cover in order to complete these tests. Let's build them up starting from
+only a couple of new things that we need to cover in order to complete these tests. Let's build them up starting from
 the `env` package.
 
 ### Env
@@ -655,7 +655,7 @@ func TestRootCmd(t *testing.T) {
 
 You may have noticed that on these `cmd` tests instead of using the `package cmd_test` we used `package cmd`. This is
 because when you test your package with the `_test` suffix we are using a different "testing" package. Because of this,
-we don't have access to any of the private constants, variables, funcs, or struct methods defined within the package
+we don't have access to any of the private constants, variables, functions, or struct methods defined within the package
 that we are testing. I am an advocate of testing our public API via the `_test` package. This is because we are limited
 to what any consumer of our package has to work with and we can't test things that can't be reached by the public API.
 
