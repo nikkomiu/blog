@@ -1,9 +1,12 @@
+import animate from "./animate";
 import { loadScript } from "./util";
 
 const pagefindUIID = "pagefind-ui-script";
 const searchSelector = ".site-search";
 
 const searchModalSelector = ".site-search-modal";
+
+let backoff = 1000;
 
 function toggleSearch(e) {
   if (e.key === "Escape") {
@@ -28,12 +31,8 @@ function modelBackgroundClickHandler(event) {
 }
 
 function showModal() {
-  const modal = document.querySelector(searchModalSelector);
-  modal.classList.remove("hidden");
-  modal.addEventListener("click", modelBackgroundClickHandler);
-  document
-    .querySelector(".site-search-close")
-    .addEventListener("click", hideModal);
+  document.querySelector(searchModalSelector).classList.remove("hidden");
+  animate(searchModalSelector, "fadeIn");
 
   const searchElement = document.querySelector(
     `${searchSelector} input[type="text"]`
@@ -44,19 +43,9 @@ function showModal() {
   }
 }
 
-function hideModal() {
-  document
-    .querySelector(".site-search-close")
-    .removeEventListener("click", hideModal);
-  const modal = document.querySelector(searchModalSelector);
-  modal.classList.add("animate__fadeOut");
-  const handler = () => {
-    modal.classList.add("hidden");
-    modal.classList.remove("animate__fadeOut");
-    modal.removeEventListener("animationend", handler);
-  };
-
-  modal.addEventListener("animationend", handler);
+async function hideModal() {
+  await animate(searchModalSelector, ["fadeOut", "faster"]);
+  document.querySelector(searchModalSelector).classList.add("hidden");
 }
 
 function loadSearchFailed(err) {
@@ -69,8 +58,6 @@ function loadSearchFailed(err) {
     </div>
   `;
 }
-
-let backoff = 1000;
 
 export async function loadSearch() {
   document.querySelectorAll("button.site-search-menu-toggle").forEach((ele) => {
@@ -94,6 +81,12 @@ export async function loadSearch() {
 
     // Add search triggers
     document.addEventListener("keydown", toggleSearch);
+    document
+      .querySelector(searchModalSelector)
+      .addEventListener("click", modelBackgroundClickHandler);
+    document
+      .querySelector(".site-search-close")
+      .addEventListener("click", hideModal);
   } catch (err) {
     loadSearchFailed(err);
     backoff *= 3;
