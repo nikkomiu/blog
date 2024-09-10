@@ -335,10 +335,10 @@ func (r *noteResolver) NodeID(ctx context.Context, obj *ent.Note) (string, error
 }
 ```
 
-What we are doing is taking the table name (notes) splitting with a `:` and the ID field of the Note then base64
-encoding the value (so it doesn't have conflicts from special characters). For security reasons, you can use something
-other than the table name. However, for this case we'll just leave it as the table name. You will see when we add the
-Noder method that you can set the first part to anything you want as long as you resolve it in the noder.
+What we are doing is taking the table name (_notes_), joining it with a `:` and the ID field of the Note then base64
+encoding the value (so there aren't encoding issues caused by the `:` in the NodeID). For security reasons, you can use
+something other than the table name. However, for this case we'll just leave it as the table name. You will see when we
+add the Noder method that you can set the first part to anything you want as long as you resolve it in the noder.
 
 {{< callout type=note >}}
 You can also create an extension to `ent` that will automatically generate a NodeID property on the model that handles
