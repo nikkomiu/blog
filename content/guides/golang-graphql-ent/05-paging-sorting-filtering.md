@@ -63,9 +63,9 @@ type PageInfo {
 }
 ```
 
-You can put these anywhere in the schema file. However, I generally group my `scalar`s together after any `directive`s
-and before any `interface`s or `type`s. Also, the reason I'm deciding to put these in the common schema instead of the
-note schema is these types are generic and can be used by any schema.
+You can put these anywhere in the schema file. However, I generally group my `scalar`s together after any `@directive`s
+(we don't currently have any in this project) and before any `interface`s or `type`s. Also, the reason I'm deciding to
+put these in the common schema instead of the note schema is these types are generic and can be used by any schema.
 
 With the schema files updated, we can regenerate our code:
 
@@ -73,8 +73,9 @@ With the schema files updated, we can regenerate our code:
 go generate ./...
 ```
 
-This time you will probably get an error within the `gql/note.resolvers.go` file because there is a compilation error.
-We can ignore this error since it's directly related to the change in response of our `notes` resolver.
+This time you will probably get an error within the `gql/note.resolvers.go` file when running `go generate` because
+there is a compilation error. We can ignore this error since it's directly related to the change in response of our
+`notes` resolver.
 
 Let's update the resolver to fix the errors:
 
