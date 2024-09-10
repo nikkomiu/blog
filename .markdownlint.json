@@ -1,5 +1,5 @@
 {
   "default": true,
   "MD010": { "ignore_code_languages": ["makefile"] },
-  "MD013": { "line_length": 120, "tables": false, "code_blocks": false }
+  "MD013": false
 }

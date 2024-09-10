@@ -8,6 +8,9 @@ table:hover .copy-button {
 
 .highlight .file-tab {
   @apply absolute left-0 select-none text-sm border border-solid border-fuchsia-800 bg-fuchsia-950 text-fuchsia-400 px-2 top-[-1.5rem];
+
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 .table-wrapper:hover > .copy-button {

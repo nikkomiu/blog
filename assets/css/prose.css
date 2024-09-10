@@ -133,7 +133,7 @@
 
 .prose .highlight pre,
 .prose .highlight code {
-  @apply text-fuchsia-500;
+  @apply text-fuchsia-500 bg-black;
 }
 
 .prose .highlight > div {
@@ -195,5 +195,9 @@
 }
 
 .prose .mermaid[data-processed="true"] {
-  @apply block;
+  @apply block w-full;
+}
+
+.prose .mermaid[data-processed="true"] svg {
+  @apply mx-auto;
 }

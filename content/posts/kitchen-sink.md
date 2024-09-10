@@ -19,6 +19,8 @@ semper risus in hendrerit gravida rutrum.
 
 <!--more-->
 
+{{< commit-ref repo="nikkomiu/blog" sha="cbe523c92fb35e335f4eea0fd2696f4c76bb145f" />}}
+
 Ac ut consequat semper viverra nam. Hac habitasse platea dictumst vestibulum
 rhoncus. Amet porttitor eget dolor morbi non. Justo eget magna fermentum
 iaculis eu non. Id eu nisl nunc mi ipsum faucibus vitae aliquet nec. Aliquam
@@ -63,7 +65,7 @@ A set of unordered items:
 
 Just some plain ol' C:
 
-```c
+```c {hl_lines="2"}
 void main(int argc, char *argv[]) {
   printf("Hello, World!\n");
 }
