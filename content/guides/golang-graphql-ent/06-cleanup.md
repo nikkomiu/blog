@@ -262,7 +262,7 @@ the migrate command:
 
   entClient, err := ent.Open(cfg.Database.Driver, cfg.Database.URL)
   if err != nil {
-    return
+    return errors.NewExitCode(err, 3)
   }
   defer entClient.Close()
 ```
@@ -275,7 +275,7 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
 
   entClient, err := ent.Open(cfg.Database.Driver, cfg.Database.URL)
   if err != nil {
-    return
+    return errors.NewExitCode(err, 3)
   }
   ctx := ent.NewContext(cmd.Context(), entClient)
   defer entClient.Close()
@@ -297,6 +297,8 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
   return http.ListenAndServe(cfg.Server.Addr(), router)
 }
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="f678a2a82d1d15c8b077c60abaacddbb0a79639f" />}}
 
 ### Environment Variable Package
 
@@ -348,6 +350,8 @@ func GetApp() App {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="b0c29dba5142d6e7e775a424f6eb79749b4c1a27" />}}
+
 ### App Config Singleton
 
 With everything in place it would be nice if every time there was a call to `GetApp() App` it didn't re-fetch the
@@ -384,6 +388,8 @@ The `GetApp() App` func has been refactored to check the package-level variable 
 `nil`, we load the app config using the `loadApp()` func. Either way we will return a **copy** of the app config at the
 end.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="9a75e2e5263657985824e053e59e760b1d9bbc11" />}}
+
 ## OS Signal Handling
 
 Now I want to respond to OS signals where if a signal is passed to the running application (like `SIGHUP`) it will be
@@ -402,7 +408,9 @@ import (
   "time"
 )
 
-func ListenAndServe(ctx context.Context, server *http.Server, shutdownTimeout time.Duration) error {
+func ListenAndServe(ctx context.Context, addr string, handler http.Handler, shutdownTimeout time.Duration) error {
+  server := &http.Server{Addr: addr, Handler: handler}
+
   errChan := make(chan error)
   go func() {
     if err := server.ListenAndServe(); err != nil {
@@ -428,8 +436,10 @@ func ListenAndServe(ctx context.Context, server *http.Server, shutdownTimeout ti
 Then we can simply use it by updating our API sub-command:
 
 ```go {file="cmd/api.go"}
-return sig.ListenAndServe(ctx, &http.Server{Addr: cfg.Server.Addr(), Handler: router}, 3*time.Second)
+return sig.ListenAndServe(ctx, cfg.Server.Addr(), router, 3*time.Second)
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="aad03f7f10b7914b8ab4abdbdf3d7f50a3d206f1" />}}
 
 ### (Optional) Load Shutdown Timeout from Config
 
@@ -485,3 +495,5 @@ return sig.ListenAndServe(ctx, &http.Server{Addr: cfg.Server.Addr(), Handler: ro
 ```
 
 {{</ section >}}
+
+{{< commit-ref repo="nikkomiu/gentql" sha="1ee540a88b95f64fbac906a791f85fe287374762" />}}
