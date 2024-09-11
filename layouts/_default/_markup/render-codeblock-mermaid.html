@@ -1,5 +1,5 @@
 {{ .Page.Store.Set "hasMermaid" true }}
-<div class="flex">
+<div class="flex flex-col">
   <pre class="mermaid">
     {{- .Inner | safeHTML -}}
   </pre>

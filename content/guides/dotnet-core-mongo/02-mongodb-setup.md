@@ -12,6 +12,8 @@ Now that we have our project set up, we can start integrating MongoDB into our d
 controller to use it. We will also cover some built-in functionality of .NET that will make our lives a bit easier with
 configuration of the database.
 
+<!--more-->
+
 At a high level, this is what our Entity Relationship Diagram is going to look like:
 
 ```mermaid
@@ -27,6 +29,15 @@ erDiagram
     string name
     string description
     double value
+    string serialNumber
+    string notes
+  }
+
+  Item ||--|{ Component : components
+
+  Component {
+    string name
+    string description
     string serialNumber
     string notes
   }
