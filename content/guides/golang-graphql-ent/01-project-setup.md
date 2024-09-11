@@ -47,10 +47,12 @@ set up my remote, as well as commit and push my initial code.
 git init .
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="202d14dd3f05a8c643665f82fca49cd061ebd831" />}}
+
 ## Create the Root Command
 
 Lets, start by creating `cmd/cmd.go` where we will define the root level command for the app.
-This app will have multiple subcommands, so to make our lives a bit easier I'm going to use the
+This app will have multiple sub-commands, so to make our lives a bit easier I'm going to use the
 [cobra](https://github.com/spf13/cobra) package to manage commands, flags, autocomplete, help, etc.
 
 ```go {file="cmd/cmd.go"}
@@ -116,7 +118,7 @@ func runAPI(cmd *cobra.Command, args []string) error {
 
 In this we created an `apiCmd` where the **Use** property is the name of the command you'll run in the CLI
 and **Run** is the method we will use to execute the command if it's called.
-Then in the `init()` method, we register the `apiCmd` with the `rootCmd` as a subcommand.
+Then in the `init()` method, we register the `apiCmd` with the `rootCmd` as a sub-command.
 Finally, we define the `runAPI() error` method where, for now, we will just print `hello api`.
 
 ## Initial main.go
@@ -149,10 +151,12 @@ We will end up coming back to this file to expand on why we create and pass the 
 Until that time, basically we just create a new `context.Context` passing it into our `cmd.Execute(context.Context) error`
 method and handle any error that comes back by printing it out to the console and returning with a status of 1.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="903b150ed23eb6f9f471f495aa2eddb4c1654195" />}}
+
 ## Test our CLI
 
-Since we are using Cobra, we get some useful things out of the box. We can run the app with our `api` subcommand now to
-see the `fmt.Println()` that we put above since we registered this subcommand with the `rootCmd`:
+Since we are using Cobra, we get some useful things out of the box. We can run the app with our `api` sub-command now to
+see the `fmt.Println()` that we put above since we registered this sub-command with the `rootCmd`:
 
 ```bash
 go run . api
@@ -233,6 +237,8 @@ Flags:
 
 Use "gentql [command] --help" for more information about a command.
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="a296fe4980a1ad52be4aa5809a82e1c10b27008c" />}}
 
 ## Conclusion
 

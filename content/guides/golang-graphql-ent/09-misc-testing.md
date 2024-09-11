@@ -768,7 +768,7 @@ func init() {
 ```
 
 Take note that we removed the `init()` calls where we add the `apiCmd` to the `rootCmd`. Because we're now building our
-commands in the new `newRootCmd()` func, we need to add our subcommands in there too:
+commands in the new `newRootCmd()` func, we need to add our sub-commands in there too:
 
 ```go {file="cmd/cmd.go",add_lines="9-13"}
 func newRootCmd() *cobra.Command {
