@@ -18,8 +18,8 @@ current simplicity of our `main.go` I'm not too worried about testing it using t
 
 ## pkg
 
-Let's look first at our `pkg` tests. These are going to be pretty simple and after we completed the resolvers there are
-only a copule of new things that we need to cover in order to complete these tests. Let's build them up starting from
+Let's look first at our `pkg` tests. These are going to be pretty simple, and after we completed the resolvers there are
+only a couple of new things that we need to cover in order to complete these tests. Let's build them up starting from
 the `env` package.
 
 ### Env
@@ -130,6 +130,8 @@ func TestDuration(t *testing.T) {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="d158f4ce9ce9c71748f56da4c9704e8b25c0ae61" />}}
+
 ### Config
 
 Building on the `env` package, we can now test our `config` package. We only have a few test cases for the config
@@ -139,7 +141,7 @@ package:
 - initial loading of the config (**explicit**)
 - getting the existing config
 
-The reason I'm splitting these up is to ensure that our _singleton_ is working as expected and we aren't trying to
+The reason I'm splitting these up is to ensure that our _singleton_ is working as expected, and we aren't trying to
 reload the config from environment variables on every `GetApp()` call.
 
 ```go {file="pkg/config/app_test.go"}
@@ -237,7 +239,7 @@ func testAppExisting(t *testing.T) {
 
 If you try to run the tests for this, you'll see that it fails. Our testing concept is sound, however, because we rely
 on a global variable that can't be unset (because of our implementation), we need to refactor our code to make our
-`GetApp()` func able to be tested:
+`GetApp()` func testable:
 
 ```go
 package config
@@ -299,7 +301,7 @@ func WithApp(ctx context.Context) (context.Context, App) {
     },
   }
 
-return context.WithValue(ctx, appContextKey, cfg), *cfg
+  return context.WithValue(ctx, appContextKey, cfg), *cfg
 }
 
 func AppFromContext(ctx context.Context) App {
@@ -313,7 +315,7 @@ func AppFromContext(ctx context.Context) App {
 ```
 
 We have fixed the issue by putting our "global" variable into our `context.Context`. Now we still maintain the singleton
-of our app config but we get testability at the same time. Just go back and update the `GetApp()` calls to pass our app
+of our app config, but we get testability at the same time. Just go back and update the `GetApp()` calls to pass our app
 context for the `cmd/api.go`:
 
 ```go {file="cmd/api.go",add_lines="1 8",rem_lines="2 9"}
@@ -391,7 +393,7 @@ func runSeed(cmd *cobra.Command, args []string) (err error) {
 }
 ```
 
-Now that our `GetApp()` is updated and our app has been fixed (and should be working again), we can refactor our tests
+Now that our `GetApp()` is updated, and our app has been fixed (and should be working again), we can refactor our tests,
 so they will pass now:
 
 ```go {file="pkg/config/app_test.go"}
@@ -493,6 +495,8 @@ func testAppExisting(t *testing.T) {
 This should take care of that pesky global variable that we were using before and make our code testable. Also take note
 that, because there are only two test cases and both are unique, I'm writing two tests **without** using a testing table.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="225491cd91cd8042c79bf9b9fbc9867fbe558ae3" />}}
+
 ### Errors
 
 For the errors package, we currently only have one custom error type. We can easily test this error by just calling the
@@ -538,6 +542,8 @@ func TestExitCode(t *testing.T) {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="5a4703fa3648306b2efb95d9d488c4499c85e800" />}}
+
 ### Sig
 
 For the sig tests, we have two branches of logic within our
@@ -560,23 +566,21 @@ import (
 
 func TestListenAndServe(t *testing.T) {
   tt := []struct {
-    name            string
-    server          *http.Server
+    name    string
+    addr    string
+    handler http.Handler
+
     shutdownTimeout time.Duration
 
     wantErr bool
   }{
     {
       name: "base",
-      server: &http.Server{
-        Addr: ":9990",
-      },
+      addr: ":9990",
     },
     {
       name: "start error",
-      server: &http.Server{
-        Addr: ":no_port",
-      },
+      addr: ":no_port",
 
       wantErr: true,
     },
@@ -587,7 +591,7 @@ func TestListenAndServe(t *testing.T) {
       ctx, cancel := context.WithTimeout(context.Background(), time.Second)
       defer cancel()
 
-      err := sig.ListenAndServe(ctx, tc.server, tc.shutdownTimeout)
+      err := sig.ListenAndServe(ctx, tc.addr, tc.handler, tc.shutdownTimeout)
 
       assert.Equal(t, tc.wantErr, err != nil, err)
     })
@@ -603,6 +607,8 @@ However, I didn't do this because it seems like more of an implementation detail
 You may also want to test the graceful shutdown of the server. However, because this test condition can be complicated
 to test fully and properly, I'm going to omit this as well.
 {{</ callout >}}
+
+{{< commit-ref repo="nikkomiu/gentql" sha="5ca3ffcba6f110f81b1ae57ee5cdcb8fe3ebe45a" />}}
 
 ## cmd
 
@@ -657,12 +663,12 @@ You may have noticed that on these `cmd` tests instead of using the `package cmd
 because when you test your package with the `_test` suffix we are using a different "testing" package. Because of this,
 we don't have access to any of the private constants, variables, funcs, or struct methods defined within the package
 that we are testing. I am an advocate of testing our public API via the `_test` package. This is because we are limited
-to what any consumer of our package has to work with and we can't test things that can't be reached by the public API.
+to what any consumer of our package has to work with, and we can't test things that can't be reached by the public API.
 
 We happen to have a couple of issues within our `cmd` package right now. The first one is that we can't easily pass the
 arguments, `stdout`, or `stderr` into our cmd. The second issue is that our `rootCmd`, `apiCmd`, `migrateCmd`, and
 `seedCmd` are all defined as global variables within our package. This will cause issues with testing our API command
-since the `*cobra.Command{}` is updating "state" variables within it when we call it. However, we call it multiple times
+since the `*cobra.Command{}` is updating "state" variables within it when we call it. However, we call it multiple times,
 and thus we need to be able to keep instances of our `*cobra.Command{}` separate. So let's update our `Execute()` to
 initialize our commands:
 
@@ -836,7 +842,7 @@ func (o WithArgsOption) CmdOpt(cmd *cobra.Command) {
 
 {{< callout type=note >}}
 We don't need to add this `Option` type and the options. I'm using them here both to allow for the **optional**
-expansion of our `Execute()` func as well as showing you how to create options. With this in place, we can always add
+expansion of our `Execute()` func and showing you how to create options. With this in place, we can always add
 extra options since this is a simple, yet extensible, way to "modify" our `rootCmd`.
 {{</ callout >}}
 
@@ -875,7 +881,7 @@ func executeWithArgs(ctx context.Context, args []string) (stdout string, stderr 
 {{< callout type=note >}}
 Now that we have these options added (and public) to the `cmd` package, we can now change our testing project to use the
 `_test` suffix. If you remember, the main reason we weren't able to do this to start was because we didn't have access
-to the `rootCmd` from outisde the package. However, with these `Option`s in place, we can now access and utilize all of
+to the `rootCmd` from outside the package. However, with these `Option`s in place, we can now access and utilize all of
 this without needing our tests **within** our `cmd` package. I'm going to switch mine over, but you don't have to if you
 don't want.
 {{</ callout >}}
@@ -969,12 +975,12 @@ func testAPICmdRoutes(t *testing.T) {
 ```
 
 If you remember from before when we were setting up our testing environment, we currently use SQLite for our testing
-database but we are using PostgreSQL for our development and production database. Because of this disjointed testing,
-I'm not going to test the migrate and seed commands for now. These can be tested easily by creating new databases for
-testing (I typically create a unique database for each test and delete it when I'm done) but this section is quite long
-and complicated right now. This is especially true if you haven't dealt with some of these testing concepts (especially
-in Go) before this. In the future, I may add another guide or post on how to set up testing using PostgreSQL as well,
-or instead of, SQLite.
+database, but we are using PostgreSQL for our development and production database. Because of this disjointed testing,
+I'm not going to test the `migrate` and `seed` commands for now. These can be tested easily by creating new databases
+for testing (I typically create a unique database for each test and delete it when I'm done) but this section is quite
+long and complicated right now. This is especially true if you haven't dealt with some of these testing concepts
+(especially in Go) before this. In the future, I may add another guide or post on how to set up testing using PostgreSQL
+as well, or instead of, SQLite.
 
 Ok, this was a lot of refactoring and a lot of effort to test our `cmd` package. However, this is the central "core" of
 our application so, in my opinion, it's best to get the testing of this area of the application right.
@@ -989,7 +995,7 @@ go test -cvoer ./...
 
 {{< callout type=note >}}
 This will generate code coverage during testing and give the percentage results in the output. There are other output
-types to get code coverage from our application but I'm not going to cover those here.
+types to get code coverage from our application, but I'm not going to cover those here.
 {{</ callout >}}
 
 If you notice from the output of the test coverage, we don't have good (if any) coverage within our generated code.
