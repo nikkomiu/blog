@@ -2,7 +2,6 @@
 title: Add Remaining Tests
 author: Nikko Miu
 toc: true
-draft: true
 weight: 9
 tags:
   - golang
@@ -800,7 +799,7 @@ look at the `executeWithArgs()` func in `cmd_test.go`, you'll notice that we can
 `SetErr()` methods on the `rootCmd` since we don't have a `rootCmd` anymore on the global scope. So, let's add an
 `Option` type in a new `cmd/opt.go` file with the options we need:
 
-```go {file="cmd/cmd.go",add_lines="1"}
+```go {file="cmd/option.go"}
 package cmd
 
 import (
@@ -985,12 +984,14 @@ as well, or instead of, SQLite.
 Ok, this was a lot of refactoring and a lot of effort to test our `cmd` package. However, this is the central "core" of
 our application so, in my opinion, it's best to get the testing of this area of the application right.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="4142fe40978540674ad1fa356570d0d7540f87db" />}}
+
 ## All Together
 
 We can now run the tests for the entire application with code coverage:
 
 ```bash
-go test -cvoer ./...
+go test -cover ./...
 ```
 
 {{< callout type=note >}}
