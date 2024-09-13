@@ -11,7 +11,9 @@ tags:
 ## Pre-Installation
 
 My machine is configured (during installation) to have Secure Boot disabled. After completing the installation, I will
-re-enable Secure Boot in the [Secure Boot section](../1-secure-boot.md) of this guide.
+re-enable Secure Boot in the [Secure Boot section](../1-secure-boot) of this guide.
+
+<!--more-->
 
 {{< callout type=warning title=Important >}}
 If you already have an EFI partition on your machine and don't want to use it for the EFI of your
