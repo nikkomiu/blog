@@ -54,8 +54,8 @@ func NewServer(ctx context.Context) *handler.Server {
 }
 ```
 
-I've split up some of the code into multiple lines but otherwise we are updating the `NewResolver()` method to take
-the `*ent.Client` in as a parameter and set it on the `Resolver{}` to the new property.
+I've split up some code into multiple lines, but otherwise we are updating the `NewResolver()` method to take the
+`*ent.Client` in as a parameter and set it on the `Resolver{}` to the new property.
 
 With that in place loading the `*ent.Client` is easy by just calling the `FromContext(context.Context)`
 method within the ent package that was generated.
@@ -63,12 +63,14 @@ method within the ent package that was generated.
 {{< callout type=note >}}
 You may be wondering why we have a `NewResolver()` and a `NewServer()` method where both are exported. You may also be
 wondering why we pass the `context.Context` into the `NewServer()` but not `NewResolver()`. In both of these cases, we
-are settingare doing it this way for testing.
+are doing it this way for testing.
 
 When we write tests for the GraphQL Resolvers, we will need to use the `NewResolver()` method so we can call the
 resolver methods. It's also easier for testing if we pass the `*ent.Client` instead of the `context.Context` since it's
 less boilerplate in testing.
 {{</ callout >}}
+
+{{< commit-ref repo="nikkomiu/gentql" sha="19403edbbaf80b490094cfee7c5bcccf414c3e16" />}}
 
 ## Add the Note GraphQL Schema
 
@@ -115,7 +117,7 @@ We have also added four methods:
 - Delete - `deleteNote(nodeId: ID!): Boolean!`
 
 With this, we will be generating our CRUD endpoints to create, read, update, and delete our Notes. However, you may
-notice that we currently don't have a way to get a single Note instance and we can only list them. This will be
+notice that we currently don't have a way to get a single Note instance, and we can only list them. This will be
 addressed in a little bit when we add the `node(nodeId: ID!): Node` Query method.
 
 Since we are using `Time` for the `createdAt` and `updatedAt` fields, we need to also add the `Time` type. Since this is
@@ -133,10 +135,10 @@ Now that we have updated the GraphQL schema files, we can regenerate the methods
 go generate ./...
 ```
 
-As long as it works, you should now have a new `gql/note.resolvers.go` file with a bunch of methods that we need to fill
+As long as it works, you should now have a new `gql/note.go` file with a bunch of methods that we need to fill
 out. First up, we're going to look at this method:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 func (r *queryResolver) Notes(ctx context.Context) ([]*model.Note, error) {
   panic(fmt.Errorf("not implemented: Notes - notes"))
 }
@@ -146,6 +148,8 @@ The `Notes(context.Context) ([]*model.Note, error)` method allows us to list Not
 this currently is under the `gql/model` package and isn't referencing our `ent` Note model. It would be nice if we could
 tell `gqlgen` to automatically use the `ent` models instead of creating new ones when possible. That's what we're going
 to fix next.
+
+{{< commit-ref repo="nikkomiu/gentql" sha="5b3fd4f2df435e83be34380e2793db87a3c29183" />}}
 
 ## Autobind Ent Models
 
@@ -157,7 +161,7 @@ autobind:
   - github.com/nikkomiu/gentql/ent
 ```
 
-This change will tell `gqlgen` to to use all models within `ent` instead of generating a new model where possible.
+This change will tell `gqlgen` to use all models within `ent` instead of generating a new model where possible.
 
 Regenerate your code:
 
@@ -169,18 +173,20 @@ If all goes well, you should now see that the `Notes(context.Context) ([]*ent.No
 model in the return instead of a `gqlgen` model now. With that, we can update this to resolve all by changing the
 implementation to:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 func (r *queryResolver) Notes(ctx context.Context) ([]*ent.Note, error) {
   return r.ent.Note.Query().All(ctx)
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="c41b8107ec25e372ed66ce6167f6352f148e7e47" />}}
+
 ## Create Note Resolver
 
 So far we haven't been able to see our app working end-to-end with GraphQL and ent. Let's change that now by
-implementing the the `CreateNote()` resolver:
+implementing the `CreateNote()` resolver:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 func (r *mutationResolver) CreateNote(ctx context.Context, input model.NoteInput) (*ent.Note, error) {
   return r.ent.Note.Create().
     SetTitle(input.Title).
@@ -217,6 +223,8 @@ You should get back a response like:
   }
 }
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="dd1af94c71c2af142699ef40d33be70d412383a0" />}}
 
 ## Property Resolvers
 
@@ -265,7 +273,7 @@ Since we didn't expose the `body` field to the GraphQL schema it won't be includ
 three fields that do not resolve within the `ent` model for Note. Because of this, those fields have been changed to
 resolver methods. Let's update the markdown resolver to just return the body (since that's how we'll store the body):
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 // BodyMarkdown is the resolver for the bodyMarkdown field.
 func (r *noteResolver) BodyMarkdown(ctx context.Context, obj *ent.Note) (string, error) {
   return obj.Body, nil
@@ -275,7 +283,7 @@ func (r *noteResolver) BodyMarkdown(ctx context.Context, obj *ent.Note) (string,
 Now for the HTML one, we want to have a Markdown parser (in this case [Goldmark](https://github.com/yuin/goldmark))
 convert the Markdown into HTML:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 // BodyHTML is the resolver for the bodyHtml field.
 func (r *noteResolver) BodyHTML(ctx context.Context, obj *ent.Note) (string, error) {
   var buf bytes.Buffer
@@ -322,13 +330,15 @@ We should now get back the expected body data for our record this time:
 If you stop and think about it, this is a feature of GraphQL (and `gqlgen`) that is very powerful. We have this method
 that will convert our Markdown into HTML _only if_ we ask for the HTML from the server in our GraphQL request.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="781f974c0005a37ed84003073477c344b495109e" />}}
+
 ## Resolve the Node ID
 
 We have one more field for our GraphQL model that exists that doesn't exist on the ent model (the `nodeId` property).
 This property is going to take a bit more effort to get implemented since this field is the `ID` field for the Note.
 Within GraphQL the `ID` field should be globally unique. To get this done, we are going to add the NodeID resolver:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 // NodeID is the resolver for the nodeId field.
 func (r *noteResolver) NodeID(ctx context.Context, obj *ent.Note) (string, error) {
   return base64.RawURLEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%d", note.Table, obj.ID))), nil
@@ -354,7 +364,7 @@ method. It may seem weird at first, but bear with us because this is a feature o
 Let's start with adding the GraphQL query resolver for it in `gql/schema/common.graphql`. When you're done the common
 schema should look like:
 
-```graphql {file="gql/schema/common.graphql"}
+```graphql {file="gql/schema/common.graphql",add_lines="3-5 9"}
 scalar Time
 
 interface Node {
@@ -393,10 +403,10 @@ As always when we change the GraphQL schema files and/or the `gqlgen.yml`, let's
 go generate ./...
 ```
 
-You should now see the new `Node(context.Context) (ent.Noder, error)` method in the `gql/common.resolvers.go`. Let's
+You should now see the new `Node(context.Context) (ent.Noder, error)` method in the `gql/common.go`. Let's
 implement this method:
 
-```go {file="gql/common.resolvers.go"}
+```go {file="gql/common.go"}
 // Node is the resolver for the node field.
 func (r *queryResolver) Node(ctx context.Context, nodeID string) (ent.Noder, error) {
   rawNodeID, err := base64.RawURLEncoding.DecodeString(nodeID)
@@ -438,14 +448,16 @@ query {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="4c7366e2752aaa7c0c790a57647475848b4d8503" />}}
+
 ## Add Remaining CRUD Resolvers
 
 We now have the ability to create a note, get a note by Node ID using the `node()` resolver, and listing all Notes.
 Let's finish up by adding the update and delete methods to round out our CRUD operations. Open the
-`gql/note.resolvers.go` and implement the `UpdateNote(context.Context, int, model.NoteInput)` and
+`gql/note.go` and implement the `UpdateNote(context.Context, int, model.NoteInput)` and
 `DeleteNote(context.Context, int)` methods like this:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 // UpdateNote is the resolver for the updateNote field.
 func (r *mutationResolver) UpdateNote(ctx context.Context, id int, input model.NoteInput) (*ent.Note, error) {
   return r.ent.Note.UpdateOneID(id).
@@ -472,9 +484,11 @@ func (r *mutationResolver) DeleteNote(ctx context.Context, id int) (bool, error)
 The `UpdateNote(context.Context, int, model.NoteInput)` method is pretty straightforward and very similar to the
 `CreateNote(context.Context, model.NoteInput)` method except that we are updating instead of creating.
 
-The `DeleteNote(context.Context, int)` looks a bit more complex but it is still pretty simple. We try to delete it and
+The `DeleteNote(context.Context, int)` looks a bit more complex, but it is still pretty simple. We try to delete it and
 if it doesn't exist we return false with no error, if there's an error we return false with the error, otherwise we
-return true and no error. This way we can determine if the delete is ok and it was actually performed.
+return true and no error. This way we can determine if the delete operation is ok, and it was actually performed.
+
+{{< commit-ref repo="nikkomiu/gentql" sha="f45ad5ff41a8d90d7c077b46d087b9e804eb7270" />}}
 
 ## Conclusion
 

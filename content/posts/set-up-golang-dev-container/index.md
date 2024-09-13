@@ -74,7 +74,7 @@ directory and clone into a Dev Container volume.
 
 Here is the `.devcontainer/Dockerfile` that we will use to create our Dev Container:
 
-```dockerfile
+```dockerfile {file=".devcontainer/Dockerfile"}
 FROM golang:1.22-alpine
 
 # Install dev dependencies
@@ -110,7 +110,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 
 Here is the `.devcontainer/docker-compose.yml` that we will use to create our Dev Container:
 
-```yaml
+```yaml {file=".devcontainer/docker-compose.yml"}
 version: "3.8"
 services:
   app:
@@ -162,7 +162,7 @@ daemon.
 
 This is the `.devcontainer/devcontainer.json` file that I'm using to create our Dev Container environment:
 
-```json
+```json {file=".devcontainer/devcontainer.json"}
 {
   "name": "blog-goapp",
   "dockerComposeFile": "docker-compose.yml",
@@ -270,7 +270,7 @@ useful for improving the development experience. You can skip these steps if you
 I find it helpful to add a `README.txt` file to the `.devcontainer` directory to help me remember how to use the Dev
 Container. Here's an example of what I typically add to the `README.txt` file:
 
-```text
+```text {file=".devcontainer/README.txt"}
 
 ================================================================
 Blog Go App Development Environment
@@ -300,7 +300,7 @@ setting the build arg in the `docker-compose.yml` file.
 To add Trivy support, we need to update the `Dockerfile` to install Trivy. Make sure to put the following after the
 `RUN apk add --update ...` line but before creating the `coder` user (so we don't need `sudo` to install Trivy):
 
-```dockerfile
+```dockerfile {file=".devcontainer/Dockerfile"}
 # Install Trivy Scanner
 ARG TRIVY_VERSION="0.49.1"
 RUN wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz && \
@@ -320,7 +320,7 @@ why it's not working out of the box. The reason is that the Docker daemon in the
 network than the default KIND network will be running in. This means that the KIND cluster that we create in the Dev
 Container won't be accessible from the Dev Container unless you specify the Docker network to use by KIND.
 
-```yaml
+```yaml {file=".devcontainer/docker-compose.yml"}
 services:
   app:
     environment:
@@ -335,7 +335,7 @@ Now that we set the environment variable, let's update the `Dockerfile` to insta
 Make sure to add the following lines to the `Dockerfile` after the `RUN apk add --update ...` line but before creating
 the `coder` user (so we don't need `sudo` to install these tools):
 
-```dockerfile
+```dockerfile {file=".devcontainer/Dockerfile"}
 # Install Kubectl, KIND, and Helm 3
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     chmod +x ./kubectl && mv kubectl /usr/local/bin/kubectl && \

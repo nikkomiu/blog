@@ -127,3 +127,5 @@ Use "gentql [command] --help" for more information about a command.
 We can combine this with more advanced create options to ensure we don't duplicate some records when they shouldn't be
 added multiple times in a row. Typically, when I set up seeding I'll use a testing user or some other unique data that
 can be checked against to ensure there isn't duplicate data, in the case that's not desirable.
+
+{{< commit-ref repo="nikkomiu/gentql" sha="2037f26cb72de0c8c069ef54b2fd367326fb29a8" />}}
