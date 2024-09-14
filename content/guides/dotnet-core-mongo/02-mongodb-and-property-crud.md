@@ -61,7 +61,7 @@ We need to create a class that will house the configuration for our database. Th
 the `appsettings.json`, `appsettings.{Environment}.json`, as well as environment variables. Because this configuration
 is part of the database, which is a part of the `Domain`, I'm going to be putting it in the `Domain` project:
 
-```cs {file="src/Monget.Domain/Models/DatabaseSettings.cs"}
+```c# {file="src/Monget.Domain/Models/DatabaseSettings.cs"}
 namespace Monget.Domain.Models;
 
 using MongoDB.Bson.Serialization.Conventions;
@@ -100,7 +100,7 @@ the recommended naming format for collections and fields on our database.
 Now that the class is created for our configuration, we can tell the API to load this configuration from its sources in
 the `Program.cs` of the `API` project:
 
-```cs {file="src/Monget.API/Program.cs"}
+```c# {file="src/Monget.API/Program.cs"}
 // Add MongoDB Settings
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection(DatabaseSettings.SectionName));
 builder.Services.AddSingleton(s => s.GetRequiredService<IOptions<DatabaseSettings>>().Value);
@@ -148,7 +148,7 @@ documentation.
 
 ## Create Domain Model
 
-```cs {file="src/Monget.Domain/Models/Property.cs"}
+```c# {file="src/Monget.Domain/Models/Property.cs"}
 namespace Monget.Domain.Models;
 
 using MongoDB.Bson;
@@ -173,7 +173,7 @@ public class Property
 With our DI capable of loading the configuration from various sources, let's update the `PropertyService` to take in our
 configuration and set some class level variables that we can use to access our collection.
 
-```cs {file="src/Monget.Domain/Services/PropertyService.cs"}
+```c# {file="src/Monget.Domain/Services/PropertyService.cs"}
 namespace Monget.Domain.Services;
 
 using Monget.Domain.Interfaces;
@@ -205,7 +205,7 @@ public class PropertyService : IPropertyService
 Since we are changing the method name (to `ListPropertiesAsync`), and the return type of `ListProperties` we need to
 update the interface to match our new contract:
 
-```cs {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
+```c# {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
 namespace Monget.Domain.Interfaces;
 
 using Monget.Domain.Models;
@@ -228,7 +228,7 @@ For right now, we are just going to convert our API method to be `async` returni
 response set to the database model. After we complete the `CreateAsync` we will return our API model instead of directly
 returning the database model.
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs"}
 [HttpGet]
 public async Task<ActionResult> ListAsync(int size = 24, int skip = 0)
 {
@@ -247,7 +247,7 @@ Let's update `Create` to be `CreateAsync` and create a new property in our datab
 a few different places (`IPropertyService`, `PropertyService`, and `PropertiesController`). Let's start with the service
 interface:
 
-```cs {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
+```c# {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
 namespace Monget.Domain.Interfaces;
 
 using Monget.Domain.Models;
@@ -261,7 +261,7 @@ public interface IPropertyService
 
 Now that we have our interface updated, we can implement the interface on our service:
 
-```cs {file="src/Monget.Domain/Services/PropertyService.cs"}
+```c# {file="src/Monget.Domain/Services/PropertyService.cs"}
 public async Task<Property> CreatePropertyAsync(Property property)
 {
     var newProperty = new Property {
@@ -292,7 +292,7 @@ Finally, we just need to update our `Create` method on the controller to be `asy
 parse our request body from JSON into the model for us and even provide us with the ability to automatically validate
 the request from the user (more on this later).
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs"}
 [HttpPost]
 public async Task<ActionResult> CreateAsync([FromBody] Property property)
 {
@@ -318,7 +318,7 @@ computed or not user-exposed.
 
 Now we can create our API models. The first model we can create is the `PropertyRequest` model:
 
-```cs {file="src/Monget.Models/PropertyRequest.cs"}
+```c# {file="src/Monget.Models/PropertyRequest.cs"}
 namespace Monget.Models;
 
 using System.ComponentModel.DataAnnotations;
@@ -343,7 +343,7 @@ data _before_ we proceed to the controller actions for each of them.
 We also need to create the `PropertyResponse` model. This model will be the model for returning a single instance of a
 `Property` from our API back to the clients.
 
-```cs {file="src/Monget.Models/PropertyResponse.cs"}
+```c# {file="src/Monget.Models/PropertyResponse.cs"}
 namespace Monget.Models;
 
 public class PropertyResponse
@@ -378,7 +378,7 @@ dotnet add ./src/Monget.API/Monget.API.csproj package AutoMapper.Extensions.Micr
 This will add the `AutoMapper` package as well as the necessary extensions for DI within ASP.NET. Then, we need to add
 our mapper class:
 
-```cs {file="src/Monget.API/MappingProfile.cs"}
+```c# {file="src/Monget.API/MappingProfile.cs"}
 namespace Monget.API;
 
 using AutoMapper;
@@ -398,7 +398,7 @@ public class MappingProfile : Profile
 Next, we can add `AutoMapper` to the DI within our `Program.cs` to manage model mappings for us. I generally place this
 after the `Configure()` calls and before any service instances:
 
-```cs {file="src/Monget.API/Program.cs"}
+```c# {file="src/Monget.API/Program.cs"}
 // Add AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 ```
@@ -407,7 +407,7 @@ With AutoMapper added to our application's DI, we can add it to our controller. 
 `IMapper` parameter to the constructor of our controller. This will allow us to map between types using the
 `Map<TDestination>()` method:
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="3 6 8 13 18 23 26-28 31",rem_lines="14 19 24 29 32"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="3 6 8 13 18 23 26-28 31",rem_lines="14 19 24 29 32"}
 public class PropertiesController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -473,7 +473,7 @@ and 100. Also, we'll set a `[Range(0, int.MaxValue)]` attribute on the `skip` pa
 the highest value that will fit into an `int`. This is to make sure someone doesn't pass a negative value as well as
 making sure that someone doesn't accidently pass a value that will overflow the `int`.
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines=2,rem_lines=1}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines=2,rem_lines=1}
 public async Task<ActionResult<PropertyResponse>> ListAsync(int size = 24, int skip = 0)
 public async Task<ActionResult<PropertyResponse>> ListAsync([Range(1, 100)] int size = 24, [Range(0, int.MaxValue)] int skip = 0)
 ```
@@ -482,7 +482,7 @@ public async Task<ActionResult<PropertyResponse>> ListAsync([Range(1, 100)] int 
 
 Starting with the service this time, let's create the methods needed to complete our CRUD operations:
 
-```cs {file="src/Monget.Domain/Services/PropertyService.cs"}
+```c# {file="src/Monget.Domain/Services/PropertyService.cs"}
 public Task<Property> GetPropertyAsync(string id)
 {
     return _collection.Find(p => p.Id == id).SingleOrDefaultAsync();
@@ -512,13 +512,13 @@ public async Task<bool> DeletePropertyAsync(string id)
 }
 ```
 
-```cs {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
+```c# {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
 Task<Property> GetPropertyAsync(string id);
 Task<Property> UpdatePropertyAsync(string id, Property property);
 Task<bool> DeletePropertyAsync(string id);
 ```
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs"}
 [HttpGet("{id}")]
 public async Task<ActionResult<PropertyResponse>> GetByIdAsync(string id)
 {

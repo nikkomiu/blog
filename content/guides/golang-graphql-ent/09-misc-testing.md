@@ -664,6 +664,8 @@ we don't have access to any of the private constants, variables, funcs, or struc
 that we are testing. I am an advocate of testing our public API via the `_test` package. This is because we are limited
 to what any consumer of our package has to work with, and we can't test things that can't be reached by the public API.
 
+### Refactoring Construction
+
 We happen to have a couple of issues within our `cmd` package right now. The first one is that we can't easily pass the
 arguments, `stdout`, or `stderr` into our cmd. The second issue is that our `rootCmd`, `apiCmd`, `migrateCmd`, and
 `seedCmd` are all defined as global variables within our package. This will cause issues with testing our API command
@@ -794,10 +796,14 @@ func newRootCmd() *cobra.Command {
 }
 ```
 
-With this in place, our app should be working again. However, we still have some issues with our testing. First, if you
-look at the `executeWithArgs()` func in `cmd_test.go`, you'll notice that we can't use the `SetArgs()`, `SetOut()`, nor
-`SetErr()` methods on the `rootCmd` since we don't have a `rootCmd` anymore on the global scope. So, let's add an
-`Option` type in a new `cmd/opt.go` file with the options we need:
+With this in place, our app should be working again. However, we still have some issues with our testing that we need to
+resolve.
+
+### Adding Options
+
+First, if you look at the `executeWithArgs()` func in `cmd_test.go`, you'll notice that we can't use the `SetArgs()`,
+`SetOut()`, nor `SetErr()` methods on the `rootCmd` since we don't have a `rootCmd` anymore on the global scope. So,
+let's add an `Option` type in a new `cmd/opt.go` file with the options we need:
 
 ```go {file="cmd/option.go"}
 package cmd
@@ -888,6 +894,8 @@ don't want.
 Notice how we are adding the `With` options to our `Execute()` func without **needing** to pass them. In my opinion,
 this makes for a cleaner interface into overriding the default values for this without mandating these be passed into
 our func.
+
+### Retest
 
 Let's now test our API command with a new `cmd/api_test.go`:
 

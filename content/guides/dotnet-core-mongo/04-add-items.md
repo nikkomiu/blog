@@ -9,11 +9,15 @@ tags:
   - mongodb
 ---
 
+<!--more-->
+
+## DbContext Class
+
 Before we start, let's create a `DbContext` class that will contain our various collections and maintin our database
 connection. This will help reduce the amout of duplicate code in our services as well as centralizing the creation of a
 `MongoClient`.
 
-```cs {file="src/Monget.Domain/DbContext.cs"}
+```c# {file="src/Monget.Domain/DbContext.cs"}
 namespace Monget.Domain;
 
 using Monget.Domain.Models;
@@ -36,13 +40,13 @@ public class DbContext
 
 Update our `Program.cs` to create a singleton of our `DbContext`:
 
-```cs {file="src/Monget.API/Program.cs"}
+```c# {file="src/Monget.API/Program.cs"}
 builder.Services.AddSingleton<DbContext>();
 ```
 
 Update the `PropertyService.cs` to use our new `DbContext` object:
 
-```cs {file="src/Monget.Domain/Services/PropertyService.cs"}
+```c# {file="src/Monget.Domain/Services/PropertyService.cs"}
 namespace Monget.Domain.Services;
 
 using Monget.Domain.Interfaces;

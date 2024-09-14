@@ -2,7 +2,6 @@
 title: Controller Unit Testing
 author: Nikko Miu
 toc: true
-draft: true
 weight: 3
 tags:
   - dotnet
@@ -23,7 +22,7 @@ I'm going to be using the
 [.NET Core Testing Best Practices](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
 as a guideline for how I write tests. One part of this includes a naming convention of test method names:
 
-```cs
+```c#
 public void MethodToTest_Condition_Expectation()
 ```
 
@@ -52,7 +51,7 @@ dotnet add ./tests/Monget.Tests.Unit/Monget.Tests.Unit.csproj reference ./src/Mo
 
 ## Create MappingProfile Test
 
-```cs {file="tests/Monget.Tests.Unit/API/MappingProfileTests.cs"}
+```c# {file="tests/Monget.Tests.Unit/API/MappingProfileTests.cs"}
 namespace Monget.Tests.Unit.API;
 
 using AutoMapper;
@@ -120,7 +119,7 @@ since they don't exist on our API model.
 
 Let's go update our mapping profile to explicitly set these properties when mapping between these two types:
 
-```cs {file="src/Monget.API/MappingProfile.cs",add_lines="3-6",rem_lines="7"}
+```c# {file="src/Monget.API/MappingProfile.cs",add_lines="3-6",rem_lines="7"}
 public MappingProfile()
 {
     CreateMap<PropertyRequest, Property>()
@@ -154,7 +153,7 @@ is helping us make these tests truly _unit_ tests.
 
 I'm going to break down the testing of our controller methods. First let's test the `ListAsync()` method:
 
-```cs {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
+```c# {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
 namespace Monget.Tests.Unit.API.Controllers;
 
 using AutoFixture;
@@ -248,7 +247,7 @@ public class PropertiesControllerTests
 
 With these in place we can move on to the `CreateAsync()` method:
 
-```cs {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
+```c# {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
 [Fact]
 public async void Create_ReturnsNewProperty()
 {
@@ -290,7 +289,7 @@ the database. The second is when the entity does not exist in the database. Righ
 actually exists in the database before returning so we need to update our controller to support returning `NotFound()`
 when the record coming back from the service is null.
 
-```cs {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
+```c# {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
 [Fact]
 public async void GetById_Existing_ReturnProperty()
 {
@@ -331,7 +330,7 @@ public async void GetById_NotExisting_ReturnNotFound()
 With this in place, let's update the controller to support the `NotFound()` result when the object doesn't exist in our
 database:
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="5-8"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="5-8"}
 [HttpGet("{id}")]
 public async Task<ActionResult<PropertyResponse>> GetByIdAsync(string id)
 {
@@ -347,7 +346,7 @@ public async Task<ActionResult<PropertyResponse>> GetByIdAsync(string id)
 
 ### Update Method
 
-```cs {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
+```c# {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
 [Fact]
 public async void Update_Existing_ReturnUpdatedProperty()
 {
@@ -394,7 +393,7 @@ public async void Update_NotExisting_ReturnNotFound()
 }
 ```
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="7-10"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="7-10"}
 [HttpPut("{id}")]
 public async Task<ActionResult<PropertyResponse>> UpdateAsync(string id, [FromBody] PropertyRequest property)
 {
@@ -412,7 +411,7 @@ public async Task<ActionResult<PropertyResponse>> UpdateAsync(string id, [FromBo
 
 ### Delete Method
 
-```cs {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
+```c# {file="tests/Monget.Tests.Unit/API/Controllers/PropertiesControllerTests.cs"}
 [Theory]
 [InlineData(typeof(OkResult), true)]
 [InlineData(typeof(NoContentResult), false)]

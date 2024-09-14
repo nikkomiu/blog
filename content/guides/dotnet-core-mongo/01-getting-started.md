@@ -89,7 +89,7 @@ dotnet new apicontroller -o ./src/Monget.API/Controllers/ -n PropertiesControlle
 Let's update the newly added controller to have our CRUD operations just return some simple strings for now. This will
 let us build up the controller as we go:
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs"}
 namespace Monget.API.Controllers;
 
 using Microsoft.AspNetCore.Http;
@@ -136,7 +136,7 @@ public class PropertiesController : ControllerBase
 Now, let's update the `Program.cs` to add support for controllers, remove the default weather route, as well as move
 `UseHttpsRedirection()` under an `IsProduction()` check. With all of these changes your `Program.cs` should look like:
 
-```cs {file="src/Monget.API/Program.cs"}
+```c# {file="src/Monget.API/Program.cs"}
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -209,7 +209,7 @@ logic.
 Let's create our `PropertyService` in our `Domain` project with just a simple placeholder return value for now (later
 we are going to replace this with meaningful data to return):
 
-```cs {file="src/Monget.Domain/Services/PropertyService.cs"}
+```c# {file="src/Monget.Domain/Services/PropertyService.cs"}
 namespace Monget.Domain.Services;
 
 using Monget.Domain.Interfaces;
@@ -230,7 +230,7 @@ by defining the methods that need to be implmented for a given service.
 
 With this in mind, let's create our `IPropertyService` in the `Interfaces` of the `Domain` project:
 
-```cs {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
+```c# {file="src/Monget.Domain/Interfaces/IPropertyService.cs"}
 namespace Monget.Domain.Interfaces;
 
 public interface IPropertyService
@@ -246,7 +246,7 @@ is an interface and not a class.
 
 Now that we have created the interface we can tell our service that it implements this new interface:
 
-```cs {file="src/Monget.Domain/Services/PropertyService.cs",add_lines=4,rem_lines=3}
+```c# {file="src/Monget.Domain/Services/PropertyService.cs",add_lines=4,rem_lines=3}
 namespace Monget.Domain.Services;
 
 public class PropertyService
@@ -269,7 +269,7 @@ request, user, or other context data within our service we would need to use a d
 
 So with this, let's update our `Program.cs` to inject our service:
 
-```cs {file="src/Monget.API/Program.cs",add_lines="1-2 6-7"}
+```c# {file="src/Monget.API/Program.cs",add_lines="1-2 6-7"}
 using Monget.Domain.Interfaces;
 using Monget.Domain.Services;
 
@@ -287,7 +287,7 @@ into our controller.
 
 Add a constructor to the controller and let's call our `ListProperties()` method within our `List()` controller action:
 
-```cs {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="7 9-12 17-19",rem_lines="20"}
+```c# {file="src/Monget.API/Controllers/PropertiesController.cs",add_lines="7 9-12 17-19",rem_lines="20"}
 namespace Monget.API.Controllers;
 
 [Route("api/[controller]")]
