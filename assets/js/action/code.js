@@ -85,7 +85,7 @@ function highlightLines(parent, addLines, remLines, isTableNum = false) {
       elem = reparentCodeTableNumber(lineElems[l - 1]);
     }
 
-    elem?.classList.add("bg-green-950/80", "text-green-500");
+    elem?.classList.add("bg-green-950/30", "text-green-500");
   });
 
   remLines.forEach((l) => {
@@ -96,7 +96,7 @@ function highlightLines(parent, addLines, remLines, isTableNum = false) {
       elem.classList.add("text-red-500");
     }
 
-    elem?.classList.add("bg-red-950/80", "text-red-500");
+    elem?.classList.add("bg-red-950/30", "text-red-500");
   });
 }
 

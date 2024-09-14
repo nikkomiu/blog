@@ -7,7 +7,7 @@ tags:
   - machine-learning
 ---
 
-This basic ML project will follow the [Project Checklist](../project-checklist/)
+This basic ML project will follow the [Project Checklist](/notes/machine-learning/project-checklist/)
 to create a simple ML application.
 The project is to create a model that will predict the median housing price in a given district in California.
 It is the first (most basic) project that will be completed from start to finish going through all the steps of the checklist.

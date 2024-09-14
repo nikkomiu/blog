@@ -26,5 +26,5 @@ table:hover .copy-button {
 }
 
 .highlight pre {
-  @apply overflow-x-auto whitespace-pre border border-fuchsia-900 px-4 py-3;
+  @apply overflow-x-auto overflow-y-hidden whitespace-pre border border-fuchsia-900 px-4 py-3;
 }

@@ -27,5 +27,5 @@ I also follow this guide for installing Kali as it is based on Debian (and the D
 
 If you're planning to install Debian (or a Debian-based OS) onto a portable storage device (like a flash drive,
 external hard drive, etc.) check the
-[USB Installation Specifics](./0-usb-installation-specifics.md) page before you
+[USB Installation Specifics](./0-usb-installation-specifics) page before you
 proceed, as there are differences in the process along the way.
