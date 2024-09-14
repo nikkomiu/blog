@@ -155,6 +155,23 @@ quam quisque id diam vel. Egestas erat imperdiet sed euismod nisi. Scelerisque
 felis imperdiet proin fermentum leo vel orci porta non. Ut faucibus pulvinar
 elementum integer. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl.
 
+```mermaid
+graph TD
+  A[Christmas] -->|Get money| B(Go shopping)
+  B --> C{Let me think}
+  B --> G[/Another/]
+  C ==>|One| D[Laptop]
+  C -->|Two| E[iPhone]
+  C -->|Three| F[fa:fa-car Car]
+  subgraph section
+    C
+    D
+    E
+    F
+    G
+  end
+```
+
 {{< section title="Some Section" >}}
 Ac ut consequat semper viverra nam. Hac habitasse platea dictumst vestibulum
 rhoncus. Amet porttitor eget dolor morbi non. Justo eget magna fermentum

@@ -32,7 +32,7 @@ export function loadTableActions() {
     CopyButton({
       buttonText: "Copy CSV",
       size: "sm",
-      className: "bottom-[-1.75rem] right-0",
+      className: "bottom-[-1.85rem] right-0",
       add: (btn) => wrapper.append(btn),
       onClick: () => navigator.clipboard.writeText(tableToCSV(el)),
     });
