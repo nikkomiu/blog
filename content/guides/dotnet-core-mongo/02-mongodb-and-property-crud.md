@@ -1,11 +1,12 @@
 ---
-title: MongoDB Setup
+title: MongoDB Setup & Property CRUD
 author: Nikko Miu
 toc: true
 weight: 2
 tags:
   - dotnet
   - mongodb
+  - automapper
 ---
 
 Now that we have our project set up, we can start integrating MongoDB into our domain layer and wire up our API
@@ -527,7 +528,7 @@ public async Task<ActionResult<PropertyResponse>> GetByIdAsync(string id)
 }
 
 [HttpPut("{id}")]
-public async Task<ActionResult> UpdateAsync(string id, [FromBody] PropertyRequest property)
+public async Task<ActionResult<PropertyResponse>> UpdateAsync(string id, [FromBody] PropertyRequest property)
 {
     var updateProperty = _mapper.Map<Property>(property);
 
@@ -547,16 +548,14 @@ public async Task<ActionResult> DeleteAsync(string id)
 
 ## Conclusion
 
-> TODO: rewrite
-
 In this section, we have:
 
 - Set up our MongoDB interaction layer.
 - Updated our service to interact with MongoDB.
-- Updated our `List()` and `Create()` API controller methods to use MongoDB.
+- Completed CRUD operations for our Property API controller.
 - Added API models.
 - Mapped between the API models and the Domain model.
-- Added request validations to `List` and `Create`.
+- Added request validations to our API request models.
 
 There is quite a bit packed into this section. In the next section we will expand on this by completing the CRUD
 operations for our Properties API controller. As we continue we will keep reusing the same concepts that were covered in
