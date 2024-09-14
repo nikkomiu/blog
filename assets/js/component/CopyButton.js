@@ -1,19 +1,19 @@
 const copyHTML = ({ copyText, svgClass, textClass }) => `
-<svg xmlns="http://www.w3.org/2000/svg" class="${svgClass}">
-  <use xlink:href="#hi-clipboard-document-list" />
-</svg>
 <span class="${textClass}">${copyText}</span>
+<svg xmlns="http://www.w3.org/2000/svg" class="${svgClass}">
+  <use xlink:href="#octicon-copy" />
+</svg>
 `;
 
 const copiedHTML = ({ svgClass, textClass }) => `
-<svg xmlns="http://www.w3.org/2000/svg" class="${svgClass}">
-  <use xlink:href="#hi-clipboard-document-check" />
-</svg>
 <span class="${textClass}">Copied!</span>
+<svg xmlns="http://www.w3.org/2000/svg" class="${svgClass}">
+  <use xlink:href="#octicon-check" />
+</svg>
 `;
 
 const btnClass =
-  "copy-button flex absolute opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300";
+  "copy-button flex absolute opacity-0 transition-opacity ease-in-out px-2 py-1 text-fuchsia-50 hover:bg-fuchsia-950 hover:text-fuchsia-300 duration-300 text-sm";
 
 export default function CopyButton({
   buttonText,
@@ -21,23 +21,25 @@ export default function CopyButton({
   size,
   onClick,
   className,
+  textClass,
+  copiedTextClass,
 }) {
   const copyText = buttonText || "Copy";
   const classes = btnClass.split(" ");
 
   let svgClass;
-  const textClass = "hidden sm:flex";
+  const textClasses = `hidden sm:flex pr-2 ${textClass}`.trim();
+  const copiedTextClasses = `hidden sm:flex pr-2 ${copiedTextClass}`.trim();
   switch (size) {
     case "sm":
-      svgClass = "w-4 h-4 mr-1";
-      classes.push("text-sm");
+      svgClass = "w-4 h-4";
       break;
     default:
-      svgClass = "w-6 h-6 mr-2";
+      svgClass = "w-5 h-5";
       break;
   }
 
-  const copyRendered = copyHTML({ copyText, svgClass, textClass });
+  const copyRendered = copyHTML({ copyText, svgClass, textClass: textClasses });
   const button = document.createElement("button");
   button.ariaLabel = copyText;
   button.innerHTML = copyRendered;
@@ -47,7 +49,7 @@ export default function CopyButton({
     button.addEventListener("click", () => {
       onClick();
 
-      button.innerHTML = copiedHTML({ svgClass, textClass });
+      button.innerHTML = copiedHTML({ svgClass, textClass: copiedTextClasses });
       button.ariaLabel = copyText;
       button.classList.add("active");
       setTimeout(() => {
