@@ -2,7 +2,6 @@
 title: Add Resolver Tests
 author: Nikko Miu
 toc: true
-draft: true
 weight: 8
 tags:
   - golang
@@ -12,7 +11,7 @@ tags:
 ---
 
 We have gotten our application in a good place to start adding tests for what we currently have in place. For this, we
-are going to be adding tests for the Note resolver, as well as our `pkg`s. After this stage, I'll be adding new tests
+are going to be adding tests for the Note resolver, as well as our `pkg`s. After this stage, I'll be adding new tests,
 but I will keep them in collapsible sections after adding our business logic.
 
 <!--more-->
@@ -64,25 +63,13 @@ with this test (as a `context.Context` is the first parameter of all of our reso
 we're trying to test. Finally, we assert that the values are matching what we're expecting. Since this resolver func is
 so simple, we only have one test case and don't have any error conditions to check.
 
-{{< callout type=note >}}
-I'm using the shorter name of just `common_test.go` here instead of `common.resolvers_test.go` since I find (and
-typically remove) the `.resolvers.` name in the file to be awkward (it also doesn't follow Go file naming conventions).
-If you want to change the resolver file names to their shorter name, you can update the `gqlgen.yml` file to use the
-shorter file name:
-
-```yaml {file=gqlgen.yml}
-resolver:
-  filename_template: "{name}.go"
-```
-
-Then before you regenerate your code, rename the resolver files to match the new names (remove `.resolvers`).
-{{</ callout >}}
-
 With our test in place, we can run the tests for **only** the `gql` subdirectory with:
 
 ```bash
 go test ./gql/...
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="1e8459eee7109ec5870a28df7864286adb59cfad" />}}
 
 ## Note Fields
 
@@ -93,6 +80,16 @@ is an error condition in our code for the `BodyHTML` resolver, I don't have an e
 should be valid Markdown.
 
 ```go {file="gql/note_test.go"}
+package gql_test
+
+import (
+  "context"
+  "testing"
+
+  "github.com/nikkomiu/gentql/ent"
+  "github.com/nikkomiu/gentql/gql"
+)
+
 func TestNoteNodeID(t *testing.T) {
   // Arrange
   expectedNodeID := "bm90ZXM6MTIz"
@@ -157,13 +154,15 @@ func TestNoteBodyHTML(t *testing.T) {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="5d536df06b239459625b6037a6235149a0b05c69" />}}
+
 ## Node
 
 With these basic tests in place, we can now look at testing more complex code paths. The first resolver using `ent` that
 we will test is the `node` resolver. This is going to be easy to set up and test. However, this test func will grow to
 be quite large depending on the number of unique entity types that your application will contain. This is because, in
-general, we should be testing all of the variants of this that we expect to come across. Because this method is used to
-resolve **any** ent model, it's going to have a lot of sub-tests within it. To manage multiple sub-tests, we are going
+general, we should be testing all the variants of this that we expect to come across. Because this method is used to
+resolve **any** ent model, it's going to have a lot of subtests within it. To manage multiple subtests, we are going
 to use a concept in testing called Testing Tables.
 
 Let's update our `common_test.go` to add the `TestNode(*testing.T)` func:
@@ -362,6 +361,8 @@ initialization of the `*ent.Client`. In the future I may write something up on h
 PostgreSQL as a "drop-in" replacement (or through a compiler flag).
 {{</ callout >}}
 
+{{< commit-ref repo="nikkomiu/gentql" sha="6051135440b533431709d8e3d5626126646a1b94" />}}
+
 ## Testing Helpers
 
 Now that we've written a few tests for our resolvers, you may have begun to notice that we are duplicating some blocks
@@ -381,7 +382,7 @@ func ContextT(t *testing.T) context.Context {
 
 All we are doing here is moving the creation of our context with a cancel func into a method we can call from our tests.
 We are passing the `*testing.T` into this func so that when our test is done the `cancel` for our `context.Context` will
-be called for us. This way we don't have to worry about forgetting to cancel the context in our tests and it will
+be called for us. This way we don't have to worry about forgetting to cancel the context in our tests, and it will
 simplify our test funcs.
 
 With this in place, we can update our tests to utilize our new `ContextT(*testing.T) context.Context` func. First,
@@ -494,10 +495,12 @@ func TestNoteBodyHTML(t *testing.T) {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="b4495aeb657f0a941f86d010142e6a64d1c6f7dc" />}}
+
 ### EntT
 
-Let's create one last helper method. This one we haven't yet seen duplicated in our code but _most_ of our resolvers are
-going to need it:
+Let's create one last helper method. This one we haven't yet seen duplicated in our code, but _most_ of our resolvers
+are going to need it:
 
 ```go {file="gql/common_test.go"}
 func EntT(t *testing.T) *ent.Client {
@@ -523,19 +526,140 @@ func TestNode(t *testing.T) {
   // ...
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="36209e72cf273fe896bc0b40d1f7b80b0b09f8a5" />}}
+
 ### assert Package
 
-At this point, I'm going to bring in a library for test assertions so we don't have to keep writing our own assertions
-manually. The assert package that I'm going to use is
+At this point, I'm going to bring in a library for test assertions, so we don't have to keep writing our own assertions
+manually. The package that I'm going to use for assertions is
 [github.com/stretchr/testify/assert](https://github.com/stretchr/testify?tab=readme-ov-file#assert-package).
 
 Starting with the common tests, let's add and use this package:
 
-```go {file="gql/common_test.go"}
+```go {file="gql/common_test.go",add_lines="11-12 28 34 40 103 110-114",rem_lines="13-19 29-31 35-37 41-43 104-108 115-117"}
+func TestPing(t *testing.T) {
+  // Arrange
+  expected := "pong"
+  resolver := gql.NewResolver(nil)
+  ctx := ContextT(t)
 
+  // Act
+  res, err := resolver.Resolvers.Query().Ping(ctx)
+
+  // Assert
+  assert.NoError(t, err)
+  assert.Equal(t, expected, res)
+  if err != nil {
+    t.Errorf("expected error to be nil but got: %s", err)
+  }
+
+  if res != expected {
+    t.Errorf("expected %s but got %s", expected, res)
+  }
+}
+
+func TestNode(t *testing.T) {
+  ctx := ContextT(t)
+  entClient := EntT(t)
+  resolver := gql.NewResolver(entClient)
+
+  note, err := entClient.Note.Create().SetTitle("Test Note 1").SetBody("Test Note Body 1").Save(ctx)
+  assert.NoError(t, err)
+  if err != nil {
+    t.Errorf("expected note to be created, but got err: %s", err)
+  }
+
+  noteNodeID, err := resolver.Resolvers.Note().NodeID(ctx, note)
+  assert.NoError(t, err)
+  if err != nil {
+    t.Errorf("expected note to resolve node id, but got err: %s", err)
+  }
+
+  notFoundNoteNodeID, err := resolver.Resolvers.Note().NodeID(ctx, &ent.Note{ID: 0})
+  assert.NoError(t, err)
+  if err != nil {
+    t.Errorf("expected note to resolve node id, but got err: %s", err)
+  }
+
+  tt := []struct {
+    name   string
+    nodeID string
+
+    expectedNode bool
+    expectedErr  bool
+  }{
+    {
+      name:   "note",
+      nodeID: noteNodeID,
+
+      expectedNode: true,
+    },
+
+    {
+      name:   "not found",
+      nodeID: notFoundNoteNodeID,
+
+      expectedErr: true,
+    },
+    {
+      name:   "invalid base64",
+      nodeID: "bad string",
+
+      expectedErr: true,
+    },
+    {
+      name:   "not enough parts",
+      nodeID: base64.RawURLEncoding.EncodeToString([]byte("notes")),
+
+      expectedErr: true,
+    },
+    {
+      name:   "too many parts",
+      nodeID: base64.RawURLEncoding.EncodeToString([]byte("notes:1:3")),
+
+      expectedErr: true,
+    },
+    {
+      name:   "bad id value",
+      nodeID: base64.RawURLEncoding.EncodeToString([]byte("notes:numless")),
+
+      expectedErr: true,
+    },
+    {
+      name:   "bad table name",
+      nodeID: base64.RawURLEncoding.EncodeToString([]byte("not_my_table:11")),
+
+      expectedErr: true,
+    },
+  }
+
+  for _, tc := range tt {
+    t.Run(tc.name, func(t *testing.T) {
+      ctx := ContextT(t)
+
+      node, err := resolver.Resolvers.Query().Node(ctx, tc.nodeID)
+
+      assert.Equal(t, tc.expectedErr, err != nil, "expected error to be %v but got: %s", tc.expectedErr, err)
+      if tc.expectedErr && err == nil {
+        t.Errorf("expected err but got none")
+      } else if !tc.expectedErr && err != nil {
+        t.Errorf("expected no error but got: %s", err)
+      }
+
+      if tc.expectedNode {
+        assert.NotNil(t, node, "expected node to be not nil")
+      } else {
+        assert.Nil(t, node, "expected node to be nil")
+      }
+      if tc.expectedNode && node == nil {
+        t.Errorf("expected node but got nil")
+      }
+    })
+  }
+}
 ```
 
-We can also update our Note tests to use this assert package:
+We can also update our Note tests to use this `assert` package:
 
 ```go {file="gql/note_test.go",add_lines="4-5 18-19 32-33",rem_lines="6-12 20-26 34-40"}
 func TestNoteNodeID(t *testing.T) {
@@ -581,12 +705,38 @@ func TestNoteBodyHTML(t *testing.T) {
 }
 ```
 
-### Other Packages
+{{< callout type=note >}}
+When we are testing the `BodyHTML`, we aren't able to easily test the error condition. This is because I don't see a way
+of testing the error condition of `goldmark.Convert()`. If you would like to reduce the complexity, you could rewrite
+the `BodyHTML` resolver to just return the error and `buf.String()` instead of checking for the error:
+
+```go {file="gql/note.go",add_lines="4-5",rem_lines="6-9"}
+// BodyHTML is the resolver for the bodyHtml field.
+func (r *noteResolver) BodyHTML(ctx context.Context, obj *ent.Note) (string, error) {
+  var buf bytes.Buffer
+  err := goldmark.Convert([]byte(obj.Body), &buf)
+  return buf.String(), err
+  if err := goldmark.Convert([]byte(obj.Body), &buf); err != nil {
+    return "", err
+  }
+  return buf.String(), nil
+}
+```
+
+Making this change would eliminate the branch within the resolver and make coverage stay higher. However, since we don't
+actually have the ability to test this, I prefer leaving the condition as unchecked because it shows that there **is**
+potential for a bug within this area due to some unknown condition that would cause `goldmark.Convert()` to fail.
+
+{{</ callout >}}
+
+{{< commit-ref repo="nikkomiu/gentql" sha="18525d258039f8f7b23154e60cf3e41994bc74de" />}}
+
+### Other Testing Packages
 
 There are a lot of testing tools out there for Go and some "suite" testing frameworks. I tend to stay away from these as
-some of the "features" that they have make it more effort to test Go applications.
+some "features" that they have can make it more effort to test Go applications.
 
-For example, you can use regular expressions to run one test, some of the tests, etc. like:
+For example, you can use regular expressions to run one test, some tests, etc. like:
 
 ```bash
 CGO_ENABLED=1 go test -v ./gql/... -run "^TestNote.*$"
@@ -612,20 +762,373 @@ or may not even be an option.
 With these helpers (and our new `assert` package) in place, we can move on to testing the Query resolvers for our Note
 entity.
 
-## Note Fixture
+## Note List
 
-Create Note Fixture
+We have already covered the Note "get" call with the `Node` test. So for Note query resolvers the only other one we need
+to test is the `Notes()` resolver (or "list"). I'm creating a handful of Notes before the test starts to "seed" our test
+database. At some point, it would be better to refactor the Note creation for testing into a fixture. However, for now
+at least I'm not going to make those changes.
 
-- Update the `TestNode` and `TestNote*` to utilize this func
+Here we're testing some conditions of the `Notes()` resolver. However, we're still missing some specifics around the
+validation of the response objects (we don't check the individual records or their actual order as they appear). We're
+also missing the "next" and "previous" page testing. For now, I'm not going to add explicit tests for this as we are
+using generated code to handle all the internal logic of the where clauses, ordering, and pretty much all other details
+of the `Notes()` resolver.
 
-## Note Query
+```go {file="gql/note_test.go"}
+func TestNoteList(t *testing.T) {
+  ctx := ContextT(t)
+  entClient := EntT(t)
+  resolver := gql.NewResolver(entClient)
+
+  totalCount := 10
+  for i := 0; i < totalCount; i++ {
+    _, err := entClient.Note.Create().
+      SetTitle(fmt.Sprintf("Test Note %d", i)).
+      SetBody("Test Note Body").
+      Save(ctx)
+    assert.NoError(t, err)
+  }
+
+  three := 3
+
+  tt := []struct {
+    name string
+
+    after   *entgql.Cursor[int]
+    first   *int
+    before  *entgql.Cursor[int]
+    last    *int
+    orderBy *ent.NoteOrder
+    where   *ent.NoteWhereInput
+
+    expectedErr bool
+    expectedLen int
+  }{
+    {
+      name: "default",
+
+      expectedLen: totalCount,
+    },
+    {
+      name: "first 3",
+
+      first: &three,
+
+      expectedLen: 3,
+    },
+    {
+      name: "last 3",
+
+      last: &three,
+
+      expectedLen: 3,
+    },
+    {
+      name: "order by title asc",
+
+      orderBy: &ent.NoteOrder{Field: ent.NoteOrderFieldTitle, Direction: entgql.OrderDirectionAsc},
+
+      expectedLen: totalCount,
+    },
+    {
+      name: "order by created at desc",
+
+      orderBy: &ent.NoteOrder{Field: ent.NoteOrderFieldCreatedAt, Direction: entgql.OrderDirectionDesc},
+
+      expectedLen: totalCount,
+    },
+    {
+      name: "order by updated at asc",
+
+      orderBy: &ent.NoteOrder{Field: ent.NoteOrderFieldUpdatedAt, Direction: entgql.OrderDirectionAsc},
+
+      expectedLen: totalCount,
+    },
+  }
+
+  for _, tc := range tt {
+    t.Run(tc.name, func(t *testing.T) {
+      // Arrange
+      ctx := ContextT(t)
+
+      // Act
+      notes, err := resolver.Resolvers.Query().Notes(ctx, tc.after, tc.first, tc.before, tc.last, tc.orderBy, tc.where)
+
+      // Assert
+      assert.NoError(t, err)
+      assert.Len(t, notes.Edges, tc.expectedLen)
+      assert.Equal(t, totalCount, notes.TotalCount)
+    })
+  }
+}
+```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="b592d139177202ca176d89598060df1a4ce29b35" />}}
 
 ## Note Mutation
 
+```go {file="gql/note_test.go"}
+func TestNoteCreate(t *testing.T) {
+  entClient := EntT(t)
+  resolver := gql.NewResolver(entClient)
+
+  tt := []struct {
+    name string
+
+    input model.NoteInput
+
+    expectedErr  bool
+    expectedNote *ent.Note
+  }{
+    {
+      name: "default",
+
+      input: model.NoteInput{
+        Title: "Test Note",
+        Body:  "Test Note Body",
+      },
+
+      expectedNote: &ent.Note{
+        Title: "Test Note",
+        Body:  "Test Note Body",
+      },
+    },
+    {
+      name: "empty title",
+
+      input: model.NoteInput{
+        Body: "Test Note Body",
+      },
+
+      expectedErr: true,
+    },
+    {
+      name: "title too short",
+
+      input: model.NoteInput{
+        Title: "T",
+        Body:  "Test Note Body",
+      },
+
+      expectedErr: true,
+    },
+    {
+      name: "empty body",
+
+      input: model.NoteInput{
+        Title: "Test Note",
+      },
+
+      expectedNote: &ent.Note{
+        Title: "Test Note",
+        Body:  "",
+      },
+    },
+  }
+
+  for _, tc := range tt {
+    t.Run(tc.name, func(t *testing.T) {
+      // Arrange
+      ctx := ContextT(t)
+      preCreateTime := time.Now()
+
+      // Act
+      note, err := resolver.Resolvers.Mutation().CreateNote(ctx, tc.input)
+
+      // Assert
+      assert.Equal(t, tc.expectedErr, err != nil, "expected error to be %v, got %v", tc.expectedErr, err)
+      if tc.expectedNote != nil {
+        assert.NotEmpty(t, note.ID)
+        assert.Equal(t, tc.expectedNote.Title, note.Title)
+        assert.Equal(t, tc.expectedNote.Body, note.Body)
+        assert.True(t, note.CreatedAt.After(preCreateTime))
+        assert.True(t, note.UpdatedAt.After(preCreateTime))
+      }
+    })
+  }
+}
+
+func TestNoteUpdate(t *testing.T) {
+  entClient := EntT(t)
+  resolver := gql.NewResolver(entClient)
+  note := entClient.Note.Create().SetTitle("Test Note").SetBody("Test Note Body").SaveX(ContextT(t))
+
+  tt := []struct {
+    name string
+
+    id    int
+    input model.NoteInput
+
+    expectedErr  bool
+    expectedNote *ent.Note
+  }{
+    {
+      name: "default",
+
+      id: note.ID,
+      input: model.NoteInput{
+        Title: "Test Note",
+        Body:  "Test Note Body",
+      },
+
+      expectedNote: &ent.Note{
+        Title: "Test Note",
+        Body:  "Test Note Body",
+      },
+    },
+    {
+      name: "empty title",
+
+      id: note.ID,
+      input: model.NoteInput{
+        Body: "Test Note Body",
+      },
+
+      expectedErr: true,
+    },
+    {
+      name: "title too short",
+
+      id: note.ID,
+      input: model.NoteInput{
+        Title: "T",
+        Body:  "Test Note Body",
+      },
+
+      expectedErr: true,
+    },
+    {
+      name: "empty body",
+
+      id: note.ID,
+      input: model.NoteInput{
+        Title: "Test Note",
+      },
+
+      expectedNote: &ent.Note{
+        Title: "Test Note",
+        Body:  "",
+      },
+    },
+    {
+      name: "no change",
+
+      id: note.ID,
+      input: model.NoteInput{
+        Title: note.Title,
+        Body:  note.Body,
+      },
+
+      expectedNote: note,
+    },
+    {
+      name: "not found",
+
+      id: 999,
+      input: model.NoteInput{
+        Title: "Test Note",
+        Body:  "Test Note Body",
+      },
+
+      expectedErr: true,
+    },
+  }
+
+  for _, tc := range tt {
+    t.Run(tc.name, func(t *testing.T) {
+      // Arrange
+      ctx := ContextT(t)
+      preCreateTime := time.Now()
+
+      // Act
+      note, err := resolver.Resolvers.Mutation().UpdateNote(ctx, tc.id, tc.input)
+
+      // Assert
+      assert.Equal(t, tc.expectedErr, err != nil, "expected error to be %v, got %v", tc.expectedErr, err)
+      if tc.expectedNote != nil {
+        assert.NotEmpty(t, note.ID)
+        assert.Equal(t, tc.expectedNote.Title, note.Title)
+        assert.Equal(t, tc.expectedNote.Body, note.Body)
+        assert.True(t, note.CreatedAt.Before(preCreateTime))
+        assert.True(t, note.UpdatedAt.After(preCreateTime))
+      }
+    })
+  }
+}
+
+func TestNoteDelete(t *testing.T) {
+  entClient := EntT(t)
+  resolver := gql.NewResolver(entClient)
+  note := entClient.Note.Create().SetTitle("Test Note").SetBody("Test Note Body").SaveX(ContextT(t))
+
+  tt := []struct {
+    name string
+
+    id int
+
+    expectedErr bool
+    expectedRes bool
+  }{
+    {
+      name: "default",
+
+      id: note.ID,
+
+      expectedRes: true,
+    },
+    {
+      name: "not found",
+
+      id: 999,
+
+      expectedRes: false,
+    },
+  }
+
+  for _, tc := range tt {
+    t.Run(tc.name, func(t *testing.T) {
+      // Arrange
+      ctx := ContextT(t)
+
+      // Act
+      res, err := resolver.Resolvers.Mutation().DeleteNote(ctx, tc.id)
+
+      // Assert
+      assert.Equal(t, tc.expectedErr, err != nil, "expected error to be %v, got %v", tc.expectedErr, err)
+      assert.Equal(t, tc.expectedRes, res)
+    })
+  }
+}
+```
+
+We added a few extra conditions to testing here that we don't currently have implementation logic to support. So, if you
+try to run the tests now, our create and update should fail.
+
+Let's fix this by adding our validation logic to the `Note` schema on ent:
+
+```go {file="ent/schema/note.go",add_lines="5"}
+// Fields of the Note.
+func (Note) Fields() []ent.Field {
+  return []ent.Field{
+    field.String("title").
+      MinLen(3).
+      Annotations(
+        entgql.OrderField("TITLE"),
+      ),
+    // ...
+```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="40e3e59faf70fc123da3cf4fc794a2be3c662dbc" />}}
+
 ## Conclusion
 
-TODO: NOTICE CODE COVERAGE HERE AND MAKE NOTE OF WHY IT IS LOW
+Now that we have all of our resolver tests completed, if you run tests with code coverage you will notice that we still
+don't cover very much of the `gql` package. This is because the vast majority of the code that exists for the `gql`
+package of our app is generated code. The way that we are currently (unit) testing, we aren't covering the generated
+code for our `gql` package. However, we can always add integration tests that ensure that all the layers of our app are
+working properly. In this type of testing, we will cover the generated code for our application.
 
-We have written all of the test cases that we should need to include for our `gqlgen` resolvers. In the next section we
+We have written all the test cases that we should need to include for our `gqlgen` resolvers. In the next section we
 are going to add the remaining tests (for the `pkg` and `cmd` parts of our application). Once you complete the next
 section you should have a good testing foundation for your Go application.

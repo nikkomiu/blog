@@ -45,7 +45,7 @@ root=... quiet splash
 ```
 
 {{< callout type=note >}}
-This assumes that you have previously followed the [Secure Boot](./debian-secure-boot.md) guide.
+This assumes that you have previously followed the [Secure Boot](../1-secure-boot) guide.
 {{</ callout >}}
 
 ## Hide the Cursor on Startup

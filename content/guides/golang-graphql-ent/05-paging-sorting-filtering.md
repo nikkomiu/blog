@@ -9,8 +9,7 @@ tags:
   - ent
 ---
 
-Now that we have `ent` and `gqlgen` wired up, we can look at updating our list notes resolver. In this section, we will
-look at implementing paging, sorting, and filtering using where clauses to provide a more robust experience to our client
+Now that we have `ent` and `gqlgen` wired up, we can look at updating our list notes resolver. In this section, we will look at implementing paging, sorting, and filtering using where clauses to provide a more robust experience to our client
 applications.
 
 <!--more-->
@@ -18,7 +17,7 @@ applications.
 This section is going to be using references from the [Relay Cursor Connection Spec](https://relay.dev/graphql/connections.htm)
 which covers what the specifications _should_ look like when using this kind of pattern in GraphQL.
 
-## Add Paging
+## Paging
 
 First let's look at paging. This is going to allow us to return smaller datasets to the client applications as well as
 giving the ability to use a "Cursor" to navigate to the next page of the dataset until the end.
@@ -27,7 +26,7 @@ First, let's update our `notes` query to take the parameters we need to provide 
 also want to update the response object to be a new `NoteConnection` struct which will contain both our data and
 information on paging:
 
-```graphql {file="gql/schema/note.graphql"}
+```graphql {file="gql/schema/note.graphql",add_lines="1-10 18",rem_lines="19"}
 type NoteConnection {
   edges: [NoteEdge]
   pageInfo: PageInfo!
@@ -46,6 +45,7 @@ input NoteInput {
 
 extend type Query {
   notes(after: Cursor, first: Int, before: Cursor, last: Int): NoteConnection!
+  notes: [Note!]!
 }
 ```
 
@@ -63,9 +63,9 @@ type PageInfo {
 }
 ```
 
-You can put these anywhere in the schema file. However, I generally group my `scalar`s together after any `directive`s
-and before any `interface`s or `type`s. Also, the reason I'm deciding to put these in the common schema instead of the
-note schema is these types are generic and can be used by any schema.
+You can put these anywhere in the schema file. However, I generally group my `scalar`s together after any `@directive`s
+(we don't currently have any in this project) and before any `interface`s or `type`s. Also, the reason I'm deciding to
+put these in the common schema instead of the note schema is these types are generic and can be used by any schema.
 
 With the schema files updated, we can regenerate our code:
 
@@ -73,8 +73,20 @@ With the schema files updated, we can regenerate our code:
 go generate ./...
 ```
 
-This time you will probably get an error within the `gql/note.resolvers.go` file because there is a compilation error.
-We can ignore this error since it's directly related to the change in response of our `notes` resolver.
+{{< callout type=warning >}}
+If you get a `panic: interface conversion: types.Type is *types.Alias, not *types.Named` back from running `generate`,
+try updating the generate command for `gqlgen` to:
+
+```go {file="gql/resolver.go",add_lines=1,rem_lines=2}
+//go:generate go run github.com/99designs/gqlgen@latest generate
+//go:generate go run github.com/99designs/gqlgen generate
+```
+
+{{</ callout >}}
+
+This time you will probably get an error within the `gql/note.go` file when running `go generate` because
+there is a compilation error. We can ignore this error since it's directly related to the change in response of our
+`notes` resolver.
 
 Let's update the resolver to fix the errors:
 
@@ -139,7 +151,9 @@ If we have more records we can use the `after` parameter with a `cursor` to go t
 more robust way of handling paging than the traditional `page` and `size` as it will also take into account things like
 the sorting order, where clauses, and not skip records or repeat results when new items are added.
 
-## Add Ordering
+{{< commit-ref repo="nikkomiu/gentql" sha="2564f6ba14639bcba83235c88fde92b9fd141cf0" />}}
+
+## Ordering
 
 For ordering, we need to update the code generation that happens within `ent` by defining what fields we want to be used
 for ordering and what name (in GraphQL) they go by. We will update our `ent/schema/note.go` file to include these
@@ -197,7 +211,7 @@ extend type Query {
 ```
 
 If you notice, once again, we have introduced a new type but not defined that type (`OrderDirection`). We will define
-this type in the common schema as it's just a simple and generic enum:
+this type in the common schema as it's just a simple and generic Enum:
 
 ```graphql {file="gql/schema/common.graphql"}
 enum OrderDirection {
@@ -215,12 +229,16 @@ go generate ./...
 With our new `ent` options added and our GraphQL schema files updated to allow for ordering, we can update the resolver
 to utilize the order field:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 // Notes is the resolver for the notes field.
 func (r *queryResolver) Notes(ctx context.Context, after *entgql.Cursor[int], first *int, before *entgql.Cursor[int], last *int, orderBy *ent.NoteOrder) (*ent.NoteConnection, error) {
   return r.ent.Note.Query().Paginate(ctx, after, first, before, last, ent.WithNoteOrder(orderBy))
 }
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="cb49fcc4e5955d2c1b9672dd217bdd32d13a34fb" />}}
+
+{{< commit-ref repo="nikkomiu/gentql" sha="cb49fcc4e5955d2c1b9672dd217bdd32d13a34fb" />}}
 
 ## Add Filtering
 
@@ -306,7 +324,7 @@ go generate ./...
 
 Finally, we can update our resolver once again to add a where filtering clause to the `Paginate()`:
 
-```go {file="gql/note.resolvers.go"}
+```go {file="gql/note.go"}
 // Notes is the resolver for the notes field.
 func (r *queryResolver) Notes(ctx context.Context, after *entgql.Cursor[int], first *int, before *entgql.Cursor[int], last *int, orderBy *ent.NoteOrder, where *ent.NoteWhereInput) (*ent.NoteConnection, error) {
   return r.ent.Note.Query().
@@ -324,3 +342,5 @@ func (r *queryResolver) Notes(ctx context.Context, after *entgql.Cursor[int], fi
 
 With that you should now be able to filter data by conditions that are listed within the `NoteWhereInput` struct in our
 GraphQL schema. Go ahead and test that you can properly filter data.
+
+{{< commit-ref repo="nikkomiu/gentql" sha="4a2f61215e50f657366e44c46f27bc4206c28317" />}}

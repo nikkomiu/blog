@@ -4,24 +4,28 @@
       <h1 class="post-title flex items-center text-fuchsia-300 w-full">
         {{ .Title | markdownify }}
       </h1>
-      {{ if .Draft }}
-        <span
-          class="flex absolute right-0 center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-            class="sm:mr-1 w-4 h-4"
+      {{ if .Site.BuildDrafts }}
+        {{ if .Draft }}
+          <span
+            class="flex absolute right-0 center uppercase items-center text-sm px-2 py-1 ml-auto select-none text-orange-300 bg-orange-900 rounded-full"
           >
-            <use href="#hi-beaker" />
-          </svg>
-          <span class="hidden sm:inline" data-pagefind-filter="draft">
-            Draft
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              class="sm:mr-1 w-4 h-4"
+            >
+              <use href="#hi-beaker" />
+            </svg>
+            <span class="hidden sm:inline" data-pagefind-filter="draft">
+              Draft
+            </span>
           </span>
-        </span>
+        {{ else }}
+          <span class="hidden" data-pagefind-filter="draft">Published</span>
+        {{ end }}
       {{ end }}
     </div>
 
@@ -118,7 +122,7 @@
         {{ end }}
         <a
           href="{{ $prev.Permalink }}"
-          class="flex flex-row w-full sm:w-auto mr-auto text-neutral-300 hover:bg-neutral-900 hover:text-white py-3 pl-2 pr-12 sm:pr-10 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
+          class="flex flex-row w-full sm:w-auto mr-auto text-neutral-200 hover:bg-neutral-900 hover:text-white py-3 pl-2 pr-12 sm:pr-10 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
         >
           <div class="flex items-center mr-2">
             <svg
@@ -134,7 +138,7 @@
           </div>
           <div class="flex flex-col">
             <h2 class="!mt-0 text-lg">Previous {{ $pt }}</h2>
-            <p class="m-0 text-neutral-500 text-sm">{{ $prev.Title }}</p>
+            <p class="m-0 text-neutral-400 text-sm">{{ $prev.Title }}</p>
           </div>
         </a>
       {{ end }}
@@ -146,11 +150,11 @@
         {{ end }}
         <a
           href="{{ $next.Permalink }}"
-          class="flex flex-row w-full sm:w-auto ml-auto text-right text-neutral-300 hover:bg-neutral-900 hover:text-white py-3 pr-2 pl-12 sm:pl-10 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
+          class="flex flex-row w-full sm:w-auto ml-auto text-right text-neutral-200 hover:bg-neutral-900 hover:text-white py-3 pr-2 pl-12 sm:pl-10 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
         >
           <div class="flex flex-col">
             <h2 class="!mt-0 text-lg">Next {{ $pt }}</h2>
-            <p class="m-0 text-neutral-500 text-sm">{{ $next.Title }}</p>
+            <p class="m-0 text-neutral-400 text-sm">{{ $next.Title }}</p>
           </div>
           <div class="flex items-center ml-2">
             <svg
@@ -173,7 +177,7 @@
   <div class="flex print:hidden">
     <a
       href="{{ .Parent.Permalink }}"
-      class="flex flex-row mx-auto w-full sm:w-auto lg:order-none mb-2 hover:bg-neutral-900 text-neutral-300 hover:text-white py-3 px-6 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
+      class="flex flex-row mx-auto w-full sm:w-auto lg:order-none mb-2 hover:bg-neutral-900 text-neutral-200 hover:text-white py-3 px-6 border-2 border-neutral-800 justify-center bg-black hover:shadow-neutral-900 hover:shadow-lg transition-all"
     >
       <div class="flex items-center mr-2">
         <svg
@@ -190,7 +194,7 @@
       <div class="flex flex-col justify-center">
         {{ if or (not .Parent.Title) (ne (.Parent.Title | inflect.Singularize) ($pt | inflect.Singularize)) }}
           <h2 class="!mt-0 text-lg">Back to {{ $pt }}</h2>
-          <p class="m-0 text-neutral-500 text-sm">{{ .Parent.Title }}</p>
+          <p class="m-0 text-neutral-400 text-sm">{{ .Parent.Title }}</p>
         {{ else }}
           <h2 class="!mt-0 text-lg">Back to {{ $pt | inflect.Pluralize }}</h2>
         {{ end }}

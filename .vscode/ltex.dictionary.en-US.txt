@@ -18,3 +18,5 @@ NOUVEAU
 ExploitDB
 keyslot
 Keyslot
+func
+ent

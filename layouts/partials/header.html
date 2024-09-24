@@ -30,44 +30,55 @@
 </header>
 
 <div
-  id="gbl-site-search"
-  class="site-search flex min-h-[52px] w-full mt-0 mb-12 print:hidden"
-  data-turbo-permanent
+  class="site-search-modal fixed top-0 left-0 w-full h-full sm:backdrop-blur overflow-y-auto hidden bg-black z-10"
 >
-  <div
-    class="fade-in-perception border-2 border-neutral-900 bg-black w-full flex items-center px-4"
-  >
-    <div class="loading hidden flex text-neutral-600">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        width="20"
-        height="20"
-        class="spin"
-      >
-        <use href="#hi-arrow-path" />
+  <div class="flex justify-end sm:bg-black sm:bg-transparent p-2">
+    <button
+      class="flex site-search-close sm:p-2 sm:m-2 sm:rounded-full sm:bg-neutral-950 shadow hover:shadow-lg hover:bg-neutral-800 transition-all"
+    >
+      <svg class="flex h-6 w-6">
+        <use href="#hi-x-mark" />
       </svg>
-      <span class="ml-2">Loading search...</span>
-    </div>
-    <noscript>
-      <div class="flex text-neutral-700">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          width="20"
-          height="20"
-          class="text-yellow-900"
-        >
-          <use href="#hi-exclamation-triangle" />
-        </svg>
-        <span class="ml-2">JavaScript is required for search to work.</span>
+    </button>
+  </div>
+  <div
+    class="w-full sm:max-w-xl mx-auto sm:bg-black sm:my-8 sm:border-2 sm:border-neutral-800 p-4 animate__animated animate__fadeInDown animate__faster"
+  >
+    <div id="gbl-site-search" class="site-search">
+      <div class="fade-in-perception w-full flex justify-center p-2">
+        <div class="loading flex text-neutral-500 text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            width="20"
+            height="20"
+            class="spin"
+          >
+            <use href="#hi-arrow-path" />
+          </svg>
+          <span class="ml-2">Loading search...</span>
+        </div>
+        <noscript>
+          <div class="flex text-neutral-700">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              width="20"
+              height="20"
+              class="text-yellow-900"
+            >
+              <use href="#hi-exclamation-triangle" />
+            </svg>
+            <span class="ml-2">JavaScript is required for search to work.</span>
+          </div>
+        </noscript>
       </div>
-    </noscript>
+    </div>
   </div>
 </div>

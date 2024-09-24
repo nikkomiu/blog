@@ -451,7 +451,7 @@ Doing so will save space on the EFI partition and (hopefully) speed up your boot
 ## (Optional) Add Splash Image to Boot
 
 Ukify can show a splash image during startup. However, I generally don't add this to my kernel image and instead opt for
-[installing Plymouth](./plymouth.md) to display the boot splash screen.
+[installing Plymouth](../plymouth) to display the boot splash screen.
 
 Add an image to `/etc/kernel/splash.bmp` for the ukify splash. Then, add the splash argument to `ukify` in
 `/etc/kernel/postinst.d/zz-update-efistub`:

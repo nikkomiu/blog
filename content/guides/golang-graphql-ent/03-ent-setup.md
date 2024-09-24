@@ -24,6 +24,19 @@ scaffolding our app to work with it. We can simply create our first entity using
 go run -mod=mod entgo.io/ent/cmd/ent new Note
 ```
 
+{{< callout type=warning >}}
+You may get an error when generating this if your version of Go isn't up-to-date. If this is the case, update your Go
+installation. If you're using Dev Containers, you'll need to update the version in the Dev Container `Dockerfile`:
+
+```dockerfile {file=".devcontainer/Dockerfile",add_lines=1,rem_lines=2}
+FROM golang:1.23-alpine
+FROM golang:1.22-alpine
+```
+
+Make sure to use the version specified in the error and don't just update to `1.23`.
+
+{{</ callout >}}
+
 With our newly created schema file, we can update the fields for the `Note` schema in the `ent/schema/note.go` file:
 
 ```go {file="ent/schema/note.go"}
@@ -49,7 +62,7 @@ For our example `Note` schema we have:
 - `createdAt` with a default value of `time.Now`
 - `updatedAt` with a default value of `time.Now` and `time.Now` when the record is updated.
 
-With this changed, we can now generate the database client as well as all of the model code needed to use our new schema.
+With this changed, we can now generate the database client as well as all the model code needed to use our new schema.
 
 ## Generate Code
 
@@ -65,7 +78,7 @@ updating and deleting, and even migrating the schema for us when there are chang
 
 ## (Optional) Hide Generated File from VS Code
 
-Generally, I don't care to see all of the generated files in my workspace so just like before with the gqlgen files, I'm
+Generally, I don't care to see all the generated files in my workspace so just like before with the gqlgen files, I'm
 going to hide them from my VS Code explorer.
 
 Update the `files.exclude` in `.vscode/settings.json` to exclude the Ent generated files:
@@ -96,6 +109,8 @@ ent/*
 !ent/generate.go
 !ent/schema/
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="eb76dd0623b78df8d1180d36be4f47b67cb3e201" />}}
 
 ## Initialize Client
 
@@ -173,11 +188,13 @@ running:
 go mod tidy
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="016bc1c238f4afb792d623bd7999f6adabb4dba4" />}}
+
 ## Database Migrations
 
 Since `ent` works against [T-SQL](https://en.wikipedia.org/wiki/Transact-SQL) databases, we will want to have support
 for migrating our database schema when we modify the schema. To support this from the CLI of our app, we're going to
-create a new Cobra subcommand in `cmd/migrate.go`:
+create a new Cobra sub-command in `cmd/migrate.go`:
 
 ```go {file="cmd/migrate.go"}
 package cmd
@@ -211,7 +228,7 @@ func runMigrate(cmd *cobra.Command, args []string) error {
 }
 ```
 
-This is similar to the API subcommand from a Cobra perspective. However, in the `runMigrate()` we just open the database
+This is similar to the API sub-command from a Cobra perspective. However, in the `runMigrate()` we just open the database
 client and call `Create()` on the schema. This will create or update the database schema based on what is currently in
 the database.
 
@@ -259,7 +276,7 @@ func init() {
 func runMigrate(cmd *cobra.Command, args []string) error {
   dryRun, err := cmd.Flags().GetBool("dry")
   if err != nil {
-    return
+    return err
   }
 
   entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
@@ -302,9 +319,11 @@ Flags:
 Also, because we set up the flag with a variable reference the variable will automatically be set when it is set by
 someone using the CLI.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="4a4118b47551fa9fc20a95f1f80c63bbc385e972" />}}
+
 ## Perform First Migration
 
-Now that we have the migration subcommand set up we need to migrate our database to the latest version so we can begin
+Now that we have the migration sub-command set up we need to migrate our database to the latest version, so we can begin
 to use the newly added Note schema:
 
 ```bash
@@ -312,8 +331,8 @@ go run . migrate
 ```
 
 {{< callout type=note >}}
-If you don't run the migrate before continuing you will get an error when trying to use the schema for the first time
-in a later section. However, the error for this tends to be pretty verbose so you should get that you just need to run
+If you don't run the `migrate` before continuing you will get an error when trying to use the schema for the first time
+in a later section. However, the error for this tends to be pretty verbose, so you should get that you just need to run
 migrations at that time.
 {{</ callout >}}
 
@@ -374,13 +393,15 @@ generated files in the `.vscode/settings.json` to exclude them from the explorer
 
 ```json {file=".vscode/settings.json"}
   "ent/{gql_*.go}": true,
-  "ent/{note/,note.go}": true
+  "ent/{note}{/,.go}": true
 ```
 
 This part is generally following along with the [GraphQL Integration](https://entgo.io/docs/graphql) page of ent's
 documentation. We will continue to advance past this initial setup document. However, it (along with the
 [GraphQL Tutorial](https://entgo.io/docs/tutorial-todo-gql)) are great resources that will expand on what we are doing
 here.
+
+{{< commit-ref repo="nikkomiu/gentql" sha="fb673ea5409ea524951640004ea20b57c3207e72" />}}
 
 ## Conclusion
 
@@ -389,10 +410,10 @@ Now we should have `ent` set up for our app, the first schema defined, and datab
 {{< callout type=note >}}
 I don't get into it much in this guide, however, `ent` is technically a graph database adapter. Having ent designed to
 work with graph databases allows for some very interesting and complex graph traversals over our data to query for data
-in an easy to use way.
+in an easy-to-use way.
 
 For more information on ent, take a look at [their documentation](https://entgo.io/docs/getting-started).
 {{</ callout >}}
 
-Next we're going to look at wiring `ent` to `gqlgen` so we don't have to manually manage the connection between the
+Next we're going to look at wiring `ent` to `gqlgen`, so we don't have to manually manage the connection between the
 ent and gqlgen models, as well as some other GraphQL concepts that are recommended.

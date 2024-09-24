@@ -6,9 +6,41 @@
     </h1>
 
     <div class="post-content">
-      <a href="{{ "/" | absURL }}">
+      <p>The page you're looking for could not be found.</p>
+
+      <div class="similar-pages my-8 hidden">
+        <p>
+          One of the following similar pages may be what you were looking for.
+        </p>
+        <div class="page-results"></div>
+      </div>
+
+      <p>You can always go back to the home page.</p>
+
+      <a
+        href="{{ "/" | absURL }}"
+        class="hover:text-fuchsia-400 hover:underline mt-6 block"
+      >
         {{ $.Site.Params.missingBackButtonLabel | default "Back to home page" }}&nbsp;→
       </a>
     </div>
   </div>
+
+  {{ $jsSourceMap := "" }}
+  {{ if hugo.IsDevelopment }}
+    {{ $jsSourceMap = "external" }}
+  {{ end }}
+  {{ $jsOpts := (dict "sourceMap" $jsSourceMap) }}
+  {{ $notFoundJs := resources.Get "js/entry.404.js" | js.Build $jsOpts }}
+
+  {{ if not hugo.IsDevelopment }}
+    {{ $notFoundJs = $notFoundJs | minify | fingerprint }}
+  {{ end }}
+  <script
+    type="text/javascript"
+    src="{{ $notFoundJs.RelPermalink }}"
+    integrity="{{ $notFoundJs.Data.Integrity }}"
+    defer
+    async
+  ></script>
 {{ end }}

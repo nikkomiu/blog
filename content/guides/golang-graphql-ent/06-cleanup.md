@@ -32,11 +32,11 @@ Once removed, we can regenerate our code:
 go generate ./...
 ```
 
-Now if you open the `common.resolvers.go` file, you should see that our resolver wasn't exactly removed. Instead when we
+Now if you open the `common.go` file, you should see that our resolver wasn't exactly removed. Instead, when we
 regenerated our code the resolver was moved to the bottom of the file with a very large daunting comment about how it
-was going to be deleted but it was saved here just in case you still needed it:
+was going to be deleted, but it was saved here just in case you still needed it:
 
-```go {file="gql/common.resolvers.go"}
+```go {file="gql/common.go"}
 // !!! WARNING !!!
 // The code below was going to be deleted when updating resolvers. It has been copied here so you have
 // one last chance to move it out of harms way if you want. There are two reasons this happens:
@@ -58,7 +58,7 @@ type Query {
 }
 ```
 
-I tend to keep this method around so I can test if there is an error reaching our service. Think of it like a GraphQL
+I tend to keep this method around, so I can test if there is an error reaching our service. Think of it like a GraphQL
 liveness probe we can use in our apps to make sure the API is working.
 
 Once this is added to the `Query` we can regenerate our code again:
@@ -70,7 +70,7 @@ go generate ./...
 Then all we need to do is implement our resolver. As I said before, all we really want here is to return the static
 string "pong":
 
-```go {file="gql/common.resolvers.go"}
+```go {file="gql/common.go"}
 // Ping is the resolver for the ping field.
 func (r *queryResolver) Ping(ctx context.Context) (string, error) {
   return "pong", nil
@@ -80,120 +80,12 @@ func (r *queryResolver) Ping(ctx context.Context) (string, error) {
 That's all there is to it! We now have a ping endpoint that we can use. We also got to see what happens to our code when
 we remove a resolver when `gqlgen`.
 
-## Add Error Handling
-
-> > > > > > > > > TODO: REMOVE `runE` and replace with `cobra.Command{SilenceUsage: true}`
-
-Currently we don't handle errors very well in our app as any time we have an issue in the `cmd` package we just panic.
-Let's fix this so instead of using `panic()` we return errors, print the error to `stderr` and exit the app with some
-error code.
-
-To start, add a `runE()` func in `cmd/cmd.go` that will wrap our run method and handle the error returned:
-
-```go {file="cmd/cmd.go"}
-func runE(fn func(*cobra.Command, []string) error) func(*cobra.Command, []string) {
-  return func(cmd *cobra.Command, args []string) {
-    err := fn(cmd, args)
-    if err != nil {
-      fmt.Fprintf(cmd.ErrOrStderr(), "failed running %s: %s\n", cmd.Name(), err)
-      os.Exit(2)
-    }
-  }
-}
-```
-
-This may look complicated but basically we're taking in a function with the signature `func(*cobra.Command, []string) error`
-(the signature that we want to use for our run functions) and returning a function with the signature
-`func(*cobra.Command, []string)` (the one that Cobra expects for the `Run` struct property).
-
-Then within here we are returning an anonymous function to match our expected return type where we call our function
-passed in with the args from our anonymous function and check the error coming out of the `fn(*cobra.Command, []string)`
-call to determine if there is an error and how to handle the case when there is one.
-
-{{< callout type=note >}}
-Cobra also exposes a `RunE` variant that returns an error. However, this isn't what we are looking for as this will
-return the help when an error is returned. It is primarily used for when you validate the command in the `Run` method
-and return an error when what a user has requested is invalid (like a file that is missing or improperly formatted).
-{{</ callout >}}
-
-With our `runE()` func in place, let's update our `runAPI()` and `runMigration()` funcs to return an error when they
-fail instead of calling `panic()`.
-
-```go {file="cmd/migrate.go"}
-var migrateCmd = &cobra.Command{
-  Use:   "migrate",
-  Short: "Migrate the database between versions",
-  RunE:  runMigrate,
-}
-
-// ...
-
-func runMigrate(cmd *cobra.Command, args []string) (err error) {
-  dryRun, err := cmd.Flags().GetBool("dry")
-  if err != nil {
-    return
-  }
-
-  entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
-  if err != nil {
-    return
-  }
-  defer entClient.Close()
-
-  if dryRun {
-    err = entClient.Schema.WriteTo(cmd.Context(), os.Stdout)
-  } else {
-    err = entClient.Schema.Create(cmd.Context())
-  }
-
-  return
-}
-```
-
-In the `runMigrate(*cobra.Command, []string) error` we have updated the return to include `error` and set it to a named
-variable (`err`). This way we don't need to explicitly call `return err` we can just call `return` since the variable
-is named.
-
-```go {file="cmd/api.go"}
-var apiCmd = &cobra.Command{
-  Use:   "api",
-  Short: "Start the API services for gentql",
-  RunE:  runAPI,
-}
-
-func runAPI(cmd *cobra.Command, args []string) (err error) {
-  entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
-  if err != nil {
-    return
-  }
-  ctx := ent.NewContext(cmd.Context(), entClient)
-  defer entClient.Close()
-
-  router := chi.NewRouter()
-
-  router.Use(
-    middleware.RequestID,
-    middleware.RealIP,
-    middleware.Logger,
-    middleware.Recoverer,
-  )
-
-  srv := gql.NewServer(ctx)
-  router.Handle("/graphql", srv)
-  router.Handle("/graphiql", playground.Handler("GentQL", "/graphql"))
-
-  return http.ListenAndServe(":8080", router)
-}
-```
-
-Again, we just updated to remove the `panic(err)` calls and replaced them with `return`/`return err`. In our `runE()`
-func remember that we check for the error and if there is one we print an error to `stderr` and exit with a non-zero
-code.
+{{< commit-ref repo="nikkomiu/gentql" sha="188f4ef9d974bbdfbafc58cb922d62ca6fe9a469" />}}
 
 ## Exit Code Error
 
 We now have the ability to exit our app when there is an error. However, it would be great if we could generate an error
-that contains a **specific** exit code to return when the app fails instead of just returning the hardcoded `2`.
+that contains a **specific** exit code to return when the app fails instead of just returning the hard-coded `2`.
 
 Let's create this all in `pkg/errors/exitcode.go`:
 
@@ -253,10 +145,13 @@ func main() {
   defer cancel()
 
   if err := cmd.Execute(ctx); err != nil {
-    exitCode := 1
+    var exitCode int
     switch typedErr := err.(type) {
     case errors.ExitCodeError:
       exitCode = typedErr.ExitCode()
+
+    default:
+      exitCode = 1
     }
 
     os.Exit(exitCode)
@@ -269,6 +164,8 @@ check on the underlying type of `err` to see if it implements the `errors.ExitCo
 access it by the assigned variable of `typedErr` which will essentially cast the `err` to the type in the switch
 statement. If we didn't do this, we would need to manually cast it and check that the cast works correctly (check for `nil`).
 
+{{< commit-ref repo="nikkomiu/gentql" sha="85f92d256f190c1946a6332c4b35ac345c7cfc80" />}}
+
 Now that this is all in place, we can use it anywhere in our code (where errors are bubbled up to the `run` commands).
 
 ```go {file="cmd/api.go"}
@@ -276,15 +173,18 @@ entClient, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
 if err != nil {
   return errors.NewExitCode(err, 3)
 }
-  defer entClient.Close()
+ctx := ent.NewContext(cmd.Context(), entClient)
+defer entClient.Close()
 ```
 
 This is by no means required, but sometimes it is nice to be able to customize errors with additional fields, info, and
 wrapping/unwrapping. I have only used this specific error type in a few different situations. However, the principles
-can be reapplied to things like wrapping HTTP errors so you can return an error from an HTTP endpoint safely. This can
+can be reapplied to things like wrapping HTTP errors, so you can return an error from an HTTP endpoint safely. This can
 be accomplished by using an extra method for `HTTPError() string` where if it doesn't exist just returns some default
 error text instead of leaking internal errors back to users of our API. Which I've found to be especially useful for
 things like request validations in HTTP APIs written in Go.
+
+{{< commit-ref repo="nikkomiu/gentql" sha="6375bf095915e9e843c633bdf3743dd2c2b1b89e" />}}
 
 ## Centralizing Configuration
 
@@ -295,7 +195,7 @@ follow [The Twelve-Factor App](https://12factor.net/) which loads configuration 
 great reason for using environment variables is my deployment environment for apps is almost always Kubernetes which
 is great at handling environment variable based configuration.
 
-## Relocate Configuration
+### Relocate Configuration
 
 First thing we will do is create our new configuration home at `pkg/config/app.go`:
 
@@ -354,7 +254,7 @@ and `Addr() string`) and finally the `GetApp() App` func which returns our app c
 
 ### Update Commands to Use Config
 
-Now, let's update our CLI commands to use the configuration instead of using the hardcoded values. First up, let's do
+Now, let's update our CLI commands to use the configuration instead of using the hard-coded values. First up, let's do
 the migrate command:
 
 ```go {file="cmd/migrate.go"}
@@ -362,7 +262,7 @@ the migrate command:
 
   entClient, err := ent.Open(cfg.Database.Driver, cfg.Database.URL)
   if err != nil {
-    return
+    return errors.NewExitCode(err, 3)
   }
   defer entClient.Close()
 ```
@@ -375,7 +275,7 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
 
   entClient, err := ent.Open(cfg.Database.Driver, cfg.Database.URL)
   if err != nil {
-    return
+    return errors.NewExitCode(err, 3)
   }
   ctx := ent.NewContext(cmd.Context(), entClient)
   defer entClient.Close()
@@ -398,11 +298,13 @@ func runAPI(cmd *cobra.Command, args []string) (err error) {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="f678a2a82d1d15c8b077c60abaacddbb0a79639f" />}}
+
 ### Environment Variable Package
 
 Let's start with creating a new package that is responsible for loading and parsing properties from environment
-variables. You could import a package to do this but I usually just write it myself in the app I'm working on. This is
-mainly because when the need arises to map environment variables to custom types (like an enum or `zap` Config) I don't
+variables. You could import a package to do this, but I usually just write it myself in the app I'm working on. This is
+mainly because when the need arises to map environment variables to custom types (like an Enum or `zap` Config) I don't
 need even more dependencies and/or introspection to get it to work well. So I'm just going to create `pkg/env/env.go`
 with the following:
 
@@ -448,9 +350,11 @@ func GetApp() App {
 }
 ```
 
+{{< commit-ref repo="nikkomiu/gentql" sha="b0c29dba5142d6e7e775a424f6eb79749b4c1a27" />}}
+
 ### App Config Singleton
 
-With everything in place it would be nice if every time there was a call to `GetApp() App` it didn't refetch the
+With everything in place it would be nice if every time there was a call to `GetApp() App` it didn't re-fetch the
 environment variables and do all of that logic. Instead, we could create a singleton instance for the configuration and
 on the first call to `GetApp() App` it can just load the configuration.
 
@@ -484,6 +388,8 @@ The `GetApp() App` func has been refactored to check the package-level variable 
 `nil`, we load the app config using the `loadApp()` func. Either way we will return a **copy** of the app config at the
 end.
 
+{{< commit-ref repo="nikkomiu/gentql" sha="9a75e2e5263657985824e053e59e760b1d9bbc11" />}}
+
 ## OS Signal Handling
 
 Now I want to respond to OS signals where if a signal is passed to the running application (like `SIGHUP`) it will be
@@ -491,7 +397,7 @@ shut down gracefully.
 
 The HTTP Server in Go doesn't support running with a `context.Context`. This means that the server can't be stopped by
 the `Done() chan` being closed for a `context.Context`. First I want to create a wrapper around the `ListenAndServe()`
-func to take a context that will shutdown the HTTP server when the context is canceled.
+func to take a context that will shut down the HTTP server when the context is canceled.
 
 ```go {file="pkg/sig/sig.go"}
 package sig
@@ -502,7 +408,9 @@ import (
   "time"
 )
 
-func ListenAndServe(ctx context.Context, server *http.Server, shutdownTimeout time.Duration) error {
+func ListenAndServe(ctx context.Context, addr string, handler http.Handler, shutdownTimeout time.Duration) error {
+  server := &http.Server{Addr: addr, Handler: handler}
+
   errChan := make(chan error)
   go func() {
     if err := server.ListenAndServe(); err != nil {
@@ -525,11 +433,13 @@ func ListenAndServe(ctx context.Context, server *http.Server, shutdownTimeout ti
 }
 ```
 
-Then we can simply use it by updating our API subcommand:
+Then we can simply use it by updating our API sub-command:
 
 ```go {file="cmd/api.go"}
-return sig.ListenAndServe(ctx, &http.Server{Addr: cfg.Server.Addr(), Handler: router}, 3*time.Second)
+return sig.ListenAndServe(ctx, cfg.Server.Addr(), router, 3*time.Second)
 ```
+
+{{< commit-ref repo="nikkomiu/gentql" sha="aad03f7f10b7914b8ab4abdbdf3d7f50a3d206f1" />}}
 
 ### (Optional) Load Shutdown Timeout from Config
 
@@ -585,3 +495,5 @@ return sig.ListenAndServe(ctx, &http.Server{Addr: cfg.Server.Addr(), Handler: ro
 ```
 
 {{</ section >}}
+
+{{< commit-ref repo="nikkomiu/gentql" sha="1ee540a88b95f64fbac906a791f85fe287374762" />}}

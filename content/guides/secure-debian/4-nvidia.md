@@ -10,14 +10,14 @@ tags:
 ---
 
 Installing NVIDIA drivers should go fairly smoothly after you
-[set up Secure Boot](./1-secure-boot.md). This is (mostly) here just to show how
+[set up Secure Boot](../1-secure-boot). This is (mostly) here just to show how
 loading new kernel modules should go now that we have our Secure Boot MOK key enabled. This is because when we created
 our Secure Boot keys we set up DKMS to find our kernel module signing keys.
 
 <!--more-->
 
 If you run into issues getting the driver installation working check the
-[Secure Boot](./1-secure-boot.md) section again. What you are most likely to encounter
+[Secure Boot](../1-secure-boot) section again. What you are most likely to encounter
 is an issue where the signing key used for the NVIDIA driver is not compatible with the signing keys that are in
 Secure Boot.
 
