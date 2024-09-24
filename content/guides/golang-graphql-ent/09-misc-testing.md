@@ -655,7 +655,7 @@ func TestRootCmd(t *testing.T) {
 
 You may have noticed that on these `cmd` tests instead of using the `package cmd_test` we used `package cmd`. This is
 because when you test your package with the `_test` suffix we are using a different "testing" package. Because of this,
-we don't have access to any of the private constants, variables, functions, or struct methods defined within the package
+we don't have access to any of the private constants, variables, funcs, or struct methods defined within the package
 that we are testing. I am an advocate of testing our public API via the `_test` package. This is because we are limited
 to what any consumer of our package has to work with and we can't test things that can't be reached by the public API.
 
