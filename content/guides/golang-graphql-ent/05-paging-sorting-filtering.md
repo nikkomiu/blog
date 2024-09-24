@@ -9,7 +9,8 @@ tags:
   - ent
 ---
 
-Now that we have `ent` and `gqlgen` wired up, we can look at updating our list notes resolver. In this section, we will look at implementing paging, sorting, and filtering using where clauses to provide a more robust experience to our client
+Now that we have `ent` and `gqlgen` wired up, we can look at updating our list notes resolver. In this section, we will
+look at implementing paging, sorting, and filtering using where clauses to provide a more robust experience to our client
 applications.
 
 <!--more-->
