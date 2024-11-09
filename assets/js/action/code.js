@@ -39,8 +39,9 @@ export function loadCodeActions() {
       highlight.hasAttribute("rem_lines");
 
     CopyButton({
-      buttonText: hasDiff ? "Copy (+)" : "Copy",
+      buttonText: hasDiff ? "Copy Additions" : "Copy",
       className: "top-0 right-0 mt-2 mr-2",
+      textClass: "sr-only",
       add: (btn) => el.parentNode.insertBefore(btn, el),
       onClick: () => {
         let clipText = el.innerText.replace(/\n\n/g, "\n").split("\n");

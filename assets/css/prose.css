@@ -38,6 +38,10 @@
   @apply text-fuchsia-400 bg-fuchsia-950/75 py-[0.15rem] px-[0.3rem] font-mono;
 }
 
+.prose pre.mermaid {
+  @apply p-0;
+}
+
 .prose pre code {
   @apply px-0 bg-transparent;
 }
