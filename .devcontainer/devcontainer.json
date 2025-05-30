@@ -17,7 +17,6 @@
         "davidanson.vscode-markdownlint",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
-        "GitHub.copilot",
         "valentjn.vscode-ltex",
         "csstools.postcss"
       ],
