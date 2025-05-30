@@ -52,8 +52,8 @@ func TestPing(t *testing.T) {
 }
 ```
 
-Here, we are creating our method with a prefix of `Test`, so Go will run this as a test method. When testing, we also
-need to pass a `*testing.T` struct into our func. The `*testing.T` is used to run subtests, setup testing environment,
+Here, we are creating our method with a prefix of `Test` so Go will run this as a test method. When testing, we also
+need to pass a `*testing.T` struct into our func. The `*testing.T` is used to run sub-tests, setup testing environment,
 fail tests, etc. For now, we will just manually do our assertions but later, we will refactor this to use an assertion
 library to reduce the amount of repetitive code.
 
@@ -514,7 +514,7 @@ Similar to how we implemented the `ContextT(*testing.T) context.Context` we are 
 into its own func that we can call from our tests. Again with this we will register a `Cleanup` func to close our
 database connection (and delete the database since we are using an in-memory SQLite database).
 
-Just update the `TestNode` func to use our new `EntT(*tesitng.T) *ent.Client`:
+Just update the `TestNode` func to use our new `EntT(*testing.T) *ent.Client`:
 
 ```go {file="gql/common_test.go",add_lines=3,rem_lines="4-5"}
 func TestNode(t *testing.T) {

@@ -133,7 +133,7 @@ interface and extend it with an `ExitCode() int` method. So any struct that impl
 can now be considered an `ExitCoder`.
 
 Then, we're just creating the struct that implements this interface (with a static compilation check that we do actually
-properly implement this interface). We also include the `Unwrap() error` method, so the error can be unwrapped using the
+properly implement this interface). We also include the `Unwrap() error` method so the error can be unwrapped using the
 `errors.Unwrap() error` method that is in the Go `errors` package.
 
 We can now check for this interface in the `main()` func:
