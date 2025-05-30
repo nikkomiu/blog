@@ -1,0 +1,14 @@
+# GPT
+User-agent: GPTBot
+Disallow: /
+
+# Google AI
+User-agent: Google-Extended
+Disallow: /
+
+# Other AI Bots
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
