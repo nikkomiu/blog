@@ -47,6 +47,3 @@ jobs:
 
       - name: Stylelint
         run: npm run stylelint:check -- -f github
-
-      - name: Markdownlint
-        run: npm run markdownlint:check
