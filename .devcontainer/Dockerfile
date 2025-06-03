@@ -2,11 +2,21 @@ FROM ubuntu
 
 ARG TARGETARCH
 ARG HUGO_VARIANT="hugo"
+ARG GO_VERSION=1.24.3
 
 # Install Core Deps
 RUN apt-get update && \
     apt-get install -y git wget curl bash zsh sudo language-pack-en && \
     update-locale LANG=en_US.UTF-8
+
+# Install Go
+RUN wget -O go.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-${TARGETARCH:-amd64}.tar.gz && \
+    tar xf go.tar.gz && \
+    chmod +x go/bin/* && \
+    mv go /usr/local/go && \
+    ln -s /usr/local/go/bin/go /usr/local/bin/go && \
+    ln -s /usr/local/go/bin/gofmt /usr/local/bin/gofmt && \
+    rm -rf go.tar.gz
 
 # Install Hugo
 RUN export HUGO_VERSION=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4)}') && \

@@ -6,6 +6,13 @@ disableHugoGeneratorInject: true
 copyright: Nikko Miu
 
 module:
+  imports:
+    - path: github.com/nikkomiu/blog-content
+      disabled: false
+      mounts:
+        - source: threere/
+          target: content
+
   mounts:
     - source: static
       target: static
