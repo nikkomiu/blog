@@ -5,7 +5,7 @@ const common = require('./common');
 
 const listenPort = 1313;
 
-const defaultHugoArgs = 'server --watch --minify --disableFastRender --enableGitInfo --cleanDestinationDir --destination public --appendPort=false';
+const defaultHugoArgs = 'server --watch --minify --disableFastRender --printPathWarnings --enableGitInfo --cleanDestinationDir --destination public --appendPort=false';
 
 async function startHugo() {
   let hugoArgs = defaultHugoArgs.split(' ');

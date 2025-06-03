@@ -170,6 +170,19 @@
   async
 ></script>
 
+{{ if hugo.IsDevelopment }}
+  {{ $jsOpts := (dict "sourceMap" "external") }}
+  {{ $liveReload := resources.Get "js/entry.livereload.js" | js.Build $jsOpts }}
+
+  <script
+    type="text/javascript"
+    src="{{ $liveReload.RelPermalink }}"
+    integrity="{{ $liveReload.Data.Integrity }}"
+    defer
+    async
+  ></script>
+{{ end }}
+
 {{ if .Store.Get "hasMermaid" }}
   {{ $mermaidJS := resources.Get "js/entry.mermaid.js" | js.Build $jsOpts }}
   {{ if not hugo.IsDevelopment }}
